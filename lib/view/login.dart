@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/primary_button_widget.dart';
+import 'dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -104,10 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           primaryColor: Color(AppTheme.primaryColor),
                           textColor: Color(0xFFFAFAFA),
                           onpressFunction: () {
-                            // Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //       builder: (builder) => SignUpScreen()),
-                            // );
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (builder) => Dashboard()),
+                            );
                           },
                           title: 'Login')),
                   SizedBox(

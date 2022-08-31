@@ -1,5 +1,6 @@
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/model/gender_model.dart';
+import 'package:dating_app/view/dashboard.dart';
 import 'package:dating_app/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -265,7 +266,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: theme_primary_button_widget(
                           primaryColor: Color(AppTheme.primaryColor),
                           textColor: Color(0xFFFAFAFA),
-                          onpressFunction: () {},
+                          onpressFunction: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (builder) => Dashboard()),
+                            );
+                          },
                           title: 'Sign Up')),
                 ],
               ),
