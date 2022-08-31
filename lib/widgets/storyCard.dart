@@ -1,5 +1,5 @@
 import 'package:dating_app/widgets/avatar.dart';
-import 'package:dating_app/widgets/circularButton.dart';
+import 'package:dating_app/widgets/circular_button.dart';
 import 'package:flutter/material.dart';
 
 class StoryCard extends StatelessWidget {

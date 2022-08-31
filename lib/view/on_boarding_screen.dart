@@ -3,9 +3,7 @@ import 'package:dating_app/view/login.dart';
 import 'package:dating_app/view/signup.dart';
 import 'package:dating_app/widgets/primary_button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -16,13 +14,6 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Widget headerbutton({
@@ -6,11 +7,15 @@ Widget headerbutton({
   required void Function() buttonaction,
   required Color buttoncolor,
 }) {
-  return FlatButton.icon(
+  return ElevatedButton.icon(
       onPressed: buttonaction,
+      style: ElevatedButton.styleFrom(elevation: 0, primary: Colors.white),
       icon: Icon(
         buttonicon,
         color: buttoncolor,
       ),
-      label: Text(buttontext));
+      label: Text(
+        buttontext,
+        style: TextStyle(color: Colors.black),
+      ));
 }

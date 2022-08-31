@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_theme.dart';
-
 class theme_primary_button_widget extends StatelessWidget {
   var primaryColor;
   var textColor;

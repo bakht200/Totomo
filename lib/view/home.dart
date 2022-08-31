@@ -7,8 +7,8 @@ import 'package:dating_app/view/sections/suggestionSection.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/assets.dart';
-import '../widgets/circularButton.dart';
-import '../widgets/headerButton.dart';
+import '../widgets/circular_button.dart';
+import '../widgets/header_Button.dart';
 import '../widgets/postcard.dart';
 import 'sections/headerButtonSection.dart';
 
@@ -28,7 +28,7 @@ class homeState extends State<Home> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          "Totmo",
+          "Totomo",
           style: TextStyle(
             color: Color(AppTheme.primaryColor),
             fontSize: 26,
@@ -67,11 +67,6 @@ class homeState extends State<Home> {
             thickness: 10,
             color: Colors.grey[300],
           ),
-          Room(),
-          Divider(
-            thickness: 10,
-            color: Colors.grey[300],
-          ),
           StorySection(),
           Divider(
             thickness: 10,
@@ -83,7 +78,7 @@ class homeState extends State<Home> {
             name: "Spiderman",
             time: "4h",
             postImage: bat,
-            postTitle: "hai mahn get some sleep,",
+            postTitle: "hai man get some sleep,",
             like: "15K",
             comments: "2K",
             share: "432",

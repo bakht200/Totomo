@@ -7,11 +7,11 @@ class Varfied extends StatelessWidget {
       width: 15,
       height: 15,
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: Colors.amber,
         shape: BoxShape.circle,
       ),
       child: Icon(
-        Icons.check,
+        Icons.star,
         color: Colors.white,
         size: 10,
       ),

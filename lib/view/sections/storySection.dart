@@ -1,5 +1,5 @@
 import 'package:dating_app/constants/assets.dart';
-import 'package:dating_app/flutterUi/widgets/storyCard.dart';
+import 'package:dating_app/widgets/storyCard.dart';
 import 'package:flutter/material.dart';
 
 class StorySection extends StatelessWidget {
@@ -11,10 +11,11 @@ class StorySection extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: [
           StoryCard(
-            labelText: "Add to story",
+            labelText: "Josh",
             story: sup,
             avatar: sup,
-            createStoryStatus: true,
+            stborder: true,
+            createStoryStatus: false,
           ),
           StoryCard(
               labelText: "Bat",

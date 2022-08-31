@@ -1,3 +1,4 @@
+import 'package:dating_app/constants/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class Avatar extends StatelessWidget {
@@ -22,7 +23,7 @@ class Avatar extends StatelessWidget {
             shape: BoxShape.circle,
             border: stborder
                 ? Border.all(
-                    color: Colors.blueAccent,
+                    color: Color(AppTheme.primaryColor),
                     width: 3,
                   )
                 : Border(),

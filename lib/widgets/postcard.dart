@@ -1,6 +1,6 @@
-import 'package:dating_app/constants/assets.dart';
+import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/view/sections/headerButtonSection.dart';
-import 'package:dating_app/widgets/headerButton.dart';
+import 'package:dating_app/widgets/header_Button.dart';
 import 'package:dating_app/widgets/vaified.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +30,7 @@ class PostCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         postCardHeader(),
         titleSection(),
@@ -63,7 +64,7 @@ class PostCard extends StatelessWidget {
               postTitle == null ? "N/A" : postTitle,
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 14,
+                fontSize: 16,
               ),
             ),
           )
@@ -96,7 +97,7 @@ class PostCard extends StatelessWidget {
                     size: 10,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Color(AppTheme.primaryColor),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -118,23 +119,8 @@ class PostCard extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-                displayText(label: share),
                 SizedBox(
                   width: 5,
-                ),
-                displayText(label: "Share"),
-                Avatar(
-                  pic: bat,
-                  displayStatus: false,
-                  width: 25,
-                  height: 25,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.grey[700],
-                  ),
                 ),
               ],
             ),
@@ -160,7 +146,8 @@ class PostCard extends StatelessWidget {
         children: [
           Text(
             name,
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(
+                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(width: 10),
           varifiedpost ? Varfied() : SizedBox(),
@@ -178,13 +165,6 @@ class PostCard extends StatelessWidget {
             size: 15,
           )
         ],
-      ),
-      trailing: IconButton(
-        onPressed: () {},
-        icon: Icon(
-          Icons.more_horiz,
-          color: Colors.grey[700],
-        ),
       ),
     );
   }

@@ -73,13 +73,14 @@ class SuggestionCard extends StatelessWidget {
       required Color buttonTextColor,
       required buttonIconColor,
       required String buttonText}) {
-    return FlatButton.icon(
+    return ElevatedButton.icon(
       onPressed: buttonAction,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5))),
+      style: ElevatedButton.styleFrom(
+          onSurface: Colors.white,
+          onPrimary: Colors.white,
+          primary: Colors.white),
       icon: Icon(buttonIcon, color: buttonIconColor),
       label: Text(buttonText, style: TextStyle(color: buttonTextColor)),
-      color: Colors.blue[700],
     );
   }
 
@@ -87,11 +88,12 @@ class SuggestionCard extends StatelessWidget {
       {required void Function() buttonAction2,
       required Color buttonTextColor2,
       required String buttonText2}) {
-    return FlatButton(
+    return ElevatedButton(
       onPressed: buttonAction2,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5))),
-      color: Colors.grey[300],
+      style: ElevatedButton.styleFrom(
+          onSurface: Colors.white,
+          onPrimary: Colors.white,
+          primary: Colors.white),
       child: Text(buttonText2, style: TextStyle(color: buttonTextColor2)),
     );
   }
