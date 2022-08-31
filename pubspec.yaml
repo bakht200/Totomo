@@ -37,6 +37,7 @@ dependencies:
   material_design_icons_flutter: 5.0.6996
   flutter_screenutil: ^5.5.3+2
   cached_network_image: ^3.2.1
+  persistent_bottom_nav_bar:
 
 dev_dependencies:
   flutter_test:
