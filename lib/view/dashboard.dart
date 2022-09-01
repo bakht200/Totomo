@@ -32,9 +32,9 @@ class _DashboardState extends State<Dashboard> {
   Widget getBody() {
     List<Widget> pages = [
       HomePage(),
-      SearchPage(),
+      const SearchPage(),
       SettingPage(),
-      ProfilePage(),
+      const ProfilePage(),
     ];
     return IndexedStack(
       index: pageIndex,
@@ -138,8 +138,8 @@ class _DashboardState extends State<Dashboard> {
     ];
     return Container(
       width: double.infinity,
-      height: 80.h,
-      decoration: BoxDecoration(color: appFooterColor),
+      height: 60.h,
+      decoration: const BoxDecoration(color: appFooterColor),
       child: Padding(
         padding:
             EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h, top: 15.h),
