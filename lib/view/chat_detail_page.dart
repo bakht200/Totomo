@@ -90,7 +90,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         borderRadius: BorderRadius.circular(20.r),
                         color: (messages[index].messageType == "receiver"
                             ? Colors.grey.shade200
-                            : Color(AppTheme.SecondayColor))),
+                            : Color(AppTheme.secondaryColor))),
                     padding: EdgeInsets.all(16.w),
                     child: Text(
                       messages[index].messageContent!,

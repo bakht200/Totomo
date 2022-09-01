@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:dating_app/constants/app_theme.dart';
-import 'package:flutter/material.dart';
-
 const appBarColor = Color(0xFFFFFFFF);
 const appFooterColor = Color(0xFFFFFFFF);
-const primary = Color(0xFFFFFFFF);
 const white = Color(0xFFFFFFFF);
 const black = Color(0xFF000000);
-const textFieldBackground = Color(0xFF262626);
-const buttonFollowColor = Color(0xFF0494F5);
+
 final storyBorderColor = [
   Color(AppTheme.primaryColor),
-  Color(AppTheme.SecondayColor)
+  Color(AppTheme.secondaryColor)
 ];
 
 class AppTheme {
-  static var SecondayColor = 0xFF39B58B;
+  static var secondaryColor = 0xFF39B58B;
   static var primaryColor = 0xFF03766E;
 
   static var toggleTrackColor = Color.fromARGB(255, 216, 153, 146);

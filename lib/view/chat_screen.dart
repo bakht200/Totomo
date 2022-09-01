@@ -68,7 +68,7 @@ class _ChatPageState extends State<ChatPage> {
                     Text(
                       "Conversations",
                       style: TextStyle(
-                          fontSize: 30.sp, fontWeight: FontWeight.bold),
+                          fontSize: 25.sp, fontWeight: FontWeight.bold),
                     ),
                     Container(
                       padding: EdgeInsets.only(

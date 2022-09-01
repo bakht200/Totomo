@@ -24,7 +24,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color(AppTheme.SecondayColor),
+            Color(AppTheme.secondaryColor),
             Color(AppTheme.primaryColor),
           ],
         )),

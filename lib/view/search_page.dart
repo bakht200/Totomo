@@ -1,4 +1,5 @@
 import 'package:dating_app/constants/app_theme.dart';
+import 'package:dating_app/view/chat_detail_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -132,10 +133,11 @@ class _SearchPageState extends State<SearchPage> {
                                     primaryColor: Color(AppTheme.primaryColor),
                                     textColor: const Color(0xFFFAFAFA),
                                     onpressFunction: () {
-                                      // Navigator.of(context).push(
-                                      // //   MaterialPageRoute(
-                                      // //       builder: (builder) => Dashboard()),
-                                      // );
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (builder) =>
+                                                ChatDetailPage()),
+                                      );
                                     },
                                     title: 'Message')),
                           ),
