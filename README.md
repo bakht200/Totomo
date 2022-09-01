@@ -1,16 +1,17 @@
-# dating_app
+# Totomo Flutter Application
 
-A new Flutter project.
+## onBoarding Screen
+![Screenshot 2022-08-04 at 3 19 57 PM](https://user-images.githubusercontent.com/62112170/187660601-369ce7ea-f503-46bb-a673-5a095d9ba3fd.png)
 
-## Getting Started
+## SignUp/Login Screen
 
-This project is a starting point for a Flutter application.
+![Screenshot 2022-08-04 at 3 19 57 PM](https://user-images.githubusercontent.com/62112170/187660824-26280514-1d77-4e7e-b112-3b4bdac09554.png)
 
-A few resources to get you started if this is your first Flutter project:
+![Screenshot 2022-08-04 at 3 19 57 PM](https://user-images.githubusercontent.com/62112170/187660820-476fb45d-f21f-48bd-a884-5fdc821784de.png)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Dashboard Screen
+![Screenshot 2022-08-04 at 3 19 57 PM](https://user-images.githubusercontent.com/62112170/187660813-dde49a2f-847e-471b-8d6a-626c99b83e83.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+
