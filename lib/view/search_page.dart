@@ -7,6 +7,8 @@ import '../widgets/primary_button_widget.dart';
 import '../widgets/search_category_item.dart';
 
 class SearchPage extends StatefulWidget {
+  const SearchPage({Key? key}) : super(key: key);
+
   @override
   _SearchPageState createState() => _SearchPageState();
 }

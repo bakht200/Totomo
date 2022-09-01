@@ -1,5 +1,6 @@
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../model/chat_message.dart';
 
@@ -28,7 +29,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         backgroundColor: Colors.white,
         flexibleSpace: SafeArea(
           child: Container(
-            padding: EdgeInsets.only(right: 16),
+            padding: EdgeInsets.only(right: 16.w),
             child: Row(
               children: <Widget>[
                 IconButton(
@@ -41,15 +42,15 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                   ),
                 ),
                 SizedBox(
-                  width: 2,
+                  width: 2.w,
                 ),
                 CircleAvatar(
                   backgroundImage: NetworkImage(
                       "https://randomuser.me/api/portraits/men/5.jpg"),
-                  maxRadius: 20,
+                  maxRadius: 20.r,
                 ),
                 SizedBox(
-                  width: 12,
+                  width: 12.w,
                 ),
                 Expanded(
                   child: Column(
@@ -59,7 +60,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       Text(
                         "Kriss Benwat",
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
+                            fontSize: 16.sp, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -74,26 +75,26 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
           ListView.builder(
             itemCount: messages.length,
             shrinkWrap: true,
-            padding: EdgeInsets.only(top: 10, bottom: 10),
+            padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return Container(
-                padding:
-                    EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                padding: EdgeInsets.only(
+                    left: 14.w, right: 14.w, top: 10.h, bottom: 10.h),
                 child: Align(
                   alignment: (messages[index].messageType == "receiver"
                       ? Alignment.topLeft
                       : Alignment.topRight),
                   child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(20.r),
                         color: (messages[index].messageType == "receiver"
                             ? Colors.grey.shade200
                             : Color(AppTheme.SecondayColor))),
-                    padding: EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16.w),
                     child: Text(
                       messages[index].messageContent!,
-                      style: TextStyle(fontSize: 15),
+                      style: TextStyle(fontSize: 15.sp),
                     ),
                   ),
                 ),
@@ -103,7 +104,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
-              padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+              padding: EdgeInsets.only(left: 10.w, bottom: 10.h, top: 10.h),
               height: 60,
               width: double.infinity,
               color: Colors.white,
@@ -112,21 +113,21 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                   GestureDetector(
                     onTap: () {},
                     child: Container(
-                      height: 30,
-                      width: 30,
+                      height: 30.h,
+                      width: 30.w,
                       decoration: BoxDecoration(
                         color: Color(AppTheme.primaryColor),
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
                       child: Icon(
                         Icons.add,
                         color: Colors.white,
-                        size: 20,
+                        size: 20.sp,
                       ),
                     ),
                   ),
                   SizedBox(
-                    width: 15,
+                    width: 15.w,
                   ),
                   Expanded(
                     child: TextField(
@@ -137,7 +138,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     ),
                   ),
                   SizedBox(
-                    width: 15,
+                    width: 15.w,
                   ),
                   FloatingActionButton(
                     onPressed: () {},

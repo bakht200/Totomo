@@ -1,18 +1,87 @@
+import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/theme/colors.dart';
+import 'package:dating_app/view/add_post.dart';
+import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/post_item.dart';
 import '../widgets/story_item.dart';
+import 'gallery_post.dart';
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  Animation<double>? _animation;
+  AnimationController? _animationController;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 260),
+    );
+
+    final curvedAnimation =
+        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController!);
+    _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.white, body: getBody());
+    return Scaffold(
+      backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionBubble(
+        // Menu items
+        items: <Bubble>[
+          // Floating action menu item
+          Bubble(
+            title: "Gallery",
+            iconColor: Colors.white,
+            bubbleColor: Color(AppTheme.primaryColor),
+            icon: Icons.photo,
+            titleStyle: TextStyle(fontSize: 16.sp, color: Colors.white),
+            onPress: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (builder) => GalleryPostScreen()));
+              _animationController?.reverse();
+            },
+          ),
+          // Floating action menu item
+          Bubble(
+            title: "Camera",
+            iconColor: Colors.white,
+            bubbleColor: Color(AppTheme.primaryColor),
+            icon: Icons.camera,
+            titleStyle: TextStyle(fontSize: 16.sp, color: Colors.white),
+            onPress: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (builder) => CameraPostScreen()));
+              _animationController?.reverse();
+            },
+          ),
+        ],
+
+        animation: _animation!,
+
+        onPress: () => _animationController!.isCompleted
+            ? _animationController?.reverse()
+            : _animationController?.forward(),
+
+        iconColor: Colors.white,
+
+        // Flaoting Action button Icon
+        iconData: Icons.add,
+        backGroundColor: Color(AppTheme.primaryColor),
+      ),
+      body: getBody(),
+    );
   }
 
   Widget getBody() {
