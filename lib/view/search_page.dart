@@ -27,7 +27,7 @@ class _SearchPageState extends State<SearchPage> {
             padding: EdgeInsets.only(top: 8.0.h),
             child: Row(
               children: <Widget>[
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 Container(
@@ -47,14 +47,14 @@ class _SearchPageState extends State<SearchPage> {
                     cursorColor: white.withOpacity(0.3),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 )
               ],
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         SingleChildScrollView(
@@ -63,20 +63,20 @@ class _SearchPageState extends State<SearchPage> {
             padding: const EdgeInsets.only(left: 15),
             child: Row(
                 children: List.generate(5, (index) {
-              return CategoryStoryItem(
+              return const CategoryStoryItem(
                 name: 'CateogryName',
               );
             })),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
-        Container(
+        SizedBox(
             height: size.height / .5,
             child: GridView.builder(
                 shrinkWrap: true,
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 padding: EdgeInsets.all(7.0.w),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     mainAxisSpacing: 16,
@@ -95,7 +95,7 @@ class _SearchPageState extends State<SearchPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
+                          const Expanded(
                             flex: 2,
                             child: CircleAvatar(
                               radius: 40,
@@ -107,7 +107,7 @@ class _SearchPageState extends State<SearchPage> {
                           Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
+                              children: const [
                                 Text(
                                   'UserName',
                                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -119,7 +119,7 @@ class _SearchPageState extends State<SearchPage> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Expanded(
@@ -128,7 +128,7 @@ class _SearchPageState extends State<SearchPage> {
                                 height: 30.h,
                                 child: theme_primary_button_widget(
                                     primaryColor: Color(AppTheme.primaryColor),
-                                    textColor: Color(0xFFFAFAFA),
+                                    textColor: const Color(0xFFFAFAFA),
                                     onpressFunction: () {
                                       // Navigator.of(context).push(
                                       // //   MaterialPageRoute(
