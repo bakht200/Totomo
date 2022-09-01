@@ -1,7 +1,7 @@
 # Totomo Flutter Application
 
 ## onBoarding Screen
-|<img src="https://user-images.githubusercontent.com/62112170/187660601-369ce7ea-f503-46bb-a673-5a095d9ba3fd.png">|
+<img src="https://user-images.githubusercontent.com/62112170/187660601-369ce7ea-f503-46bb-a673-5a095d9ba3fd.png" width="250">
 
 ## SignUp/Login Screen
 
