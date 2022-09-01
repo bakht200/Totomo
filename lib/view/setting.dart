@@ -156,7 +156,7 @@ class _SettingPageState extends State<SettingPage> {
                                     SizedBox(
                                       height: 30.h,
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: width,
                                       height: height / 20,
                                       child: ElevatedButton(
@@ -165,7 +165,9 @@ class _SettingPageState extends State<SettingPage> {
                                           ),
                                           style:
                                               AppTheme.themeFilledButtonStyle,
-                                          onPressed: () async {}),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          }),
                                     ),
                                     SizedBox(
                                       height: 10.h,
@@ -279,7 +281,7 @@ class _SettingPageState extends State<SettingPage> {
                   Padding(
                     padding: EdgeInsets.only(left: 8.0.w),
                     child: GestureDetector(
-                      onTap: () async {},
+                      onTap: () {},
                       child: Text(
                         'Sign out',
                         style: AppTheme.appBarSubHeadingStyle,

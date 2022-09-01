@@ -1,5 +1,6 @@
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/theme/colors.dart';
+import 'package:dating_app/view/chat_screen.dart';
 import 'package:dating_app/view/profile.dart';
 import 'package:dating_app/view/search_page.dart';
 import 'package:dating_app/view/setting.dart';
@@ -32,7 +33,6 @@ class _DashboardState extends State<Dashboard> {
       HomePage(),
       SearchPage(),
       SettingPage(),
-      
       ProfilePage(),
     ];
     return IndexedStack(
@@ -57,10 +57,16 @@ class _DashboardState extends State<Dashboard> {
                 fontSize: 35,
               ),
             ),
-            SvgPicture.asset(
-              "assets/images/message_icon.svg",
-              width: 30,
-              color: Colors.black,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (builder) => ChatPage()));
+              },
+              child: SvgPicture.asset(
+                "assets/images/message_icon.svg",
+                width: 30,
+                color: Colors.black,
+              ),
             ),
           ],
         ),
