@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CircularButton extends StatelessWidget {
   final IconData buttonIcon;
@@ -13,7 +14,7 @@ class CircularButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(5),
+      margin: EdgeInsets.all(5.w),
       decoration:
           BoxDecoration(color: Colors.grey[300], shape: BoxShape.circle),
       child: IconButton(

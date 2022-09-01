@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../view/chat_detail_page.dart';
 
@@ -28,7 +29,8 @@ class _ConversationListState extends State<ConversationList> {
         }));
       },
       child: Container(
-        padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+        padding:
+            EdgeInsets.only(left: 16.w, right: 16.w, top: 10.h, bottom: 10.h),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -36,10 +38,10 @@ class _ConversationListState extends State<ConversationList> {
                 children: <Widget>[
                   CircleAvatar(
                     backgroundImage: NetworkImage(widget.imageUrl!),
-                    maxRadius: 30,
+                    maxRadius: 30.r,
                   ),
                   SizedBox(
-                    width: 16,
+                    width: 16.w,
                   ),
                   Expanded(
                     child: Container(
@@ -49,15 +51,15 @@ class _ConversationListState extends State<ConversationList> {
                         children: <Widget>[
                           Text(
                             widget.name!,
-                            style: TextStyle(fontSize: 16),
+                            style: TextStyle(fontSize: 16.sp),
                           ),
                           SizedBox(
-                            height: 6,
+                            height: 6.h,
                           ),
                           Text(
                             widget.messageText!,
                             style: TextStyle(
-                                fontSize: 13,
+                                fontSize: 13.sp,
                                 color: Colors.grey.shade600,
                                 fontWeight: FontWeight.normal),
                           ),
@@ -70,7 +72,7 @@ class _ConversationListState extends State<ConversationList> {
             ),
             Text(
               widget.time!,
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+              style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.normal),
             ),
           ],
         ),

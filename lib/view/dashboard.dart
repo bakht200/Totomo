@@ -5,6 +5,7 @@ import 'package:dating_app/view/profile.dart';
 import 'package:dating_app/view/search_page.dart';
 import 'package:dating_app/view/setting.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'home_page.dart';
@@ -21,7 +22,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50.0), child: getAppBar()),
+          preferredSize: Size.fromHeight(50.0.h), child: getAppBar()),
       backgroundColor: black,
       body: getBody(),
       bottomNavigationBar: getFooter(),
@@ -49,12 +50,12 @@ class _DashboardState extends State<Dashboard> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            const Text(
+            Text(
               "Totomo",
               style: TextStyle(
                 color: black,
                 fontFamily: 'Billabong',
-                fontSize: 35,
+                fontSize: 35.sp,
               ),
             ),
             GestureDetector(
@@ -64,7 +65,7 @@ class _DashboardState extends State<Dashboard> {
               },
               child: SvgPicture.asset(
                 "assets/images/message_icon.svg",
-                width: 30,
+                width: 30.w,
                 color: Colors.black,
               ),
             ),
@@ -75,12 +76,12 @@ class _DashboardState extends State<Dashboard> {
       return AppBar(
         elevation: 0,
         backgroundColor: appBarColor,
-        title: const Text(
+        title: Text(
           "Search",
           style: TextStyle(
             color: black,
             fontFamily: 'Billabong',
-            fontSize: 35,
+            fontSize: 35.sp,
           ),
         ),
       );
@@ -88,12 +89,12 @@ class _DashboardState extends State<Dashboard> {
       return AppBar(
         elevation: 0,
         backgroundColor: appBarColor,
-        title: const Text(
+        title: Text(
           "Setting",
           style: TextStyle(
             color: black,
             fontFamily: 'Billabong',
-            fontSize: 35,
+            fontSize: 35.sp,
           ),
         ),
       );
@@ -101,12 +102,12 @@ class _DashboardState extends State<Dashboard> {
       return AppBar(
         elevation: 0,
         backgroundColor: appBarColor,
-        title: const Text(
+        title: Text(
           "Profile",
           style: TextStyle(
             color: black,
             fontFamily: 'Billabong',
-            fontSize: 35,
+            fontSize: 35.sp,
           ),
         ),
       );
@@ -114,12 +115,12 @@ class _DashboardState extends State<Dashboard> {
       return AppBar(
         elevation: 0,
         backgroundColor: appBarColor,
-        title: const Text(
+        title: Text(
           "Account",
           style: TextStyle(
             color: black,
             fontFamily: 'Billabong',
-            fontSize: 35,
+            fontSize: 35.sp,
           ),
         ),
       );
@@ -137,11 +138,11 @@ class _DashboardState extends State<Dashboard> {
     ];
     return Container(
       width: double.infinity,
-      height: 80,
+      height: 80.h,
       decoration: BoxDecoration(color: appFooterColor),
       child: Padding(
         padding:
-            const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 15),
+            EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h, top: 15.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(bottomItems.length, (index) {
@@ -151,7 +152,7 @@ class _DashboardState extends State<Dashboard> {
                 },
                 child: Image.asset(
                   bottomItems[index],
-                  width: 27,
+                  width: 27.w,
                   color: Color(AppTheme.primaryColor),
                 ));
           }),

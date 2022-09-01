@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage>
             child: Row(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0.w),
                   child: Row(
                       children: List.generate(10, (index) {
                     return StoryItem(

@@ -29,14 +29,14 @@ class _SearchPageState extends State<SearchPage> {
             padding: EdgeInsets.only(top: 8.0.h),
             child: Row(
               children: <Widget>[
-                const SizedBox(
-                  width: 15,
+                SizedBox(
+                  width: 15.w,
                 ),
                 Container(
-                  width: size.width - 30,
-                  height: 45,
+                  width: size.width - 30.w,
+                  height: 45.h,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10.r),
                       color: Colors.grey.shade200),
                   child: TextField(
                     decoration: InputDecoration(
@@ -49,20 +49,20 @@ class _SearchPageState extends State<SearchPage> {
                     cursorColor: white.withOpacity(0.3),
                   ),
                 ),
-                const SizedBox(
-                  width: 15,
+                SizedBox(
+                  width: 15.w,
                 )
               ],
             ),
           ),
         ),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: 15.h,
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Padding(
-            padding: const EdgeInsets.only(left: 15),
+            padding: EdgeInsets.only(left: 15.w),
             child: Row(
                 children: List.generate(5, (index) {
               return const CategoryStoryItem(
@@ -71,8 +71,8 @@ class _SearchPageState extends State<SearchPage> {
             })),
           ),
         ),
-        const SizedBox(
-          height: 15,
+        SizedBox(
+          height: 15.h,
         ),
         SizedBox(
             height: size.height / .5,
@@ -81,27 +81,27 @@ class _SearchPageState extends State<SearchPage> {
                 physics: const ScrollPhysics(),
                 padding: EdgeInsets.all(7.0.w),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisSpacing: 16,
+                    mainAxisSpacing: 16.w,
                     childAspectRatio: (size.width / (size.height - 100.h)).w,
                     crossAxisCount: 3,
-                    crossAxisSpacing: 10),
+                    crossAxisSpacing: 10.h),
                 itemBuilder: (context, index) {
                   return Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                         border:
                             Border.all(color: Color(AppTheme.primaryColor))),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0.w),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Expanded(
+                          Expanded(
                             flex: 2,
                             child: CircleAvatar(
-                              radius: 40,
-                              backgroundImage: NetworkImage(
+                              radius: 40.r,
+                              backgroundImage: const NetworkImage(
                                 'https://www.fivesquid.com/pics/t2/1568868712-108802-1-1.jpg',
                               ),
                             ),
@@ -121,8 +121,8 @@ class _SearchPageState extends State<SearchPage> {
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 10,
+                          SizedBox(
+                            height: 10.h,
                           ),
                           Expanded(
                             child: SizedBox(

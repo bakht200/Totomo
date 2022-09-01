@@ -1,7 +1,4 @@
-import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -48,14 +45,14 @@ class _GalleryPostScreenState extends State<GalleryPostScreen> {
           Expanded(
             flex: 2,
             child: Container(
-              margin: EdgeInsets.all(12),
+              margin: EdgeInsets.all(12.r),
               height: 200.h,
               child: TextField(
                 maxLines: 15,
                 decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.all(8.0),
+                  contentPadding: EdgeInsets.all(8.0.w),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(5.0.r),
                   ),
                   hintText: "Enter a description",
                   fillColor: Colors.grey[200],
