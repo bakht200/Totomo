@@ -1,5 +1,5 @@
 import 'package:dating_app/constants/app_theme.dart';
-import 'package:dating_app/theme/colors.dart';
+
 import 'package:dating_app/view/add_post.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +10,8 @@ import '../widgets/story_item.dart';
 import 'gallery_post.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -38,9 +40,7 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionBubble(
-        // Menu items
         items: <Bubble>[
-          // Floating action menu item
           Bubble(
             title: "Gallery",
             iconColor: Colors.white,
@@ -53,7 +53,6 @@ class _HomePageState extends State<HomePage>
               _animationController?.reverse();
             },
           ),
-          // Floating action menu item
           Bubble(
             title: "Camera",
             iconColor: Colors.white,
@@ -67,16 +66,11 @@ class _HomePageState extends State<HomePage>
             },
           ),
         ],
-
         animation: _animation!,
-
         onPress: () => _animationController!.isCompleted
             ? _animationController?.reverse()
             : _animationController?.forward(),
-
         iconColor: Colors.white,
-
-        // Flaoting Action button Icon
         iconData: Icons.add,
         backGroundColor: Color(AppTheme.primaryColor),
       ),

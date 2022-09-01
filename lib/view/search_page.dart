@@ -1,5 +1,5 @@
 import 'package:dating_app/constants/app_theme.dart';
-import 'package:dating_app/theme/colors.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

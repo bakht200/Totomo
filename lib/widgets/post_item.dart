@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import '../theme/colors.dart';
+import '../constants/app_theme.dart';
 
 class PostItem extends StatelessWidget {
   final String profileImg;

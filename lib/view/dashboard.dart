@@ -1,5 +1,5 @@
 import 'package:dating_app/constants/app_theme.dart';
-import 'package:dating_app/theme/colors.dart';
+
 import 'package:dating_app/view/chat_screen.dart';
 import 'package:dating_app/view/profile.dart';
 import 'package:dating_app/view/search_page.dart';
