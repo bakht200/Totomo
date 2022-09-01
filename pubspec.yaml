@@ -38,6 +38,8 @@ dependencies:
   flutter_screenutil: ^5.5.3+2
   cached_network_image: ^3.2.1
   persistent_bottom_nav_bar:
+  flutter_svg: ^1.1.4
+  line_icons:
 
 dev_dependencies:
   flutter_test:
@@ -76,7 +78,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family: Billabong
+      fonts:
+        - asset: assets/fonts/Billabong.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

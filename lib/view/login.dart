@@ -1,12 +1,11 @@
 import 'package:dating_app/constants/app_theme.dart';
-import 'package:dating_app/view/home.dart';
 import 'package:dating_app/view/signup.dart';
 import 'package:dating_app/widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/primary_button_widget.dart';
-import 'bottom_nav_bar.dart';
+import 'dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -108,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onpressFunction: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (builder) => BottomNavBar()),
+                                  builder: (builder) => Dashboard()),
                             );
                           },
                           title: 'Login')),

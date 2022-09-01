@@ -1,6 +1,6 @@
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/model/gender_model.dart';
-import 'package:dating_app/view/home.dart';
+
 import 'package:dating_app/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +10,7 @@ import 'package:numberpicker/numberpicker.dart';
 import '../widgets/gender_selection_widget.dart';
 import '../widgets/primary_button_widget.dart';
 import '../widgets/text_field_widget.dart';
-import 'bottom_nav_bar.dart';
+import 'dashboard.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -270,7 +270,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onpressFunction: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (builder) => BottomNavBar()),
+                                  builder: (builder) => Dashboard()),
                             );
                           },
                           title: 'Sign Up')),

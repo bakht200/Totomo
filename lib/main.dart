@@ -1,3 +1,4 @@
+import 'package:dating_app/view/dashboard.dart';
 import 'package:dating_app/view/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: OnBoardingScreen(),
+            home: Dashboard(),
           );
         });
   }
