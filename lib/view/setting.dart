@@ -47,12 +47,20 @@ class _SettingPageState extends State<SettingPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Bakht',
-                          style: AppTheme.subHeadingStyle,
+                        Row(
+                          children: [
+                            Text(
+                              'Bakht',
+                              style: AppTheme.subHeadingStyle,
+                            ),
+                            Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            )
+                          ],
                         ),
                         Text(
-                          'Premium User',
+                          'bakht@gmail.com',
                           style: AppTheme.listSubHeadingStyle,
                         ),
                       ],
@@ -66,150 +74,136 @@ class _SettingPageState extends State<SettingPage> {
             ),
             Divider(),
             ListTile(
-              title: Padding(
-                padding: EdgeInsets.only(left: 4.0.w),
-                child: Text("Account Settings",
-                    style: AppTheme.accountSettingHeadingStyle),
-              ),
-            ),
-            ListTile(
               onTap: () {
-                showModalBottomSheet(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30.r),
-                        topRight: Radius.circular(30.r),
-                      ),
-                    ),
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Padding(
-                          padding: EdgeInsets.all(8.0.w),
-                          child: Wrap(children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.all(8.0.w),
-                              child: Center(
-                                child: Container(
-                                  height: 3.h,
-                                  width: MediaQuery.of(context).size.width / 2,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20.r),
-                                      color: Colors.grey),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0.w),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Change Name',
-                                      style: AppTheme.subHeadingStyle,
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Text(
-                                      'This name will be displayed to the other users.',
-                                      style: AppTheme.listSubHeadingStyle,
-                                    ),
-                                    SizedBox(
-                                      height: 20.h,
-                                    ),
-                                    TextFormField(
-                                      controller: nameEditingController,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp('[a-z A-Z]')),
-                                      ],
-                                      keyboardType: TextInputType.text,
-                                      decoration: InputDecoration(
-                                        hintText: 'Name',
-                                        fillColor: Colors.white,
-                                        errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(AppTheme.primaryColor),
-                                          ),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(AppTheme.primaryColor),
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(AppTheme.primaryColor),
-                                          ),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 30.h,
-                                    ),
-                                    SizedBox(
-                                      width: width,
-                                      height: height / 20,
-                                      child: ElevatedButton(
-                                          child: Text(
-                                            'Save',
-                                          ),
-                                          style:
-                                              AppTheme.themeFilledButtonStyle,
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          }),
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Container(
-                                      width: width,
-                                      height: height / 20,
-                                      child: ElevatedButton(
-                                        child: Text('Cancel',
-                                            style: AppTheme
-                                                .unFilledButtonTextStyle),
-                                        style: AppTheme.unfilledButtonStyle,
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 20.h,
-                                    ),
-                                  ]),
-                            ),
-                          ]));
-                    });
+                // showModalBottomSheet(
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.only(
+                //         topLeft: Radius.circular(30.r),
+                //         topRight: Radius.circular(30.r),
+                //       ),
+                //     ),
+                //     context: context,
+                //     builder: (BuildContext context) {
+                //       return Padding(
+                //           padding: EdgeInsets.all(8.0.w),
+                //           child: Wrap(children: <Widget>[
+                //             Padding(
+                //               padding: EdgeInsets.all(8.0.w),
+                //               child: Center(
+                //                 child: Container(
+                //                   height: 3.h,
+                //                   width: MediaQuery.of(context).size.width / 2,
+                //                   decoration: BoxDecoration(
+                //                       borderRadius: BorderRadius.circular(20.r),
+                //                       color: Colors.grey),
+                //                 ),
+                //               ),
+                //             ),
+                //             SizedBox(
+                //               height: 20.h,
+                //             ),
+                //             Padding(
+                //               padding: EdgeInsets.all(8.0.w),
+                //               child: Column(
+                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                //                   children: [
+                //                     Text(
+                //                       'Change Name',
+                //                       style: AppTheme.subHeadingStyle,
+                //                     ),
+                //                     SizedBox(
+                //                       height: 10.h,
+                //                     ),
+                //                     Text(
+                //                       'This name will be displayed to the other users.',
+                //                       style: AppTheme.listSubHeadingStyle,
+                //                     ),
+                //                     SizedBox(
+                //                       height: 20.h,
+                //                     ),
+                //                     TextFormField(
+                //                       controller: nameEditingController,
+                //                       inputFormatters: [
+                //                         FilteringTextInputFormatter.allow(
+                //                             RegExp('[a-z A-Z]')),
+                //                       ],
+                //                       keyboardType: TextInputType.text,
+                //                       decoration: InputDecoration(
+                //                         hintText: 'Name',
+                //                         fillColor: Colors.white,
+                //                         errorBorder: OutlineInputBorder(
+                //                           borderSide: BorderSide(
+                //                             color: Color(AppTheme.primaryColor),
+                //                           ),
+                //                         ),
+                //                         focusedErrorBorder: OutlineInputBorder(
+                //                           borderSide: BorderSide(
+                //                             color: Color(AppTheme.primaryColor),
+                //                           ),
+                //                         ),
+                //                         focusedBorder: OutlineInputBorder(
+                //                           borderSide: BorderSide(
+                //                             color: Color(AppTheme.primaryColor),
+                //                           ),
+                //                         ),
+                //                         enabledBorder: OutlineInputBorder(
+                //                           borderSide: BorderSide(
+                //                             color:
+                //                                 Theme.of(context).primaryColor,
+                //                           ),
+                //                         ),
+                //                       ),
+                //                     ),
+                //                     SizedBox(
+                //                       height: 30.h,
+                //                     ),
+                //                     SizedBox(
+                //                       width: width,
+                //                       height: height / 20,
+                //                       child: ElevatedButton(
+                //                           child: Text(
+                //                             'Save',
+                //                           ),
+                //                           style:
+                //                               AppTheme.themeFilledButtonStyle,
+                //                           onPressed: () {
+                //                             Navigator.pop(context);
+                //                           }),
+                //                     ),
+                //                     SizedBox(
+                //                       height: 10.h,
+                //                     ),
+                //                     Container(
+                //                       width: width,
+                //                       height: height / 20,
+                //                       child: ElevatedButton(
+                //                         child: Text('Cancel',
+                //                             style: AppTheme
+                //                                 .unFilledButtonTextStyle),
+                //                         style: AppTheme.unfilledButtonStyle,
+                //                         onPressed: () {
+                //                           Navigator.pop(context);
+                //                         },
+                //                       ),
+                //                     ),
+                //                     SizedBox(
+                //                       height: 20.h,
+                //                     ),
+                //                   ]),
+                //             ),
+                //           ]));
+                //     });
               },
               leading: Image.asset(
                 'assets/images/tag.png',
                 color: Color(AppTheme.primaryColor),
                 height: 25.h,
               ),
-              title: Text('Change Name',
+              title: Text('Account Setting',
                   style: AppTheme.settingListTileHeadingStyle),
               trailing: Wrap(
                 spacing: 5,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.0.h),
-                    child: Text(
-                      'Bakht',
-                      style: AppTheme.listSubHeadingStyle,
-                    ),
-                  ),
                   Padding(
                     padding: EdgeInsets.only(top: 5.0.h),
                     child: Icon(
@@ -221,55 +215,113 @@ class _SettingPageState extends State<SettingPage> {
                 ],
               ),
             ),
-            //  ListTile(
-            //     onTap: () async {
-
-            //     },
-            //     leading: Icon(
-            //       Icons.notifications_active_outlined,
-            //       color: Color(AppTheme.primaryColor),
-            //     ),
-            //     title: Text('Allow Notifications',
-            //        // style: AppTheme.settingListTileHeadingStyle
-            //         ),
-            //     trailing: Switch(
-            //       value: isSwitched,
-            //       onChanged: (value) async {
-            //         if (value == false) {
-            //           String token =
-            //               await FirebaseMessaging.instance.getToken();
-            //           await signInServices.sendFcmToken(token,
-            //               signInController.userData.first.user.id);
-
-            //           _settingController.toggleButtonValue(value);
-            //           await UserSecureStorage.setNotificationStatus(
-            //               "true");
-            //         } else {
-            //           _settingController.toggleButtonValue(value);
-            //           await FirebaseMessaging.instance.deleteToken();
-            //           await UserSecureStorage.setNotificationStatus(
-            //               "false");
-            //         }
-            //       },
-            //       activeTrackColor: AppTheme.toggleTrackColor,
-            //       activeColor: AppTheme.primaryColor,
-            //     ),
-
-            // ),
             ListTile(
               leading: Icon(
-                Icons.location_on,
+                Icons.notifications,
                 color: Color(AppTheme.primaryColor),
+                size: 25.h,
               ),
-              title:
-                  Text('Location', style: AppTheme.settingListTileHeadingStyle),
-              trailing: Padding(
-                padding: EdgeInsets.only(top: 5.0.h, right: 10.0.h),
-                child: Text(
-                  "Peshawar",
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTheme.listSubHeadingStyle,
-                ),
+              title: Text('Notification',
+                  style: AppTheme.settingListTileHeadingStyle),
+              trailing: Wrap(
+                spacing: 5,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 5.0.h),
+                    child: Icon(
+                      Icons.navigate_next,
+                      size: 35.sp,
+                      color: Color(AppTheme.primaryColor),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.remove_red_eye,
+                color: Color(AppTheme.primaryColor),
+                size: 25.h,
+              ),
+              title: Text('Appearance',
+                  style: AppTheme.settingListTileHeadingStyle),
+              trailing: Wrap(
+                spacing: 5,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 5.0.h),
+                    child: Icon(
+                      Icons.navigate_next,
+                      size: 35.sp,
+                      color: Color(AppTheme.primaryColor),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.lock,
+                color: Color(AppTheme.primaryColor),
+                size: 25.h,
+              ),
+              title: Text('Privacy & Security',
+                  style: AppTheme.settingListTileHeadingStyle),
+              trailing: Wrap(
+                spacing: 5,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 5.0.h),
+                    child: Icon(
+                      Icons.navigate_next,
+                      size: 35.sp,
+                      color: Color(AppTheme.primaryColor),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.headphones,
+                color: Color(AppTheme.primaryColor),
+                size: 25.h,
+              ),
+              title: Text('Help & Support',
+                  style: AppTheme.settingListTileHeadingStyle),
+              trailing: Wrap(
+                spacing: 5,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 5.0.h),
+                    child: Icon(
+                      Icons.navigate_next,
+                      size: 35.sp,
+                      color: Color(AppTheme.primaryColor),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.help_center,
+                color: Color(AppTheme.primaryColor),
+                size: 25.h,
+              ),
+              title: Text('About', style: AppTheme.settingListTileHeadingStyle),
+              trailing: Wrap(
+                spacing: 5,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 5.0.h),
+                    child: Icon(
+                      Icons.navigate_next,
+                      size: 35.sp,
+                      color: Color(AppTheme.primaryColor),
+                    ),
+                  ),
+                ],
               ),
             ),
             Divider(),
@@ -281,7 +333,9 @@ class _SettingPageState extends State<SettingPage> {
                   Padding(
                     padding: EdgeInsets.only(left: 8.0.w),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        Navigator.pop(context);
+                      },
                       child: Text(
                         'Sign out',
                         style: AppTheme.appBarSubHeadingStyle,
