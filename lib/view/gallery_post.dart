@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../constants/app_theme.dart';
 import '../widgets/primary_button_widget.dart';
@@ -32,7 +33,13 @@ class _GalleryPostScreenState extends State<GalleryPostScreen> {
                       child: theme_primary_button_widget(
                           primaryColor: Color(AppTheme.primaryColor),
                           textColor: Color(0xFFFAFAFA),
-                          onpressFunction: () {},
+                          onpressFunction: () async {
+                            final ImagePicker _picker = ImagePicker();
+                            // Pick an image
+                            final XFile? image = await _picker.pickImage(
+                                source: ImageSource.gallery);
+                            cameraFile = image;
+                          },
                           title: 'Choose Image from Gallery'))
                   : Image.file(cameraFile)),
           SizedBox(

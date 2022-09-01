@@ -13,8 +13,6 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   TextEditingController nameEditingController = TextEditingController();
 
-  var notificationStatus;
-
   @override
   void initState() {
     super.initState();
@@ -22,8 +20,6 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,

@@ -42,6 +42,7 @@ dependencies:
   line_icons:
   camera_camera: ^2.0.2
   floating_action_bubble: ^1.1.4
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:
