@@ -11,6 +11,7 @@ final storyBorderColor = [Color(0xFF39B58B), Color(0xFF03766E)];
 class AppTheme {
   static var secondaryColor = 0xFF8BBF72;
   static var primaryColor = 0xFF1DBF72;
+  static var appBarBackgroundColor = 0xFF1C2937;
 
   static var toggleTrackColor = Color.fromARGB(255, 216, 153, 146);
 

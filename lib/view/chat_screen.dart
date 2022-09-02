@@ -50,56 +50,6 @@ class _ChatPageState extends State<ChatPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SafeArea(
-              child: Padding(
-                padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 10.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Icon(
-                        Icons.navigate_before,
-                        size: 30.sp,
-                      ),
-                    ),
-                    Text(
-                      "Conversations",
-                      style: TextStyle(
-                          fontSize: 25.sp, fontWeight: FontWeight.bold),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(
-                          left: 8.w, right: 8.w, top: 2.h, bottom: 2.h),
-                      height: 30.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30.r),
-                        color: Colors.pink[50],
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.add,
-                            color: Colors.pink,
-                            size: 20.sp,
-                          ),
-                          SizedBox(
-                            width: 2.w,
-                          ),
-                          Text(
-                            "Add New",
-                            style: TextStyle(
-                                fontSize: 14.sp, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
             Padding(
               padding: EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w),
               child: TextField(

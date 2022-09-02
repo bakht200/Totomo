@@ -7,6 +7,7 @@ import 'package:dating_app/view/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'home_page.dart';
 
@@ -17,6 +18,9 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int pageIndex = 0;
+  TextEditingController _searchQueryController = TextEditingController();
+  bool _isSearching = false;
+  String searchQuery = "Search query";
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +36,7 @@ class _DashboardState extends State<Dashboard> {
   Widget getBody() {
     List<Widget> pages = [
       HomePage(),
+      ChatPage(),
       const SearchPage(),
       SettingPage(),
       const ProfilePage(),
@@ -47,61 +52,109 @@ class _DashboardState extends State<Dashboard> {
       return AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: appBarColor,
+        backgroundColor: Color(AppTheme.appBarBackgroundColor),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 8.0.sp),
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (builder) => ChatPage()));
-                },
-                child: Icon(
-                  Icons.message_outlined,
-                  size: 27.sp,
-                  color: Color(AppTheme.primaryColor),
-                )),
-          ),
-        ],
-        title: Center(
-          child: Text(
-            "Totomo",
-            style: TextStyle(
-              color: black,
-              fontWeight: FontWeight.bold,
-              fontSize: 35.sp,
+          IconButton(
+            onPressed: () {
+              setState(() {
+                if (_isSearching) {
+                  _isSearching = false;
+                } else {
+                  _isSearching = true;
+                }
+              });
+            },
+            icon: Icon(
+              Icons.search,
+              color: Colors.white,
             ),
           ),
-        ),
+          Image.asset('assets/images/filter.png',
+              color: Colors.white, width: 20.w),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.white,
+            ),
+          ),
+        ],
+        title: _isSearching
+            ? _buildSearchField()
+            : Center(
+                child: Text(
+                  "Totomo",
+                  style: TextStyle(
+                    color: white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32.sp,
+                  ),
+                ),
+              ),
       );
     } else if (pageIndex == 1) {
       return AppBar(
+        backgroundColor: Color(AppTheme.appBarBackgroundColor),
         automaticallyImplyLeading: false,
-        elevation: 0,
-        backgroundColor: appBarColor,
-        title: Center(
-          child: Text(
-            "Search",
-            style: TextStyle(
-              color: black,
-              fontWeight: FontWeight.bold,
-              fontSize: 35.sp,
-            ),
+        title: Padding(
+          padding: EdgeInsets.only(left: 7.w, right: 16.w, top: 10.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "Conversations",
+                style: TextStyle(
+                    fontSize: 25.sp, fontWeight: FontWeight.bold, color: white),
+              ),
+            ],
           ),
         ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.all(8.0.w),
+            child: Container(
+              padding:
+                  EdgeInsets.only(left: 8.w, right: 8.w, top: 2.h, bottom: 2.h),
+              height: 30.h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30.r),
+                color: Color(AppTheme.primaryColor),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 20.sp,
+                  ),
+                  SizedBox(
+                    width: 2.w,
+                  ),
+                  Text(
+                    "Add New",
+                    style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
       );
     } else if (pageIndex == 2) {
       return AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: appBarColor,
+        backgroundColor: Color(AppTheme.appBarBackgroundColor),
         title: Center(
           child: Text(
-            "Setting",
+            "Search",
             style: TextStyle(
-              color: black,
+              color: white,
               fontWeight: FontWeight.bold,
-              fontSize: 35.sp,
+              fontSize: 32.sp,
             ),
           ),
         ),
@@ -110,42 +163,61 @@ class _DashboardState extends State<Dashboard> {
       return AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: appBarColor,
+        backgroundColor: Color(AppTheme.appBarBackgroundColor),
         title: Center(
           child: Text(
-            "Profile",
+            "Setting",
             style: TextStyle(
-              color: black,
+              color: white,
               fontWeight: FontWeight.bold,
-              fontSize: 35.sp,
+              fontSize: 32.sp,
             ),
           ),
         ),
       );
     } else {
       return AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: appBarColor,
-        title: Text(
-          "Account",
-          style: TextStyle(
-            color: black,
-            fontFamily: 'Billabong',
-            fontSize: 35.sp,
+        backgroundColor: Color(AppTheme.appBarBackgroundColor),
+        title: Center(
+          child: Text(
+            "Profile",
+            style: TextStyle(
+              color: white,
+              fontWeight: FontWeight.bold,
+              fontSize: 32.sp,
+            ),
           ),
         ),
       );
     }
   }
 
+  Widget _buildSearchField() {
+    return TextField(
+        controller: _searchQueryController,
+        autofocus: true,
+        decoration: InputDecoration(
+          hintText: "Search Data...",
+          border: InputBorder.none,
+          hintStyle: TextStyle(color: Colors.white30),
+        ),
+        style: TextStyle(color: Colors.white, fontSize: 16.0),
+        onChanged: (query) {});
+  }
+
   Widget getFooter() {
     List bottomItems = [
       pageIndex == 0 ? "assets/images/home (2).png" : "assets/images/home.png",
       pageIndex == 1
+          ? "assets/images/comment (1).png"
+          : "assets/images/comment.png",
+      pageIndex == 2
           ? "assets/images/magnifying-glass.png"
           : "assets/images/search.png",
-      pageIndex == 2 ? "assets/images/gear.png" : "assets/images/settings.png",
-      pageIndex == 3 ? "assets/images/man-user.png" : "assets/images/user.png",
+      pageIndex == 3 ? "assets/images/gear.png" : "assets/images/settings.png",
+      pageIndex == 4 ? "assets/images/man-user.png" : "assets/images/user.png",
     ];
     return Container(
       width: double.infinity,
