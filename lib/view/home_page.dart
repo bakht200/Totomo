@@ -1,6 +1,7 @@
 import 'package:dating_app/constants/app_theme.dart';
 
 import 'package:dating_app/view/add_post.dart';
+import 'package:dating_app/view/description.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,8 +49,8 @@ class _HomePageState extends State<HomePage>
             icon: Icons.edit,
             titleStyle: TextStyle(fontSize: 16.sp, color: Colors.white),
             onPress: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (builder) => GalleryPostScreen()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (builder) => DescriptionPostScreen()));
               _animationController?.reverse();
             },
           ),
