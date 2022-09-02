@@ -64,7 +64,7 @@ class _DashboardState extends State<Dashboard> {
                 }
               });
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               color: Colors.white,
             ),
@@ -73,7 +73,7 @@ class _DashboardState extends State<Dashboard> {
               color: Colors.white, width: 20.w),
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.more_vert,
               color: Colors.white,
             ),
