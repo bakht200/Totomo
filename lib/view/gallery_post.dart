@@ -13,7 +13,7 @@ class GalleryPostScreen extends StatefulWidget {
 }
 
 class _GalleryPostScreenState extends State<GalleryPostScreen> {
-  var cameraFile = null;
+  var cameraFile;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
