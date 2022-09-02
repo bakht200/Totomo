@@ -21,13 +21,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(AppTheme.secondaryColor),
-            Color(AppTheme.primaryColor),
-          ],
-        )),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: storyBorderColor)),
         child: Padding(
           padding: EdgeInsets.only(left: 15.0.w, right: 15.0.w),
           child: Column(
@@ -37,7 +33,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   flex: 3,
                   child: Align(
                       alignment: Alignment.topCenter,
-                      child: Image.asset('assets/images/Frame 7.png'))),
+                      child: Image.asset('assets/images/onboarding.png'))),
               Expanded(
                 flex: 3,
                 child: Column(

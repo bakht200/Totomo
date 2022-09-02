@@ -45,69 +45,80 @@ class _DashboardState extends State<Dashboard> {
   Widget getAppBar() {
     if (pageIndex == 0) {
       return AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: appBarColor,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              "Totomo",
-              style: TextStyle(
-                color: black,
-                fontFamily: 'Billabong',
-                fontSize: 35.sp,
-              ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 8.0.sp),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (builder) => ChatPage()));
+                },
+                child: Icon(
+                  Icons.message_outlined,
+                  size: 27.sp,
+                  color: Color(AppTheme.primaryColor),
+                )),
+          ),
+        ],
+        title: Center(
+          child: Text(
+            "Totomo",
+            style: TextStyle(
+              color: black,
+              fontWeight: FontWeight.bold,
+              fontSize: 35.sp,
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (builder) => ChatPage()));
-              },
-              child: SvgPicture.asset(
-                "assets/images/message_icon.svg",
-                width: 30.w,
-                color: Colors.black,
-              ),
-            ),
-          ],
+          ),
         ),
       );
     } else if (pageIndex == 1) {
       return AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: appBarColor,
-        title: Text(
-          "Search",
-          style: TextStyle(
-            color: black,
-            fontFamily: 'Billabong',
-            fontSize: 35.sp,
+        title: Center(
+          child: Text(
+            "Search",
+            style: TextStyle(
+              color: black,
+              fontWeight: FontWeight.bold,
+              fontSize: 35.sp,
+            ),
           ),
         ),
       );
     } else if (pageIndex == 2) {
       return AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: appBarColor,
-        title: Text(
-          "Setting",
-          style: TextStyle(
-            color: black,
-            fontFamily: 'Billabong',
-            fontSize: 35.sp,
+        title: Center(
+          child: Text(
+            "Setting",
+            style: TextStyle(
+              color: black,
+              fontWeight: FontWeight.bold,
+              fontSize: 35.sp,
+            ),
           ),
         ),
       );
     } else if (pageIndex == 3) {
       return AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: appBarColor,
-        title: Text(
-          "Profile",
-          style: TextStyle(
-            color: black,
-            fontFamily: 'Billabong',
-            fontSize: 35.sp,
+        title: Center(
+          child: Text(
+            "Profile",
+            style: TextStyle(
+              color: black,
+              fontWeight: FontWeight.bold,
+              fontSize: 35.sp,
+            ),
           ),
         ),
       );

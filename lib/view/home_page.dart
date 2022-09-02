@@ -42,6 +42,18 @@ class _HomePageState extends State<HomePage>
       floatingActionButton: FloatingActionBubble(
         items: <Bubble>[
           Bubble(
+            title: "Text",
+            iconColor: Colors.white,
+            bubbleColor: Color(AppTheme.primaryColor),
+            icon: Icons.edit,
+            titleStyle: TextStyle(fontSize: 16.sp, color: Colors.white),
+            onPress: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (builder) => GalleryPostScreen()));
+              _animationController?.reverse();
+            },
+          ),
+          Bubble(
             title: "Gallery",
             iconColor: Colors.white,
             bubbleColor: Color(AppTheme.primaryColor),

@@ -26,7 +26,10 @@ class StoryItem extends StatelessWidget {
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: storyBorderColor)),
+                    colors: [
+                      Color(AppTheme.primaryColor),
+                      Color(AppTheme.secondaryColor),
+                    ])),
             child: Padding(
               padding: EdgeInsets.all(3.0.w),
               child: Container(

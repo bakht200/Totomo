@@ -6,14 +6,11 @@ const appFooterColor = Color(0xFFFFFFFF);
 const white = Color(0xFFFFFFFF);
 const black = Color(0xFF000000);
 
-final storyBorderColor = [
-  Color(AppTheme.primaryColor),
-  Color(AppTheme.secondaryColor)
-];
+final storyBorderColor = [Color(0xFF39B58B), Color(0xFF03766E)];
 
 class AppTheme {
-  static var secondaryColor = 0xFF39B58B;
-  static var primaryColor = 0xFF03766E;
+  static var secondaryColor = 0xFF8BBF72;
+  static var primaryColor = 0xFF1DBF72;
 
   static var toggleTrackColor = Color.fromARGB(255, 216, 153, 146);
 
