@@ -1,4 +1,5 @@
 import 'package:dating_app/constants/app_theme.dart';
+import 'package:dating_app/view/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -57,7 +58,8 @@ class _EditProfileButton extends StatelessWidget {
             border: Border.all(color: Color(AppTheme.appBarBackgroundColor))),
         child: OutlinedButton(
           onPressed: () {
-            // TODO handle onPressed
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (builder) => EditProfilePage()));
           },
           child: Text(
             'Edit Profile',
