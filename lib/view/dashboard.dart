@@ -38,7 +38,7 @@ class _DashboardState extends State<Dashboard> {
       HomePage(),
       ChatPage(),
       const SearchPage(),
-      SettingPage(),
+      Container(),
       const ProfilePage(),
     ];
     return IndexedStack(
@@ -70,13 +70,60 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           Image.asset('assets/images/filter.png',
-              color: Colors.white, width: 20.w),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.more_vert,
-              color: Colors.white,
-            ),
+              color: Colors.white, width: 15.w),
+          PopupMenuButton<int>(
+            icon: Icon(Icons.more_vert, color: Colors.white),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 1,
+                child: Row(
+                  children: [
+                    const Icon(Icons.settings, color: Colors.white),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Text(
+                      "Setting",
+                      style: TextStyle(
+                        color: white,
+                        fontSize: 18.sp,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 2,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Text(
+                      "Logout",
+                      style: TextStyle(
+                        color: white,
+                        fontSize: 18.sp,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+            offset: Offset(0, 100),
+            color: Color((AppTheme.appBarBackgroundColor)),
+            elevation: 2,
+            onSelected: (value) {
+              if (value == 1) {
+                print("SETTING SCREEN");
+              } else if (value == 2) {
+                print("LOGOUT");
+              }
+            },
           ),
         ],
         title: _isSearching
@@ -211,12 +258,14 @@ class _DashboardState extends State<Dashboard> {
     List bottomItems = [
       pageIndex == 0 ? "assets/images/home (2).png" : "assets/images/home.png",
       pageIndex == 1
-          ? "assets/images/comment (1).png"
-          : "assets/images/comment.png",
+          ? "assets/images/email (1).png"
+          : "assets/images/email.png",
       pageIndex == 2
           ? "assets/images/magnifying-glass.png"
           : "assets/images/search.png",
-      pageIndex == 3 ? "assets/images/gear.png" : "assets/images/settings.png",
+      pageIndex == 3
+          ? "assets/images/shopping-list.png"
+          : "assets/images/clipboard.png",
       pageIndex == 4 ? "assets/images/man-user.png" : "assets/images/user.png",
     ];
     return Container(

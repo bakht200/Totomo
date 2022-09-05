@@ -33,7 +33,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   flex: 3,
                   child: Align(
                       alignment: Alignment.topCenter,
-                      child: Image.asset('assets/images/onboarding.png'))),
+                      child: Image.asset('assets/images/BAKHT.png'))),
               Expanded(
                 flex: 3,
                 child: Column(
