@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -36,9 +37,13 @@ class _ConversationListState extends State<ConversationList> {
             Expanded(
               child: Row(
                 children: <Widget>[
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(widget.imageUrl!),
-                    maxRadius: 30.r,
+                  Badge(
+                    badgeContent: const Text(''),
+                    badgeColor: Colors.green,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(widget.imageUrl!),
+                      maxRadius: 25.r,
+                    ),
                   ),
                   SizedBox(
                     width: 16.w,

@@ -39,10 +39,10 @@ dependencies:
   cached_network_image: ^3.2.1
   persistent_bottom_nav_bar:
   flutter_svg: ^1.1.4
-  line_icons:
   camera_camera: ^2.0.2
   floating_action_bubble: ^1.1.4
   image_picker: ^0.8.5+3
+  badges: ^2.0.3
 
 dev_dependencies:
   flutter_test:
