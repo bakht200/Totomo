@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage>
           border: InputBorder.none,
           hintStyle: TextStyle(color: Colors.white30),
         ),
-        style: TextStyle(color: Colors.white, fontSize: 16.0),
+        style: const TextStyle(color: Colors.white, fontSize: 16.0),
         onChanged: (query) {});
   }
 
@@ -76,7 +76,37 @@ class _HomePageState extends State<HomePage>
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        ListTile(
+                          leading: const Icon(
+                            Icons.rocket,
+                            color: Colors.red,
+                          ),
+                          title: const Text('Best'),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.settings,
+                            color: Colors.purple,
+                          ),
+                          title: const Text('New'),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
             child: Image.asset('assets/images/filter.png',
                 color: Colors.white, width: 15.w),
           ),

@@ -1,4 +1,4 @@
-import 'package:dating_app/view/find_new_friend.dart';
+import 'package:dating_app/widgets/find_friend_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -6,40 +6,46 @@ import '../constants/app_theme.dart';
 import '../model/chat_user_model.dart';
 import '../widgets/conversational_list.dart';
 
-class ChatPage extends StatefulWidget {
+class FindFriend extends StatefulWidget {
   @override
-  _ChatPageState createState() => _ChatPageState();
+  _FindFriendState createState() => _FindFriendState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _FindFriendState extends State<FindFriend> {
   List<ChatUsers> chatUsers = [
     ChatUsers(
         name: "Jane Russel",
-        messageText: "Awesome Setup",
+        messageText: "Hello i'm a boy ",
         imageURL:
             "https://static.vecteezy.com/system/resources/thumbnails/002/002/280/small_2x/old-man-with-beard-wearing-glasses-avatar-character-free-vector.jpg",
         time: "Now"),
     ChatUsers(
         name: "Glady's Murphy",
-        messageText: "That's Great",
+        messageText: "Hello i'm a boy ",
         imageURL:
             "https://static.vecteezy.com/system/resources/thumbnails/002/002/280/small_2x/old-man-with-beard-wearing-glasses-avatar-character-free-vector.jpg",
         time: "Yesterday"),
     ChatUsers(
         name: "Jorge Henry",
-        messageText: "Hey where are you?",
+        messageText: "Hello i'm a boy ",
         imageURL:
             "https://static.vecteezy.com/system/resources/thumbnails/002/002/280/small_2x/old-man-with-beard-wearing-glasses-avatar-character-free-vector.jpg",
         time: "31 Mar"),
     ChatUsers(
         name: "Philip Fox",
-        messageText: "Busy! Call me in 20 mins",
+        messageText: "Hello i'm a boy ",
         imageURL:
             "https://static.vecteezy.com/system/resources/thumbnails/002/002/280/small_2x/old-man-with-beard-wearing-glasses-avatar-character-free-vector.jpg",
         time: "28 Mar"),
     ChatUsers(
         name: "Debra Hawkins",
-        messageText: "Thankyou, It's awesome",
+        messageText: "Hello i'm a boy ",
+        imageURL:
+            "https://static.vecteezy.com/system/resources/thumbnails/002/002/280/small_2x/old-man-with-beard-wearing-glasses-avatar-character-free-vector.jpg",
+        time: "23 Mar"),
+    ChatUsers(
+        name: "Debra Hawkins",
+        messageText: "Hello i'm a boy ",
         imageURL:
             "https://static.vecteezy.com/system/resources/thumbnails/002/002/280/small_2x/old-man-with-beard-wearing-glasses-avatar-character-free-vector.jpg",
         time: "23 Mar"),
@@ -49,59 +55,29 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(AppTheme.appBarBackgroundColor),
-        automaticallyImplyLeading: false,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Icon(
+            Icons.navigate_before,
+            color: Colors.white,
+            size: 30.sp,
+          ),
+        ),
         title: Padding(
           padding: EdgeInsets.only(left: 7.w, right: 16.w, top: 10.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Conversations",
+                "Find Friend",
                 style: TextStyle(
                     fontSize: 25.sp, fontWeight: FontWeight.bold, color: white),
               ),
             ],
           ),
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.all(8.0.w),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (builder) => FindFriend()));
-              },
-              child: Container(
-                padding: EdgeInsets.only(
-                    left: 8.w, right: 8.w, top: 2.h, bottom: 2.h),
-                height: 30.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.r),
-                  color: Color(AppTheme.primaryColor),
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 20.sp,
-                    ),
-                    SizedBox(
-                      width: 2.w,
-                    ),
-                    Text(
-                      "Add New",
-                      style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-        ],
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -131,10 +107,10 @@ class _ChatPageState extends State<ChatPage> {
             ListView.builder(
               itemCount: chatUsers.length,
               shrinkWrap: true,
-              padding: EdgeInsets.only(top: 16.h),
               physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.only(top: 16.h),
               itemBuilder: (context, index) {
-                return ConversationList(
+                return FindFriendList(
                   name: chatUsers[index].name,
                   messageText: chatUsers[index].messageText,
                   imageUrl: chatUsers[index].imageURL,
