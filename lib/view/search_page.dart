@@ -9,7 +9,6 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import '../model/gender_model.dart';
 import '../widgets/gender_selection_widget.dart';
 import '../widgets/primary_button_widget.dart';
-import '../widgets/search_category_item.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -82,9 +81,9 @@ class _SearchPageState extends State<SearchPage> {
                                           onTap: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Icon(Icons.close)),
+                                          child: const Icon(Icons.close)),
                                       Text(
-                                        'Search',
+                                        'Search by',
                                         style: TextStyle(
                                           color: black,
                                           fontWeight: FontWeight.bold,
@@ -292,6 +291,7 @@ class _SearchPageState extends State<SearchPage> {
                                             onChanged: (SfRangeValues value) {
                                               setState(() {
                                                 _values = value;
+                                                print(value);
                                               });
                                             },
                                           ),
@@ -381,13 +381,13 @@ class _SearchPageState extends State<SearchPage> {
                       color: Colors.grey.shade200),
                   child: TextField(
                     decoration: InputDecoration(
+                        hintText: 'Search by name',
                         border: InputBorder.none,
                         prefixIcon: Icon(
                           Icons.search,
                           color: black.withOpacity(0.3),
                         )),
-                    style: TextStyle(color: white.withOpacity(0.3)),
-                    cursorColor: white.withOpacity(0.3),
+                    style: TextStyle(color: black.withOpacity(0.3)),
                   ),
                 ),
                 SizedBox(
