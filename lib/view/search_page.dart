@@ -19,7 +19,24 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.white, body: getBody());
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          backgroundColor: Color(AppTheme.appBarBackgroundColor),
+          title: Center(
+            child: Text(
+              "Search",
+              style: TextStyle(
+                color: white,
+                fontWeight: FontWeight.bold,
+                fontSize: 32.sp,
+              ),
+            ),
+          ),
+        ),
+        body: getBody());
   }
 
   Widget getBody() {
@@ -56,11 +73,17 @@ class _SearchPageState extends State<SearchPage> {
                   width: 10.w,
                 ),
                 GestureDetector(
-                  child: Image.asset(
-                    'assets/images/filter.png',
-                    height: 30.h,
-                    width: 20.w,
-                  ),
+                  child: filterType
+                      ? Image.asset(
+                          'assets/images/row.png',
+                          height: 30.h,
+                          width: 20.w,
+                        )
+                      : Image.asset(
+                          'assets/images/layout.png',
+                          height: 30.h,
+                          width: 20.w,
+                        ),
                   onTap: () {
                     setState(() {
                       if (filterType) {
@@ -148,7 +171,7 @@ class _SearchPageState extends State<SearchPage> {
                               ),
                               Align(
                                 alignment: Alignment.topLeft,
-                                child: Container(
+                                child: SizedBox(
                                   height: 35.h,
                                   width: 100.w,
                                   child: const Text(
@@ -191,7 +214,7 @@ class _SearchPageState extends State<SearchPage> {
                     physics: const ScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.all(5.0),
+                        padding: EdgeInsets.all(5.0.w),
                         child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.r),
@@ -226,7 +249,7 @@ class _SearchPageState extends State<SearchPage> {
                                 ),
                                 Align(
                                   alignment: Alignment.topLeft,
-                                  child: Container(
+                                  child: SizedBox(
                                     height: 35.h,
                                     width: 100.w,
                                     child: const Text(
@@ -241,7 +264,7 @@ class _SearchPageState extends State<SearchPage> {
                               ],
                             ),
                             trailing: SizedBox(
-                                width: 90.w, //
+                                width: 90.w,
                                 height: 30.h,
                                 child: theme_primary_button_widget(
                                     primaryColor: Color(AppTheme.primaryColor),

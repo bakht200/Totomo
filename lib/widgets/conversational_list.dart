@@ -63,6 +63,13 @@ class _ConversationListState extends State<ConversationList> {
                                 color: Colors.grey.shade600,
                                 fontWeight: FontWeight.normal),
                           ),
+                          Text(
+                            'Tokyo, Japan',
+                            style: TextStyle(
+                                fontSize: 13.sp,
+                                color: Colors.grey.shade600,
+                                fontStyle: FontStyle.italic),
+                          ),
                         ],
                       ),
                     ),

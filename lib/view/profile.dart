@@ -7,9 +7,24 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      body: CustomScrollView(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Color(AppTheme.appBarBackgroundColor),
+        title: Center(
+          child: Text(
+            "Profile",
+            style: TextStyle(
+              color: white,
+              fontWeight: FontWeight.bold,
+              fontSize: 32.sp,
+            ),
+          ),
+        ),
+      ),
+      body: const CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: _ProfileHeader(
@@ -35,17 +50,22 @@ class _EditProfileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: OutlinedButton(
-        onPressed: () {
-          // TODO handle onPressed
-        },
-        child: Text(
-          'Edit Profile',
-          style: TextStyle(
-            color: Color(AppTheme.primaryColor),
-            fontSize: 14.0.sp,
-            fontWeight: FontWeight.bold,
+      padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6.r),
+            border: Border.all(color: Color(AppTheme.appBarBackgroundColor))),
+        child: OutlinedButton(
+          onPressed: () {
+            // TODO handle onPressed
+          },
+          child: Text(
+            'Edit Profile',
+            style: TextStyle(
+              color: Color(AppTheme.primaryColor),
+              fontSize: 14.0.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),

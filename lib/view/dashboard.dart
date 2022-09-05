@@ -18,15 +18,12 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int pageIndex = 0;
-  TextEditingController _searchQueryController = TextEditingController();
-  bool _isSearching = false;
+
   String searchQuery = "Search query";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50.0.h), child: getAppBar()),
       backgroundColor: black,
       body: getBody(),
       bottomNavigationBar: getFooter(),
@@ -35,7 +32,7 @@ class _DashboardState extends State<Dashboard> {
 
   Widget getBody() {
     List<Widget> pages = [
-      HomePage(),
+      const HomePage(),
       ChatPage(),
       const SearchPage(),
       Container(),
@@ -47,212 +44,16 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  Widget getAppBar() {
-    if (pageIndex == 0) {
-      return AppBar(
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        backgroundColor: Color(AppTheme.appBarBackgroundColor),
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                if (_isSearching) {
-                  _isSearching = false;
-                } else {
-                  _isSearching = true;
-                }
-              });
-            },
-            icon: const Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-          ),
-          Image.asset('assets/images/filter.png',
-              color: Colors.white, width: 15.w),
-          PopupMenuButton<int>(
-            icon: Icon(Icons.more_vert, color: Colors.white),
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 1,
-                child: Row(
-                  children: [
-                    const Icon(Icons.settings, color: Colors.white),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    Text(
-                      "Setting",
-                      style: TextStyle(
-                        color: white,
-                        fontSize: 18.sp,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 2,
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.logout,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    Text(
-                      "Logout",
-                      style: TextStyle(
-                        color: white,
-                        fontSize: 18.sp,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-            offset: Offset(0, 100),
-            color: Color((AppTheme.appBarBackgroundColor)),
-            elevation: 2,
-            onSelected: (value) {
-              if (value == 1) {
-                print("SETTING SCREEN");
-              } else if (value == 2) {
-                print("LOGOUT");
-              }
-            },
-          ),
-        ],
-        title: _isSearching
-            ? _buildSearchField()
-            : Center(
-                child: Text(
-                  "Totomo",
-                  style: TextStyle(
-                    color: white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 32.sp,
-                  ),
-                ),
-              ),
-      );
-    } else if (pageIndex == 1) {
-      return AppBar(
-        backgroundColor: Color(AppTheme.appBarBackgroundColor),
-        automaticallyImplyLeading: false,
-        title: Padding(
-          padding: EdgeInsets.only(left: 7.w, right: 16.w, top: 10.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "Conversations",
-                style: TextStyle(
-                    fontSize: 25.sp, fontWeight: FontWeight.bold, color: white),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.all(8.0.w),
-            child: Container(
-              padding:
-                  EdgeInsets.only(left: 8.w, right: 8.w, top: 2.h, bottom: 2.h),
-              height: 30.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30.r),
-                color: Color(AppTheme.primaryColor),
-              ),
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 20.sp,
-                  ),
-                  SizedBox(
-                    width: 2.w,
-                  ),
-                  Text(
-                    "Add New",
-                    style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
-      );
-    } else if (pageIndex == 2) {
-      return AppBar(
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        backgroundColor: Color(AppTheme.appBarBackgroundColor),
-        title: Center(
-          child: Text(
-            "Search",
-            style: TextStyle(
-              color: white,
-              fontWeight: FontWeight.bold,
-              fontSize: 32.sp,
-            ),
-          ),
-        ),
-      );
-    } else if (pageIndex == 3) {
-      return AppBar(
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        backgroundColor: Color(AppTheme.appBarBackgroundColor),
-        title: Center(
-          child: Text(
-            "Setting",
-            style: TextStyle(
-              color: white,
-              fontWeight: FontWeight.bold,
-              fontSize: 32.sp,
-            ),
-          ),
-        ),
-      );
-    } else {
-      return AppBar(
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        backgroundColor: Color(AppTheme.appBarBackgroundColor),
-        title: Center(
-          child: Text(
-            "Profile",
-            style: TextStyle(
-              color: white,
-              fontWeight: FontWeight.bold,
-              fontSize: 32.sp,
-            ),
-          ),
-        ),
-      );
-    }
-  }
-
-  Widget _buildSearchField() {
-    return TextField(
-        controller: _searchQueryController,
-        autofocus: true,
-        decoration: InputDecoration(
-          hintText: "Search Data...",
-          border: InputBorder.none,
-          hintStyle: TextStyle(color: Colors.white30),
-        ),
-        style: TextStyle(color: Colors.white, fontSize: 16.0),
-        onChanged: (query) {});
-  }
+  // Widget getAppBar() {
+  //    else if (pageIndex == 1) {
+  //     return     } else if (pageIndex == 2) {
+  //     return ;
+  //   } else if (pageIndex == 3) {
+  //     return
+  //   } else {
+  //     return ;
+  //   }
+  // }
 
   Widget getFooter() {
     List bottomItems = [

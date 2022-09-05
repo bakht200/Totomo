@@ -21,6 +21,8 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   Animation<double>? _animation;
   AnimationController? _animationController;
+  bool _isSearching = false;
+  final TextEditingController _searchQueryController = TextEditingController();
 
   @override
   void initState() {
@@ -36,10 +38,116 @@ class _HomePageState extends State<HomePage>
     super.initState();
   }
 
+  Widget _buildSearchField() {
+    return TextField(
+        controller: _searchQueryController,
+        autofocus: true,
+        decoration: const InputDecoration(
+          hintText: "Search Data...",
+          border: InputBorder.none,
+          hintStyle: TextStyle(color: Colors.white30),
+        ),
+        style: TextStyle(color: Colors.white, fontSize: 16.0),
+        onChanged: (query) {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Color(AppTheme.appBarBackgroundColor),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                if (_isSearching) {
+                  _isSearching = false;
+                } else {
+                  _isSearching = true;
+                }
+              });
+            },
+            icon: Icon(
+              _isSearching ? Icons.close : Icons.search,
+              color: Colors.white,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {},
+            child: Image.asset('assets/images/filter.png',
+                color: Colors.white, width: 15.w),
+          ),
+          PopupMenuButton<int>(
+            icon: const Icon(Icons.more_vert, color: Colors.white),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 1,
+                child: Row(
+                  children: [
+                    const Icon(Icons.settings, color: Colors.white),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Text(
+                      "Setting",
+                      style: TextStyle(
+                        color: white,
+                        fontSize: 18.sp,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 2,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Text(
+                      "Logout",
+                      style: TextStyle(
+                        color: white,
+                        fontSize: 18.sp,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+            offset: const Offset(0, 100),
+            color: Color((AppTheme.appBarBackgroundColor)),
+            elevation: 2,
+            onSelected: (value) {
+              if (value == 1) {
+                print("SETTING SCREEN");
+              } else if (value == 2) {
+                print("LOGOUT");
+              }
+            },
+          ),
+        ],
+        title: _isSearching
+            ? _buildSearchField()
+            : Center(
+                child: Text(
+                  "Totomo",
+                  style: TextStyle(
+                    color: white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32.sp,
+                  ),
+                ),
+              ),
+      ),
       floatingActionButton: FloatingActionBubble(
         items: <Bubble>[
           Bubble(

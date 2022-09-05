@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../constants/app_theme.dart';
 import '../model/chat_user_model.dart';
 import '../widgets/conversational_list.dart';
 
@@ -45,6 +46,56 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(AppTheme.appBarBackgroundColor),
+        automaticallyImplyLeading: false,
+        title: Padding(
+          padding: EdgeInsets.only(left: 7.w, right: 16.w, top: 10.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "Conversations",
+                style: TextStyle(
+                    fontSize: 25.sp, fontWeight: FontWeight.bold, color: white),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.all(8.0.w),
+            child: Container(
+              padding:
+                  EdgeInsets.only(left: 8.w, right: 8.w, top: 2.h, bottom: 2.h),
+              height: 30.h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30.r),
+                color: Color(AppTheme.primaryColor),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 20.sp,
+                  ),
+                  SizedBox(
+                    width: 2.w,
+                  ),
+                  Text(
+                    "Add New",
+                    style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
