@@ -85,7 +85,7 @@ class _DashboardState extends State<Dashboard> {
                 },
                 child: Image.asset(
                   bottomItems[index],
-                  width: 27.w,
+                  width: 20.w,
                   color: Color(AppTheme.primaryColor),
                 ));
           }),

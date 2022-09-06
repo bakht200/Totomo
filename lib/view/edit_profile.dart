@@ -27,14 +27,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
         elevation: 0,
         backgroundColor: Color(AppTheme.appBarBackgroundColor),
-        title: Center(
-          child: Text(
-            "Edit Profile",
-            style: TextStyle(
-              color: white,
-              fontWeight: FontWeight.bold,
-              fontSize: 27.sp,
-            ),
+        title: Text(
+          "Edit Profile",
+          style: TextStyle(
+            color: white,
+            fontWeight: FontWeight.bold,
+            fontSize: 22.sp,
           ),
         ),
       ),
@@ -141,6 +139,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       child: TextField(
         obscureText: isPasswordTextField ? showPassword : false,
         decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(10.0.w),
             errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey, width: 1.0),
             ),
@@ -166,7 +165,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                   )
                 : null,
-            contentPadding: EdgeInsets.only(bottom: 3.h),
             labelText: labelText,
             floatingLabelBehavior: FloatingLabelBehavior.always,
             hintText: placeholder,

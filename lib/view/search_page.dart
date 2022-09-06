@@ -327,14 +327,12 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
           ],
-          title: Center(
-            child: Text(
-              "Search",
-              style: TextStyle(
-                color: white,
-                fontWeight: FontWeight.bold,
-                fontSize: 27.sp,
-              ),
+          title: Text(
+            "Search",
+            style: TextStyle(
+              color: white,
+              fontWeight: FontWeight.bold,
+              fontSize: 22.sp,
             ),
           ),
         ),

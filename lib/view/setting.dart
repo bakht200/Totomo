@@ -23,6 +23,27 @@ class _SettingPageState extends State<SettingPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+          ),
+          elevation: 0,
+          backgroundColor: Color(AppTheme.appBarBackgroundColor),
+          title: Text(
+            "Setting",
+            style: TextStyle(
+              color: white,
+              fontWeight: FontWeight.bold,
+              fontSize: 22.sp,
+            ),
+          ),
+        ),
         body: Column(
           children: [
             Padding(

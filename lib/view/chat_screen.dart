@@ -50,18 +50,10 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         backgroundColor: Color(AppTheme.appBarBackgroundColor),
         automaticallyImplyLeading: false,
-        title: Padding(
-          padding: EdgeInsets.only(left: 7.w, right: 16.w, top: 10.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "Conversations",
-                style: TextStyle(
-                    fontSize: 25.sp, fontWeight: FontWeight.bold, color: white),
-              ),
-            ],
-          ),
+        title: Text(
+          "Conversations",
+          style: TextStyle(
+              fontSize: 22.sp, fontWeight: FontWeight.bold, color: white),
         ),
         actions: [
           Padding(

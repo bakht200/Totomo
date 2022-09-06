@@ -14,14 +14,12 @@ class ProfilePage extends StatelessWidget {
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Color(AppTheme.appBarBackgroundColor),
-        title: Center(
-          child: Text(
-            "Profile",
-            style: TextStyle(
-              color: white,
-              fontWeight: FontWeight.bold,
-              fontSize: 27.sp,
-            ),
+        title: Text(
+          "Profile",
+          style: TextStyle(
+            color: white,
+            fontWeight: FontWeight.bold,
+            fontSize: 22.sp,
           ),
         ),
       ),

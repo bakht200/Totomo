@@ -73,7 +73,7 @@ class _FindFriendState extends State<FindFriend> {
               Text(
                 "Find Friend",
                 style: TextStyle(
-                    fontSize: 27.sp, fontWeight: FontWeight.bold, color: white),
+                    fontSize: 22.sp, fontWeight: FontWeight.bold, color: white),
               ),
             ],
           ),

@@ -2,6 +2,7 @@ import 'package:dating_app/constants/app_theme.dart';
 
 import 'package:dating_app/view/add_post.dart';
 import 'package:dating_app/view/description.dart';
+import 'package:dating_app/view/setting.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -153,12 +154,14 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
             ],
-            offset: const Offset(0, 100),
             color: Color((AppTheme.appBarBackgroundColor)),
-            elevation: 2,
+            elevation: 0,
+            shape: Border.all(width: 0.5),
+            offset: Offset(0, kToolbarHeight),
             onSelected: (value) {
               if (value == 1) {
-                print("SETTING SCREEN");
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (builder) => SettingPage()));
               } else if (value == 2) {
                 print("LOGOUT");
               }
@@ -167,14 +170,12 @@ class _HomePageState extends State<HomePage>
         ],
         title: _isSearching
             ? _buildSearchField()
-            : Center(
-                child: Text(
-                  "Totomo",
-                  style: TextStyle(
-                    color: white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 27.sp,
-                  ),
+            : Text(
+                "Totomo",
+                style: TextStyle(
+                  color: white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22.sp,
                 ),
               ),
       ),
