@@ -333,7 +333,7 @@ class _SearchPageState extends State<SearchPage> {
               style: TextStyle(
                 color: white,
                 fontWeight: FontWeight.bold,
-                fontSize: 32.sp,
+                fontSize: 27.sp,
               ),
             ),
           ),

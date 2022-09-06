@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../constants/app_theme.dart';
+import '../widgets/primary_button_widget.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -32,7 +33,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             style: TextStyle(
               color: white,
               fontWeight: FontWeight.bold,
-              fontSize: 32.sp,
+              fontSize: 27.sp,
             ),
           ),
         ),
@@ -107,43 +108,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
               buildTextField("Full Name", "Dor Alex", false),
               buildTextField("E-mail", "alexd@gmail.com", false),
               buildTextField("Password", "********", true),
-              buildTextField("Bio", "Hi i', Dor Alex", false),
+              buildTextField("Bio", "Hi i'm, Dor Alex", false),
               SizedBox(
                 height: 35.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  RaisedButton(
-                    padding: EdgeInsets.symmetric(horizontal: 50.h),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text("CANCEL",
-                        style: TextStyle(
-                            fontSize: 14.sp,
-                            letterSpacing: 2.2,
-                            color: Colors.black)),
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    color: Colors.green,
-                    padding: EdgeInsets.symmetric(horizontal: 50.w),
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.r)),
-                    child: Text(
-                      "SAVE",
-                      style: TextStyle(
-                          fontSize: 14.sp,
-                          letterSpacing: 2.2,
-                          color: Colors.white),
-                    ),
-                  )
+                  SizedBox(
+                      width: 120.w, //
+                      height: 45.h,
+                      child: theme_primary_button_widget(
+                          primaryColor: Color(AppTheme.primaryColor),
+                          textColor: Color(0xFFFAFAFA),
+                          onpressFunction: () {
+                            Navigator.of(context).pop();
+                          },
+                          title: 'Save')),
                 ],
               )
             ],
@@ -160,6 +141,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
       child: TextField(
         obscureText: isPasswordTextField ? showPassword : false,
         decoration: InputDecoration(
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 1.0),
+            ),
+            focusedErrorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 1.0),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 1.0),
+            ),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 1.0),
+            ),
             suffixIcon: isPasswordTextField
                 ? IconButton(
                     onPressed: () {
