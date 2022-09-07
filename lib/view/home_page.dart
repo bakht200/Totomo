@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage>
             color: Color((AppTheme.appBarBackgroundColor)),
             elevation: 0,
             shape: Border.all(width: 0.5),
-            offset: Offset(0, kToolbarHeight),
+            offset: const Offset(0, kToolbarHeight),
             onSelected: (value) {
               if (value == 1) {
                 Navigator.of(context).push(
@@ -189,7 +189,7 @@ class _HomePageState extends State<HomePage>
             titleStyle: TextStyle(fontSize: 16.sp, color: Colors.white),
             onPress: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (builder) => DescriptionPostScreen()));
+                  builder: (builder) => const DescriptionPostScreen()));
               _animationController?.reverse();
             },
           ),
@@ -200,8 +200,8 @@ class _HomePageState extends State<HomePage>
             icon: Icons.photo,
             titleStyle: TextStyle(fontSize: 16.sp, color: Colors.white),
             onPress: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (builder) => GalleryPostScreen()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (builder) => const GalleryPostScreen()));
               _animationController?.reverse();
             },
           ),
@@ -212,8 +212,8 @@ class _HomePageState extends State<HomePage>
             icon: Icons.camera,
             titleStyle: TextStyle(fontSize: 16.sp, color: Colors.white),
             onPress: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (builder) => CameraPostScreen()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (builder) => const CameraPostScreen()));
               _animationController?.reverse();
             },
           ),
@@ -242,7 +242,7 @@ class _HomePageState extends State<HomePage>
                   padding: EdgeInsets.all(8.0.w),
                   child: Row(
                       children: List.generate(10, (index) {
-                    return StoryItem(
+                    return const StoryItem(
                       img:
                           'https://st2.depositphotos.com/3310833/7828/v/380/depositphotos_78289624-stock-illustration-flat-hipster-character.jpg?forcejpeg=true',
                       name: 'Story',

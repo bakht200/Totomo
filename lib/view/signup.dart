@@ -2,6 +2,8 @@ import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/model/gender_model.dart';
 
 import 'package:dating_app/view/login.dart';
+import 'package:dating_app/view/on_boarding_screen.dart';
+import 'package:dating_app/view/stepper_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -271,7 +273,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             onpressFunction: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                    builder: (builder) => Dashboard()),
+                                    builder: (builder) => FormPage()),
                               );
                             },
                             title: 'Sign Up')),

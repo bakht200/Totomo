@@ -65,18 +65,10 @@ class _FindFriendState extends State<FindFriend> {
             size: 30.sp,
           ),
         ),
-        title: Padding(
-          padding: EdgeInsets.only(left: 7.w, right: 16.w, top: 10.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "Find Friend",
-                style: TextStyle(
-                    fontSize: 22.sp, fontWeight: FontWeight.bold, color: white),
-              ),
-            ],
-          ),
+        title: Text(
+          "Find Friend",
+          style: TextStyle(
+              fontSize: 22.sp, fontWeight: FontWeight.bold, color: white),
         ),
       ),
       body: SingleChildScrollView(
