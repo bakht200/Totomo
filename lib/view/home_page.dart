@@ -111,6 +111,13 @@ class _HomePageState extends State<HomePage>
             child: Image.asset('assets/images/filter.png',
                 color: Colors.white, width: 15.w),
           ),
+          SizedBox(
+            width: 13.w,
+          ),
+          Icon(
+            Icons.diamond,
+            color: Colors.amber,
+          ),
           PopupMenuButton<int>(
             icon: const Icon(Icons.more_vert, color: Colors.white),
             itemBuilder: (context) => [
@@ -226,7 +233,40 @@ class _HomePageState extends State<HomePage>
         iconData: Icons.add,
         backGroundColor: Color(AppTheme.primaryColor),
       ),
-      body: getBody(),
+      body: _isSearching ? getSearchBody() : getBody(),
+    );
+  }
+
+  Widget getSearchBody() {
+    return Column(
+      children: [
+        Expanded(
+            child: ListView.builder(
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (_isSearching) {
+                          _isSearching = false;
+                        } else {
+                          _isSearching = true;
+                        }
+                      });
+                    },
+                    child: ListTile(
+                      title: Text(
+                        'Title',
+                        style: TextStyle(fontSize: 16.sp),
+                      ),
+                      leading: const Icon(
+                        Icons.access_alarm_sharp,
+                        color: Colors.purple,
+                      ),
+                    ),
+                  );
+                })),
+      ],
     );
   }
 

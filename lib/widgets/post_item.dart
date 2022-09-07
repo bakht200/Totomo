@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 
 import '../constants/app_theme.dart';
 
@@ -122,6 +124,37 @@ class PostItem extends StatelessWidget {
                       width: 27.w,
                       color: Colors.black,
                     ),
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Dialogs.materialDialog(
+                            lottieBuilder: LottieBuilder.asset(
+                                'assets/images/5084-gold-coin.json'),
+                            color: Colors.white,
+                            msg: 'Congratulations, you give 1 diamond to Bakht',
+                            title: 'Congratulations',
+                            context: context,
+                            actions: [
+                              IconsButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                text: 'Claim',
+                                iconData: Icons.done,
+                                color: Color(AppTheme.primaryColor),
+                                textStyle: TextStyle(color: Colors.white),
+                                iconColor: Colors.white,
+                              ),
+                            ]);
+                      },
+                      child: Icon(
+                        Icons.diamond,
+                        color: Colors.amber,
+                        size: 35.sp,
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -130,41 +163,6 @@ class PostItem extends StatelessWidget {
           SizedBox(
             height: 12.h,
           ),
-          // Padding(
-          //   padding: const EdgeInsets.only(left: 15, right: 15),
-          //   child: Row(children: [
-          //     Icon(
-          //       Icons.thumb_up_sharp,
-          //       color: Colors.blue,
-          //       size: 15,
-          //     ),
-          //     SizedBox(
-          //       width: 10,
-          //     ),
-          //     Text("12",
-          //         style: TextStyle(
-          //             fontSize: 15,
-          //             fontWeight: FontWeight.w500,
-          //             color: Colors.black)),
-          //     SizedBox(
-          //       width: 20,
-          //     ),
-          //     Icon(
-          //       Icons.comment_sharp,
-          //       color: Colors.blue,
-          //       size: 15,
-          //     ),
-          //     SizedBox(
-          //       width: 10,
-          //     ),
-          //     Text("12",
-          //         style: TextStyle(
-          //             fontSize: 15,
-          //             fontWeight: FontWeight.w500,
-          //             color: Colors.black)),
-          //   ]),
-          // ),
-
           Padding(
               padding: EdgeInsets.only(left: 15.w, right: 15.w),
               child: RichText(
@@ -185,19 +183,6 @@ class PostItem extends StatelessWidget {
           SizedBox(
             height: 12.h,
           ),
-          // Padding(
-          //   padding: EdgeInsets.only(left: 15, right: 15),
-          //   child: Text(
-          //     "View $viewCount comments",
-          //     style: TextStyle(
-          //         color: Colors.black,
-          //         fontSize: 15,
-          //         fontWeight: FontWeight.w500),
-          //   ),
-          // ),
-          // SizedBox(
-          //   height: 12,
-          // ),
         ],
       ),
     );

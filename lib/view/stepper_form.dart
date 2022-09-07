@@ -70,10 +70,10 @@ class _FormPageState extends State<FormPage> {
                                   bool isLastStep =
                                       (currentStep == getSteps().length - 1);
                                   if (isLastStep) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (builder) => Dashboard()),
-                                    );
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) => Dashboard()),
+                                        (Route<dynamic> route) => false);
                                   } else {
                                     setState(() {
                                       currentStep += 1;
