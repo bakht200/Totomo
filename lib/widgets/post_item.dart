@@ -34,7 +34,7 @@ class PostItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
+            padding: EdgeInsets.symmetric(vertical: 7.h, horizontal: 10.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -86,10 +86,10 @@ class PostItem extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 12.h,
+            height: 7.h,
           ),
           Container(
-            height: 400.h,
+            height: 300.h,
             decoration: BoxDecoration(
               image: DecorationImage(
                   image: NetworkImage(postImg), fit: BoxFit.cover),
