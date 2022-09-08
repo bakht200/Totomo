@@ -16,25 +16,25 @@ class FormPage extends StatefulWidget {
 class _FormPageState extends State<FormPage> {
   int currentStep = 0;
   List interestList = [
-    'Movies',
-    'Cooking',
-    'Entertaintment',
-    'Game',
-    'Watching',
-    'Running',
-    'Sleeping',
-    'Laughing',
-    'Reading',
-    'Coding',
-    'Writing',
-    'Travelling',
+    {'title': 'Movies', 'image': 'assets/images/love.png'},
+    {'title': 'Cooking', 'image': 'assets/images/cup.png'},
+    {'title': 'Entertaintment', 'image': 'assets/images/businessman.png'},
+    {'title': 'Game', 'image': 'assets/images/love.png'},
+    {'title': 'Watching', 'image': 'assets/images/cup.png'},
+    {'title': 'Running', 'image': 'assets/images/businessman.png'},
+    {'title': 'Sleeping', 'image': 'assets/images/cup.png'},
+    {'title': 'Laughing', 'image': 'assets/images/businessman.png'},
+    {'title': 'Reading', 'image': 'assets/images/cup.png'},
+    {'title': 'Coding', 'image': 'assets/images/love.png'},
+    {'title': 'Writing', 'image': 'assets/images/cup.png'},
+    {'title': 'Travelling', 'image': 'assets/images/businessman.png'},
   ];
 
   List idealMatch = [
-    'Love',
-    'Friend',
-    'Business',
-    'Fling',
+    {'title': 'Love', 'image': 'assets/images/love.png'},
+    {'title': 'Friend', 'image': 'assets/images/love-birds.png'},
+    {'title': 'Business', 'image': 'assets/images/businessman.png'},
+    {'title': 'Fling', 'image': 'assets/images/cup.png'},
   ];
 
   List<int> selectedItems = [];
@@ -211,13 +211,25 @@ class _FormPageState extends State<FormPage> {
                             height: 20.h,
                             width: 20.w,
                             child: Center(
-                                child: Text(
-                              interestList[index],
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    interestList[index]['image'],
+                                    height: 25.h,
+                                  ),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  Text(
+                                    interestList[index]['title'],
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            )),
+                            ),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(
@@ -233,7 +245,8 @@ class _FormPageState extends State<FormPage> {
                                   bottomRight: Radius.circular(10.r)),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
+                                  color: Color(AppTheme.primaryColor)
+                                      .withOpacity(0.5),
                                   spreadRadius: 5,
                                   blurRadius: 7,
                                   offset: Offset(0, 3),
@@ -292,14 +305,23 @@ class _FormPageState extends State<FormPage> {
                           child: Container(
                             height: 20.h,
                             width: 20.w,
-                            child: Center(
-                                child: Text(
-                              idealMatch[index],
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            )),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  idealMatch[index]['image'],
+                                  height: 80.h,
+                                ),
+                                Text(
+                                  idealMatch[index]['title'],
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(
@@ -315,7 +337,8 @@ class _FormPageState extends State<FormPage> {
                                   bottomRight: Radius.circular(10.r)),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
+                                  color: Color(AppTheme.primaryColor)
+                                      .withOpacity(0.5),
                                   spreadRadius: 5,
                                   blurRadius: 7,
                                   offset: Offset(0, 3),
