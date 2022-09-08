@@ -61,7 +61,7 @@ class _FormPageState extends State<FormPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         SizedBox(
-                            width: 70.w, //
+                            width: 70.w,
                             height: 45.h,
                             child: theme_primary_button_widget(
                                 primaryColor: Color(AppTheme.primaryColor),

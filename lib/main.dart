@@ -2,6 +2,7 @@ import 'package:dating_app/view/dashboard.dart';
 import 'package:dating_app/view/on_boarding_screen.dart';
 import 'package:dating_app/view/splash_screen.dart';
 import 'package:dating_app/view/stepper_form.dart';
+import 'package:dating_app/view/subscription_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-            home: OnBoardingScreen(),
+            home: SubscriptionPage(),
           );
         });
   }
