@@ -59,7 +59,7 @@ class _SearchPageState extends State<SearchPage> {
                         return StatefulBuilder(builder:
                             (BuildContext context, StateSetter setState) {
                           return Container(
-                            height: MediaQuery.of(context).size.height * 0.90,
+                            height: MediaQuery.of(context).size.height * 0.94,
                             decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
@@ -67,71 +67,73 @@ class _SearchPageState extends State<SearchPage> {
                                 topRight: Radius.circular(25.0),
                               ),
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                    child: Padding(
-                                  padding: EdgeInsets.all(8.0.w),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      GestureDetector(
-                                          onTap: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Icon(Icons.close)),
-                                      Text(
-                                        'Search by',
-                                        style: TextStyle(
-                                          color: black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20.sp,
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {},
-                                        child: Container(
-                                          padding: EdgeInsets.only(
-                                              left: 8.w,
-                                              right: 8.w,
-                                              top: 2.h,
-                                              bottom: 2.h),
-                                          height: 30.h,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(30.r),
-                                            color: Color(AppTheme.primaryColor),
-                                          ),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Icon(
-                                                Icons.refresh,
-                                                color: Colors.white,
-                                                size: 20.sp,
-                                              ),
-                                              SizedBox(
-                                                width: 2.w,
-                                              ),
-                                              Text(
-                                                "Reset",
-                                                style: TextStyle(
-                                                    fontSize: 14.sp,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white),
-                                              ),
-                                            ],
+                            child: Padding(
+                              padding: EdgeInsets.all(4.0.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                      child: Padding(
+                                    padding: EdgeInsets.all(8.0.w),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Icon(Icons.close)),
+                                        Text(
+                                          'Search by',
+                                          style: TextStyle(
+                                            color: black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20.sp,
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                )),
-                                Expanded(
-                                    flex: 10,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0.w),
+                                        GestureDetector(
+                                          onTap: () {},
+                                          child: Container(
+                                            padding: EdgeInsets.only(
+                                                left: 8.w,
+                                                right: 8.w,
+                                                top: 2.h,
+                                                bottom: 2.h),
+                                            height: 30.h,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30.r),
+                                              color:
+                                                  Color(AppTheme.primaryColor),
+                                            ),
+                                            child: Row(
+                                              children: <Widget>[
+                                                Icon(
+                                                  Icons.refresh,
+                                                  color: Colors.white,
+                                                  size: 20.sp,
+                                                ),
+                                                SizedBox(
+                                                  width: 2.w,
+                                                ),
+                                                Text(
+                                                  "Reset",
+                                                  style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )),
+                                  Expanded(
+                                      flex: 9,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -203,6 +205,60 @@ class _SearchPageState extends State<SearchPage> {
                                               ],
                                             ),
                                           ),
+                                          ListTile(
+                                            leading: Icon(
+                                              Icons.location_pin,
+                                              color: Colors.red,
+                                              size: 25.h,
+                                            ),
+                                            title: Text('Prefecture',
+                                                style: TextStyle(
+                                                  color: Color(0xFF555555),
+                                                  fontSize: 15.sp,
+                                                )),
+                                            trailing: Wrap(
+                                              spacing: 5,
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 5.0.h),
+                                                  child: Icon(
+                                                    Icons.navigate_next,
+                                                    size: 35.sp,
+                                                    color: Color(
+                                                        AppTheme.primaryColor),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          ListTile(
+                                            leading: Icon(
+                                              Icons.location_pin,
+                                              color: Colors.red,
+                                              size: 25.h,
+                                            ),
+                                            title: Text('Nearest',
+                                                style: TextStyle(
+                                                  color: Color(0xFF555555),
+                                                  fontSize: 15.sp,
+                                                )),
+                                            trailing: Wrap(
+                                              spacing: 5,
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 5.0.h),
+                                                  child: Icon(
+                                                    Icons.navigate_next,
+                                                    size: 35.sp,
+                                                    color: Color(
+                                                        AppTheme.primaryColor),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                           Divider(),
                                           Row(
                                             children: [
@@ -218,7 +274,7 @@ class _SearchPageState extends State<SearchPage> {
                                             ],
                                           ),
                                           SizedBox(
-                                            height: 90.h,
+                                            height: 50.h,
                                             child: ListView.builder(
                                                 scrollDirection:
                                                     Axis.horizontal,
@@ -226,25 +282,60 @@ class _SearchPageState extends State<SearchPage> {
                                                 itemCount: genders.length,
                                                 itemBuilder: (context, index) {
                                                   return InkWell(
-                                                    splashColor:
-                                                        Colors.pinkAccent,
-                                                    onTap: () {
-                                                      setState(() {
-                                                        for (var gender
-                                                            in genders) {
-                                                          gender.selected =
-                                                              false;
-                                                        }
-                                                        genders[index]
-                                                            .selected = true;
-                                                        selectedGender =
-                                                            genders[index].name;
-                                                        print(selectedGender);
-                                                      });
-                                                    },
-                                                    child: CustomRadio(
-                                                        genders[index]),
-                                                  );
+                                                      splashColor:
+                                                          Colors.pinkAccent,
+                                                      onTap: () {
+                                                        setState(() {
+                                                          for (var gender
+                                                              in genders) {
+                                                            gender.selected =
+                                                                false;
+                                                          }
+                                                          genders[index]
+                                                              .selected = true;
+                                                          selectedGender =
+                                                              genders[index]
+                                                                  .name;
+                                                          print(selectedGender);
+                                                        });
+                                                      },
+                                                      child: Card(
+                                                          color: genders[index]
+                                                                  .selected
+                                                              ? Color(AppTheme
+                                                                  .primaryColor)
+                                                              : Colors
+                                                                  .grey[300],
+                                                          child: Container(
+                                                            height: 70.h,
+                                                            width: 70.w,
+                                                            alignment: Alignment
+                                                                .center,
+                                                            margin:
+                                                                EdgeInsets.all(
+                                                                    5.0.w),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                  genders[index]
+                                                                      .name,
+                                                                  style: TextStyle(
+                                                                      color: genders[index].selected
+                                                                          ? Colors
+                                                                              .white
+                                                                          : Colors
+                                                                              .black38),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          )));
                                                 }),
                                           ),
                                           Divider(),
@@ -296,27 +387,24 @@ class _SearchPageState extends State<SearchPage> {
                                             },
                                           ),
                                         ],
-                                      ),
-                                    )),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                      width: double.infinity, //
-                                      height: 45.h,
-                                      child: theme_primary_button_widget(
-                                          primaryColor:
-                                              Color(AppTheme.primaryColor),
-                                          textColor: Color(0xFFFAFAFA),
-                                          onpressFunction: () {},
-                                          title: 'Search')),
-                                ),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
-                              ],
+                                      )),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SizedBox(
+                                        width: double.infinity, //
+                                        height: 45.h,
+                                        child: theme_primary_button_widget(
+                                            primaryColor:
+                                                Color(AppTheme.primaryColor),
+                                            textColor: Color(0xFFFAFAFA),
+                                            onpressFunction: () {},
+                                            title: 'Search')),
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         });

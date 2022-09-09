@@ -87,6 +87,16 @@ class _HomePageState extends State<HomePage>
                       children: <Widget>[
                         ListTile(
                           leading: const Icon(
+                            Icons.diamond,
+                            color: Colors.amber,
+                          ),
+                          title: const Text('Most gold'),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          leading: const Icon(
                             Icons.rocket,
                             color: Colors.red,
                           ),
@@ -112,7 +122,6 @@ class _HomePageState extends State<HomePage>
             child: Image.asset('assets/images/filter.png',
                 color: Colors.white, width: 15.w),
           ),
-         
           PopupMenuButton<int>(
             icon: const Icon(Icons.more_vert, color: Colors.white),
             itemBuilder: (context) => [

@@ -34,7 +34,7 @@ class _FormPageState extends State<FormPage> {
 
   List idealMatch = [
     {'title': 'Love', 'image': 'assets/images/love.png'},
-    {'title': 'Friends', 'image': 'assets/images/love-birds.png'},
+    {'title': 'Friends', 'image': 'assets/images/high-five.png'},
     {'title': 'Business', 'image': 'assets/images/businessman.png'},
     {'title': 'Fling', 'image': 'assets/images/cup.png'},
   ];
