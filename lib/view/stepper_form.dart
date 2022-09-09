@@ -34,7 +34,7 @@ class _FormPageState extends State<FormPage> {
 
   List idealMatch = [
     {'title': 'Love', 'image': 'assets/images/love.png'},
-    {'title': 'Friend', 'image': 'assets/images/love-birds.png'},
+    {'title': 'Friends', 'image': 'assets/images/love-birds.png'},
     {'title': 'Business', 'image': 'assets/images/businessman.png'},
     {'title': 'Fling', 'image': 'assets/images/cup.png'},
   ];
@@ -97,16 +97,16 @@ class _FormPageState extends State<FormPage> {
                                         });
                                 },
                                 title: 'Back')),
-                        SizedBox(
-                            width: 70.w, //
-                            height: 45.h,
-                            child: theme_primary_button_widget(
-                                primaryColor: Colors.red,
-                                textColor: const Color(0xFFFAFAFA),
-                                onpressFunction: () {
-                                  Navigator.of(context).pop();
-                                },
-                                title: 'Logout')),
+                        // SizedBox(
+                        //     width: 70.w, //
+                        //     height: 45.h,
+                        //     child: theme_primary_button_widget(
+                        //         primaryColor: Colors.red,
+                        //         textColor: const Color(0xFFFAFAFA),
+                        //         onpressFunction: () {
+                        //           Navigator.of(context).pop();
+                        //         },
+                        //         title: 'Logout')),
                       ],
                     ),
                   );
