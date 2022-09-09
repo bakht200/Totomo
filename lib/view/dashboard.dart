@@ -4,6 +4,7 @@ import 'package:dating_app/view/chat_screen.dart';
 import 'package:dating_app/view/profile.dart';
 import 'package:dating_app/view/search_page.dart';
 import 'package:dating_app/view/setting.dart';
+import 'package:dating_app/view/subscription_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -35,7 +36,7 @@ class _DashboardState extends State<Dashboard> {
       const HomePage(),
       ChatPage(),
       const SearchPage(),
-      Container(),
+      SubscriptionPage(),
       const ProfilePage(),
     ];
     return IndexedStack(
@@ -64,9 +65,7 @@ class _DashboardState extends State<Dashboard> {
       pageIndex == 2
           ? "assets/images/magnifying-glass.png"
           : "assets/images/search.png",
-      pageIndex == 3
-          ? "assets/images/shopping-list.png"
-          : "assets/images/clipboard.png",
+      pageIndex == 3 ? "assets/images/diamond.png" : "assets/images/value.png",
       pageIndex == 4 ? "assets/images/man-user.png" : "assets/images/user.png",
     ];
     return Container(

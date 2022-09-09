@@ -22,6 +22,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       'total': '\$399/mo',
     },
     {
+      'index': '6',
+      'name': 'MONTHS',
+      'price': '\$399',
+      'total': '\$399/mo',
+    },
+    {
       'index': '1',
       'name': 'YEAR',
       'price': '\$399',
@@ -32,7 +38,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   var premiumFacility = [
     {
       'icon': 'assets/images/hearts.png',
-      'title': 'Search by city and gender',
+      'title': 'Search by nearest, perfecture, city, Vip',
     },
     {
       'icon': 'assets/images/tap.png',
@@ -44,7 +50,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     },
     {
       'icon': 'assets/images/love-birds.png',
-      'title': 'Access first to feature premium feature',
+      'title': 'Access first to premium feature',
     },
     {
       'icon': 'assets/images/reputation.png',
@@ -53,10 +59,6 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     {
       'icon': 'assets/images/dollar-coin.png',
       'title': 'get 10 gold by months',
-    },
-    {
-      'icon': 'assets/images/like.png',
-      'title': 'use a coupon',
     },
   ];
 
@@ -74,8 +76,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 'Unlock Everything',
                 style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
               ),
-              Text(
-                  'please do this you will get free subscription and many more about this',
+              Text('MEET ANYONE MORE EASILY!',
                   style:
                       TextStyle(fontSize: 12.sp, fontStyle: FontStyle.italic)),
               SizedBox(
@@ -177,6 +178,25 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                       );
                     }),
               ),
+              Text(
+                'Do you have a coupon?',
+                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0.w),
+                child: const TextField(
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.greenAccent, width: 1.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 1.0),
+                    ),
+                    hintText: 'Write your coupon code',
+                  ),
+                ),
+              ),
               SizedBox(
                   width: double.infinity, //
                   height: 45.h,
@@ -184,7 +204,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                       primaryColor: Color(AppTheme.primaryColor),
                       textColor: Color(0xFFFAFAFA),
                       onpressFunction: () {
-                        Navigator.of(context).pop();
+                        // Navigator.of(context).pop();
                       },
                       title: 'Continue')),
             ],

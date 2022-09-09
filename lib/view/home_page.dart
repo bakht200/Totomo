@@ -112,19 +112,7 @@ class _HomePageState extends State<HomePage>
             child: Image.asset('assets/images/filter.png',
                 color: Colors.white, width: 15.w),
           ),
-          SizedBox(
-            width: 13.w,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (builder) => SubscriptionPage()));
-            },
-            child: Icon(
-              Icons.diamond,
-              color: Colors.amber,
-            ),
-          ),
+         
           PopupMenuButton<int>(
             icon: const Icon(Icons.more_vert, color: Colors.white),
             itemBuilder: (context) => [

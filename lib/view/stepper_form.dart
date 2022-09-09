@@ -27,6 +27,8 @@ class _FormPageState extends State<FormPage> {
     {'title': 'Reading', 'image': 'assets/images/cup.png'},
     {'title': 'Coding', 'image': 'assets/images/love.png'},
     {'title': 'Writing', 'image': 'assets/images/cup.png'},
+    {'title': 'Sports', 'image': 'assets/images/cup.png'},
+    {'title': 'Outdoor', 'image': 'assets/images/businessman.png'},
     {'title': 'Travelling', 'image': 'assets/images/businessman.png'},
   ];
 
@@ -130,15 +132,13 @@ class _FormPageState extends State<FormPage> {
               fontSize: 13.sp, fontWeight: FontWeight.bold, color: black),
         ),
         content: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(
               onTap: () {
                 ImagePicker.platform.getImage(source: ImageSource.gallery);
               },
               child: Container(
-                height: 300.h,
+                height: 200.h,
                 width: 500.w,
                 decoration: BoxDecoration(
                   border: Border.all(color: Color(AppTheme.primaryColor)),
@@ -159,7 +159,32 @@ class _FormPageState extends State<FormPage> {
                           fontWeight: FontWeight.w400,
                           color: black),
                     ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
                   ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              height: 200.h,
+              width: 500.w,
+              child: Container(
+                margin: EdgeInsets.all(12.r),
+                child: TextField(
+                  maxLines: 15,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(8.0.w),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    hintText: "Enter a description",
+                    fillColor: Colors.grey[200],
+                    filled: true,
+                  ),
                 ),
               ),
             ),

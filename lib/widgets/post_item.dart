@@ -133,17 +133,27 @@ class PostItem extends StatelessWidget {
                             lottieBuilder: LottieBuilder.asset(
                                 'assets/images/5084-gold-coin.json'),
                             color: Colors.white,
-                            msg: 'Congratulations, you give 1 diamond to Bakht',
-                            title: 'Congratulations',
+                            msg: 'Watch ads for send a gold or buy 100 golds!',
+                            title: 'Send a gold',
                             context: context,
                             actions: [
                               IconsButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                text: 'Claim',
-                                iconData: Icons.done,
+                                text: 'Watch Add',
+                                iconData: Icons.video_collection,
                                 color: Color(AppTheme.primaryColor),
+                                textStyle: TextStyle(color: Colors.white),
+                                iconColor: Colors.white,
+                              ),
+                              IconsButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                text: 'Buy',
+                                iconData: Icons.diamond_outlined,
+                                color: Colors.blue,
                                 textStyle: TextStyle(color: Colors.white),
                                 iconColor: Colors.white,
                               ),

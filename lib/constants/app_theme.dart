@@ -6,7 +6,7 @@ const appFooterColor = Color(0xFFFFFFFF);
 const white = Color(0xFFFFFFFF);
 const black = Color(0xFF000000);
 
-final storyBorderColor = [Color(0xFF39B58B), Color(0xFF03766E)];
+final storyBorderColor = [Color(0xFF1DBF72), Color.fromARGB(255, 58, 202, 132)];
 
 class AppTheme {
   static var secondaryColor = 0xFF8BBF72;
