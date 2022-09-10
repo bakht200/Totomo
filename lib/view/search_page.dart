@@ -1,5 +1,6 @@
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/view/chat_detail_page.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +21,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   bool filterType = false;
   List<Gender> genders = [];
+  bool _switchValue = true;
 
   int _currentValue = 1;
   String? selectedGender;
@@ -249,11 +251,13 @@ class _SearchPageState extends State<SearchPage> {
                                                 Padding(
                                                   padding: EdgeInsets.only(
                                                       top: 5.0.h),
-                                                  child: Icon(
-                                                    Icons.navigate_next,
-                                                    size: 35.sp,
-                                                    color: Color(
-                                                        AppTheme.primaryColor),
+                                                  child: CupertinoSwitch(
+                                                    value: _switchValue,
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        _switchValue = value;
+                                                      });
+                                                    },
                                                   ),
                                                 ),
                                               ],
@@ -349,7 +353,7 @@ class _SearchPageState extends State<SearchPage> {
                                             ],
                                           ),
                                           _myRadioButton(
-                                            title: "New User",
+                                            title: "All Member",
                                             value: 0,
                                             onChanged: (newValue) => setState(
                                                 () => _groupValue = newValue),
@@ -376,7 +380,7 @@ class _SearchPageState extends State<SearchPage> {
                                             min: _min,
                                             max: _max,
                                             values: _values,
-                                            interval: 20,
+                                            interval: 10,
                                             showTicks: true,
                                             showLabels: true,
                                             onChanged: (SfRangeValues value) {
