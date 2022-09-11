@@ -1,5 +1,6 @@
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/view/edit_profile.dart';
+import 'package:dating_app/view/phone_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -73,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(6.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -92,7 +93,85 @@ class _ProfilePageState extends State<ProfilePage> {
                               Icons.diamond,
                               color: Colors.amber,
                             ),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(8.0.w),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Country",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16.0.sp,
+                                            fontWeight: FontWeight.w500,
+                                            fontStyle: FontStyle.italic),
+                                      ),
+                                      Text(
+                                        'Japan',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14.0.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(8.0.w),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "City",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16.0.sp,
+                                            fontWeight: FontWeight.w500,
+                                            fontStyle: FontStyle.italic),
+                                      ),
+                                      Text(
+                                        'Tokyo',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14.0.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (builder) => PhoneNumber()));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Color(AppTheme.primaryColor)),
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text(
+                                "Verify",
+                                style: TextStyle(
+                                    color: Color(AppTheme.primaryColor),
+                                    fontSize: 16.0.sp,
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FontStyle.italic),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),

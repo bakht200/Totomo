@@ -1,5 +1,6 @@
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/view/chat_detail_page.dart';
+import 'package:dating_app/view/profile.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _SearchPageState extends State<SearchPage> {
   String? selectedGender;
   int _groupValue = -1;
   final double _min = 18;
-  final double _max = 90;
+  final double _max = 60;
   SfRangeValues _values = const SfRangeValues(40.0, 60.0);
 
   @override
@@ -175,6 +176,41 @@ class _SearchPageState extends State<SearchPage> {
                                           ListTile(
                                             leading: Icon(
                                               Icons.location_city,
+                                              color: Colors.red,
+                                              size: 25.h,
+                                            ),
+                                            title: Row(
+                                              children: [
+                                                Text('Prefecture',
+                                                    style: TextStyle(
+                                                      color: Color(0xFF555555),
+                                                      fontSize: 15.sp,
+                                                    )),
+                                                const Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                )
+                                              ],
+                                            ),
+                                            trailing: Wrap(
+                                              spacing: 5,
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 5.0.h),
+                                                  child: Icon(
+                                                    Icons.navigate_next,
+                                                    size: 35.sp,
+                                                    color: Color(
+                                                        AppTheme.primaryColor),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          ListTile(
+                                            leading: Icon(
+                                              Icons.location_pin,
                                               color: Colors.deepOrange,
                                               size: 25.h,
                                             ),
@@ -213,38 +249,19 @@ class _SearchPageState extends State<SearchPage> {
                                               color: Colors.red,
                                               size: 25.h,
                                             ),
-                                            title: Text('Prefecture',
-                                                style: TextStyle(
-                                                  color: Color(0xFF555555),
-                                                  fontSize: 15.sp,
-                                                )),
-                                            trailing: Wrap(
-                                              spacing: 5,
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: 5.0.h),
-                                                  child: Icon(
-                                                    Icons.navigate_next,
-                                                    size: 35.sp,
-                                                    color: Color(
-                                                        AppTheme.primaryColor),
-                                                  ),
-                                                ),
+                                            title: Row(
+                                              children: [
+                                                Text('Nearest',
+                                                    style: TextStyle(
+                                                      color: Color(0xFF555555),
+                                                      fontSize: 15.sp,
+                                                    )),
+                                                const Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                )
                                               ],
                                             ),
-                                          ),
-                                          ListTile(
-                                            leading: Icon(
-                                              Icons.location_pin,
-                                              color: Colors.red,
-                                              size: 25.h,
-                                            ),
-                                            title: Text('Nearest',
-                                                style: TextStyle(
-                                                  color: Color(0xFF555555),
-                                                  fontSize: 15.sp,
-                                                )),
                                             trailing: Wrap(
                                               spacing: 5,
                                               children: <Widget>[
@@ -380,7 +397,7 @@ class _SearchPageState extends State<SearchPage> {
                                             min: _min,
                                             max: _max,
                                             values: _values,
-                                            interval: 10,
+                                            interval: 5,
                                             showTicks: true,
                                             showLabels: true,
                                             onChanged: (SfRangeValues value) {
@@ -643,36 +660,64 @@ class _SearchPageState extends State<SearchPage> {
                                     )
                                   ],
                                 ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: SizedBox(
-                                    height: 35.h,
-                                    width: 100.w,
-                                    child: const Text(
-                                      'Hello here i am Josh he is ',
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w500),
+                              ],
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Hello here i am Josh he is ',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Row(
+                                  children: const [
+                                    Icon(
+                                      MdiIcons.map,
+                                      color: Colors.blue,
                                     ),
-                                  ),
+                                    Text('Japan'),
+                                    Icon(
+                                      Icons.location_pin,
+                                      color: Colors.red,
+                                    ),
+                                    Text('Tokyo'),
+                                  ],
                                 ),
                               ],
                             ),
-                            trailing: SizedBox(
-                                width: 90.w,
-                                height: 30.h,
-                                child: theme_primary_button_widget(
-                                    primaryColor: Color(AppTheme.primaryColor),
-                                    textColor: const Color(0xFFFAFAFA),
-                                    onpressFunction: () {
+                            trailing: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                    onTap: () {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (builder) =>
                                                 ChatDetailPage()),
                                       );
                                     },
-                                    title: 'Message')),
+                                    child: Icon(
+                                      Icons.message_rounded,
+                                      color: Colors.black,
+                                    )),
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (builder) =>
+                                                ProfilePage()),
+                                      );
+                                    },
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.red,
+                                    )),
+                              ],
+                            ),
                           ),
                         ),
                       );

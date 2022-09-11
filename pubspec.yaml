@@ -45,6 +45,7 @@ dependencies:
   badges: ^2.0.3
   syncfusion_flutter_sliders: ^20.2.46
   material_dialogs: ^1.1.3
+  country_pickers: ^2.0.0
 
 dev_dependencies:
   flutter_test:
