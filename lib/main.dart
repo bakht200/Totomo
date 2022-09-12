@@ -1,10 +1,15 @@
+import 'package:dating_app/view/authentication_screen.dart';
 import 'package:dating_app/view/dashboard.dart';
 import 'package:dating_app/view/on_boarding_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -18,10 +23,12 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-            home: OnBoardingScreen(),
+          return FirebasePhoneAuthProvider(
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
+              home: AuthenticationScreen(),
+            ),
           );
         });
   }
