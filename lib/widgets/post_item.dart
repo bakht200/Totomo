@@ -72,7 +72,8 @@ class PostItem extends StatelessWidget {
                               Text(
                                 'Funny',
                                 style: TextStyle(
-                                    color: Colors.grey,
+                                    color: Color(AppTheme.primaryColor),
+                                    fontStyle: FontStyle.italic,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500),
                               ),
