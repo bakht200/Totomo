@@ -57,12 +57,26 @@ class PostItem extends StatelessWidget {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: 8.0.w),
-                          child: Text(
-                            name,
-                            style: TextStyle(
-                                color: black,
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w500),
+                          child: Row(
+                            children: [
+                              Text(
+                                name,
+                                style: TextStyle(
+                                    color: black,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              SizedBox(
+                                width: 10.w,
+                              ),
+                              Text(
+                                'Funny',
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
                           ),
                         ),
                         Row(

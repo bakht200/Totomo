@@ -65,6 +65,20 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     ],
                   ),
                 ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Icon(
+                  Icons.diamond,
+                  color: Colors.amber,
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                Icon(
+                  Icons.block,
+                  color: Colors.red,
+                ),
               ],
             ),
           ),

@@ -97,16 +97,6 @@ class _FormPageState extends State<FormPage> {
                                         });
                                 },
                                 title: 'Back')),
-                        // SizedBox(
-                        //     width: 70.w, //
-                        //     height: 45.h,
-                        //     child: theme_primary_button_widget(
-                        //         primaryColor: Colors.red,
-                        //         textColor: const Color(0xFFFAFAFA),
-                        //         onpressFunction: () {
-                        //           Navigator.of(context).pop();
-                        //         },
-                        //         title: 'Logout')),
                       ],
                     ),
                   );
@@ -127,9 +117,8 @@ class _FormPageState extends State<FormPage> {
         state: currentStep > 0 ? StepState.complete : StepState.indexed,
         isActive: currentStep >= 0,
         title: Text(
-          "Upload Profile",
-          style: TextStyle(
-              fontSize: 13.sp, fontWeight: FontWeight.bold, color: black),
+          "Profile",
+          style: TextStyle(fontSize: 12.sp, color: black),
         ),
         content: Column(
           children: [
@@ -195,9 +184,8 @@ class _FormPageState extends State<FormPage> {
         state: currentStep > 1 ? StepState.complete : StepState.indexed,
         isActive: currentStep >= 1,
         title: Text(
-          "Interests",
-          style: TextStyle(
-              fontSize: 13.sp, fontWeight: FontWeight.bold, color: black),
+          "Interest",
+          style: TextStyle(fontSize: 12.sp, color: black),
         ),
         content: Column(
           children: [
@@ -292,8 +280,7 @@ class _FormPageState extends State<FormPage> {
         isActive: currentStep >= 2,
         title: Text(
           "Ideal Match",
-          style: TextStyle(
-              fontSize: 13.sp, fontWeight: FontWeight.bold, color: black),
+          style: TextStyle(fontSize: 12.sp, color: black),
         ),
         content: Column(
           children: [
@@ -376,6 +363,109 @@ class _FormPageState extends State<FormPage> {
                 ),
               ),
             )
+          ],
+        ),
+      ),
+      Step(
+        state: currentStep > 3 ? StepState.complete : StepState.indexed,
+        isActive: currentStep >= 3,
+        title: Text(
+          "Location",
+          style: TextStyle(fontSize: 12.sp, color: black),
+        ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 12.0.w),
+              child: Text(
+                'Enter your Country',
+                style: TextStyle(
+                    fontSize: 12.sp, color: black, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              height: 100.h,
+              width: 500.w,
+              child: Container(
+                margin: EdgeInsets.all(12.r),
+                child: TextField(
+                  maxLines: 15,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(8.0.w),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    hintText: "Enter your Country",
+                    fillColor: Colors.grey[100],
+                    filled: true,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 12.0.w),
+              child: Text(
+                'Enter your Perfecture',
+                style: TextStyle(
+                    fontSize: 12.sp, color: black, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              height: 100.h,
+              width: 500.w,
+              child: Container(
+                margin: EdgeInsets.all(12.r),
+                child: TextField(
+                  maxLines: 15,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(8.0.w),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    hintText: "Enter your Perfecture",
+                    fillColor: Colors.grey[100],
+                    filled: true,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 12.0.w),
+              child: Text(
+                'Enter your City',
+                style: TextStyle(
+                    fontSize: 12.sp, color: black, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              height: 100.h,
+              width: 500.w,
+              child: Container(
+                margin: EdgeInsets.all(12.r),
+                child: TextField(
+                  maxLines: 15,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(8.0.w),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    hintText: "Enter your City",
+                    fillColor: Colors.grey[100],
+                    filled: true,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
           ],
         ),
       ),

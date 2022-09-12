@@ -1,6 +1,7 @@
 import 'package:dating_app/view/authentication_screen.dart';
 import 'package:dating_app/view/dashboard.dart';
 import 'package:dating_app/view/on_boarding_screen.dart';
+import 'package:dating_app/view/stepper_form.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-              home: Dashboard(),
+              home: FormPage(),
             ),
           );
         });
