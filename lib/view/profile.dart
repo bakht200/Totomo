@@ -4,6 +4,8 @@ import 'package:dating_app/view/phone_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'authentication_screen.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -152,7 +154,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (builder) => PhoneNumber()));
+                                builder: (builder) => AuthenticationScreen()));
                           },
                           child: Container(
                             decoration: BoxDecoration(

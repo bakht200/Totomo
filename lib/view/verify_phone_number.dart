@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dating_app/view/dashboard.dart';
 import 'package:dating_app/view/home_page.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +91,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
           // );
 
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (builder) => HomePage()));
+              .push(MaterialPageRoute(builder: (builder) => Dashboard()));
         },
         onLoginFailed: (authException, stackTrace) {
           // log(

@@ -40,6 +40,8 @@ class _HomePageState extends State<HomePage>
     super.initState();
   }
 
+  List searchCategories = ['cat', 'blog', 'funny', 'weather', 'sports', 'news'];
+
   Widget _buildSearchField() {
     return TextField(
         controller: _searchQueryController,
@@ -144,6 +146,24 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
               PopupMenuItem(
+                value: 1,
+                child: Row(
+                  children: [
+                    const Icon(Icons.category, color: Colors.white),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Text(
+                      "Create Category",
+                      style: TextStyle(
+                        color: white,
+                        fontSize: 18.sp,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              PopupMenuItem(
                 value: 2,
                 child: Row(
                   children: [
@@ -181,13 +201,27 @@ class _HomePageState extends State<HomePage>
         ],
         title: _isSearching
             ? _buildSearchField()
-            : Text(
-                "Totomo",
-                style: TextStyle(
-                  color: white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22.sp,
-                ),
+            : Row(
+                children: [
+                  Text(
+                    "Totomo",
+                    style: TextStyle(
+                      color: white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22.sp,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5.w,
+                  ),
+                  Text(
+                    "Homepage",
+                    style: TextStyle(
+                      color: Colors.white54,
+                      fontSize: 18.sp,
+                    ),
+                  ),
+                ],
               ),
       ),
       floatingActionButton: FloatingActionBubble(
@@ -246,7 +280,7 @@ class _HomePageState extends State<HomePage>
       children: [
         Expanded(
             child: ListView.builder(
-                itemCount: 5,
+                itemCount: searchCategories.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
@@ -259,8 +293,23 @@ class _HomePageState extends State<HomePage>
                       });
                     },
                     child: ListTile(
+                      trailing: Container(
+                          decoration: BoxDecoration(
+                              color: (index == 2 || index == 3)
+                                  ? (Colors.green)
+                                  : Colors.red,
+                              borderRadius: BorderRadius.circular(30.r)),
+                          child: IconButton(
+                            icon: Icon(
+                              (index == 2 || index == 3)
+                                  ? Icons.add
+                                  : Icons.minimize,
+                              color: Colors.white,
+                            ),
+                            onPressed: null,
+                          )),
                       title: Text(
-                        'Title',
+                        searchCategories[index].toString(),
                         style: TextStyle(fontSize: 16.sp),
                       ),
                       leading: const Icon(
