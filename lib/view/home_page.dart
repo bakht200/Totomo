@@ -7,6 +7,7 @@ import 'package:dating_app/view/subscription_page.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../widgets/post_item.dart';
 import '../widgets/story_item.dart';
@@ -26,8 +27,16 @@ class _HomePageState extends State<HomePage>
   bool _isSearching = false;
   final TextEditingController _searchQueryController = TextEditingController();
 
+  final BannerAd myBanner = BannerAd(
+    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+    size: AdSize.banner,
+    request: AdRequest(),
+    listener: BannerAdListener(),
+  );
+
   @override
   void initState() {
+    myBanner.load();
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 260),
@@ -347,6 +356,12 @@ class _HomePageState extends State<HomePage>
           ),
           Divider(
             color: white.withOpacity(0.3),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: AdWidget(ad: myBanner),
+            width: myBanner.size.width.toDouble(),
+            height: myBanner.size.height.toDouble(),
           ),
           Column(
             children: List.generate(5, (index) {
