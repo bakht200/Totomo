@@ -1,14 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/model/gender_model.dart';
 
 import 'package:dating_app/view/login.dart';
 import 'package:dating_app/view/on_boarding_screen.dart';
 import 'package:dating_app/view/stepper_form.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:numberpicker/numberpicker.dart';
 
+import '../services/auth_functions.dart';
 import '../widgets/gender_selection_widget.dart';
 import '../widgets/primary_button_widget.dart';
 import '../widgets/text_field_widget.dart';
@@ -26,6 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   int _currentValue = 1;
   String? selectedGender;
+  AuthService? authService;
 
   @override
   void initState() {
@@ -34,6 +38,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     genders.add(Gender("Others", MdiIcons.genderTransgender, false));
     super.initState();
   }
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         TextFieldWidget(
+                          controller: nameController,
                           hintText: 'Full Name',
                         ),
                       ],
@@ -114,6 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         TextFieldWidget(
+                          controller: emailController,
                           hintText: 'Email Address',
                         ),
                       ],
@@ -135,6 +145,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         TextFieldWidget(
+                          controller: passwordController,
                           hintText: 'Password',
                         ),
                       ],
@@ -270,11 +281,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: theme_primary_button_widget(
                             primaryColor: Color(AppTheme.primaryColor),
                             textColor: Color(0xFFFAFAFA),
-                            onpressFunction: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (builder) => FormPage()),
-                              );
+                            onpressFunction: () async {
+                              await FirebaseAuth.instance
+                                  .createUserWithEmailAndPassword(
+                                      email: emailController.text.trim(),
+                                      password: passwordController.text.trim());
+
+                              User user = FirebaseAuth.instance.currentUser!;
+
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(user.uid)
+                                  .set({
+                                'uid': user.uid,
+                                'fullName': nameController.text.trim(),
+                                'email': emailController.text.trim(),
+                                'passowrd': passwordController.text.trim(),
+                                'age': _currentValue,
+                                'gender': selectedGender,
+                                // });
+                              });
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //       builder: (builder) => FormPage()),
+                              // );
                             },
                             title: 'Sign Up')),
                   ],

@@ -1,6 +1,7 @@
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/view/signup.dart';
 import 'package:dating_app/widgets/text_field_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,6 +16,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +74,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      TextFieldWidget(hintText: 'Email Address'),
+                      TextFieldWidget(
+                          controller: email, hintText: 'Email Address'),
                     ],
                   ),
                   SizedBox(
@@ -91,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       TextFieldWidget(
+                        controller: password,
                         hintText: 'Password',
                       ),
                     ],
@@ -104,11 +109,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: theme_primary_button_widget(
                           primaryColor: Color(AppTheme.primaryColor),
                           textColor: Color(0xFFFAFAFA),
-                          onpressFunction: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (builder) => Dashboard()),
-                            );
+                          onpressFunction: () async {
+                            try {
+                              await FirebaseAuth.instance
+                                  .signInWithEmailAndPassword(
+                                      email: email.text.trim(),
+                                      password: password.text.trim());
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (builder) => Dashboard()),
+                              );
+                            } catch (e) {
+                              print(e);
+                            }
+                            // Navigator.of(context).push(
+                            //   MaterialPageRoute(
+                            //       builder: (builder) => Dashboard()),
+                            // );
                           },
                           title: 'Login')),
                   SizedBox(

@@ -49,11 +49,12 @@ dependencies:
   firebase_phone_auth_handler: ^1.0.6
   firebase_core: ^1.22.0
   firebase_auth:
-  pinput: ^2.2.11
+  pinput: ^2.2.12
   easy_container: ^1.0.4
   intl_phone_field: ^3.1.0
   fluttertoast:
   google_mobile_ads: ^2.0.1
+  cloud_firestore:
 
 dev_dependencies:
   flutter_test:
