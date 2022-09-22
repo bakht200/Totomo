@@ -55,6 +55,8 @@ dependencies:
   fluttertoast:
   google_mobile_ads: ^2.0.1
   cloud_firestore:
+  get:
+  firebase_storage: ^10.3.8
 
 dev_dependencies:
   flutter_test:

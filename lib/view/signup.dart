@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/constants/app_theme.dart';
+import 'package:dating_app/controller/auth_controller.dart';
 import 'package:dating_app/model/gender_model.dart';
 
 import 'package:dating_app/view/login.dart';
@@ -8,6 +9,8 @@ import 'package:dating_app/view/stepper_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -42,6 +45,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  final authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -282,29 +287,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             primaryColor: Color(AppTheme.primaryColor),
                             textColor: Color(0xFFFAFAFA),
                             onpressFunction: () async {
-                              await FirebaseAuth.instance
-                                  .createUserWithEmailAndPassword(
-                                      email: emailController.text.trim(),
-                                      password: passwordController.text.trim());
-
-                              User user = FirebaseAuth.instance.currentUser!;
-
-                              await FirebaseFirestore.instance
-                                  .collection("users")
-                                  .doc(user.uid)
-                                  .set({
-                                'uid': user.uid,
-                                'fullName': nameController.text.trim(),
-                                'email': emailController.text.trim(),
-                                'passowrd': passwordController.text.trim(),
-                                'age': _currentValue,
-                                'gender': selectedGender,
-                                // });
-                              });
-                              // Navigator.of(context).push(
-                              //   MaterialPageRoute(
-                              //       builder: (builder) => FormPage()),
-                              // );
+                              await authController.SignUpFunction(
+                                  emailController.text.trim(),
+                                  passwordController.text.trim(),
+                                  nameController.text.trim(),
+                                  _currentValue,
+                                  selectedGender,
+                                  context);
                             },
                             title: 'Sign Up')),
                   ],

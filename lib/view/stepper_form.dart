@@ -1,7 +1,10 @@
 import 'package:dating_app/constants/app_theme.dart';
+import 'package:dating_app/controller/auth_controller.dart';
 import 'package:dating_app/view/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../widgets/primary_button_widget.dart';
@@ -42,6 +45,17 @@ class _FormPageState extends State<FormPage> {
   List<int> selectedItems = [];
   List<int> ideaSelectedItem = [];
 
+  var imagepath;
+  TextEditingController description = TextEditingController();
+  TextEditingController country = TextEditingController();
+  TextEditingController perfecture = TextEditingController();
+  TextEditingController city = TextEditingController();
+
+  List<String> selectedInterestNames = [];
+  List<String> selectedIdealNames = [];
+
+  final authCotntroller = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,14 +82,19 @@ class _FormPageState extends State<FormPage> {
                             child: theme_primary_button_widget(
                                 primaryColor: Color(AppTheme.primaryColor),
                                 textColor: const Color(0xFFFAFAFA),
-                                onpressFunction: () {
+                                onpressFunction: () async {
                                   bool isLastStep =
                                       (currentStep == getSteps().length - 1);
                                   if (isLastStep) {
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                            builder: (context) => Dashboard()),
-                                        (Route<dynamic> route) => false);
+                                    await authCotntroller.profileCompletion(
+                                        imagepath,
+                                        description.text.trim(),
+                                        selectedInterestNames,
+                                        selectedIdealNames,
+                                        city.text.trim(),
+                                        country.text.trim(),
+                                        perfecture.text.trim(),
+                                        context);
                                   } else {
                                     setState(() {
                                       currentStep += 1;
@@ -124,7 +143,8 @@ class _FormPageState extends State<FormPage> {
           children: [
             GestureDetector(
               onTap: () {
-                ImagePicker.platform.getImage(source: ImageSource.gallery);
+                imagepath =
+                    ImagePicker.platform.getImage(source: ImageSource.gallery);
               },
               child: Container(
                 height: 200.h,
@@ -164,6 +184,7 @@ class _FormPageState extends State<FormPage> {
               child: Container(
                 margin: EdgeInsets.all(12.r),
                 child: TextField(
+                  controller: description,
                   maxLines: 15,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(8.0.w),
@@ -215,8 +236,13 @@ class _FormPageState extends State<FormPage> {
                             setState(() {
                               if (selectedItems.contains(index)) {
                                 selectedItems.remove(index);
+                                selectedInterestNames.removeWhere((element) =>
+                                    element == interestList[index]['title']);
                               } else {
                                 selectedItems.add(index);
+
+                                selectedInterestNames
+                                    .add(interestList[index]['title']);
                               }
                             });
                           },
@@ -308,9 +334,13 @@ class _FormPageState extends State<FormPage> {
                           onTap: () {
                             setState(() {
                               if (ideaSelectedItem.contains(index)) {
+                                selectedIdealNames.removeWhere((element) =>
+                                    element == interestList[index]['title']);
                                 ideaSelectedItem.remove(index);
                               } else {
                                 ideaSelectedItem.add(index);
+                                selectedIdealNames
+                                    .add(interestList[index]['title']);
                               }
                             });
                           },
@@ -390,6 +420,7 @@ class _FormPageState extends State<FormPage> {
               child: Container(
                 margin: EdgeInsets.all(12.r),
                 child: TextField(
+                  controller: country,
                   maxLines: 15,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(8.0.w),
@@ -420,6 +451,7 @@ class _FormPageState extends State<FormPage> {
               child: Container(
                 margin: EdgeInsets.all(12.r),
                 child: TextField(
+                  controller: perfecture,
                   maxLines: 15,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(8.0.w),
@@ -450,6 +482,7 @@ class _FormPageState extends State<FormPage> {
               child: Container(
                 margin: EdgeInsets.all(12.r),
                 child: TextField(
+                  controller: city,
                   maxLines: 15,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(8.0.w),
