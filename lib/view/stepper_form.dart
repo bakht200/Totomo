@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/controller/auth_controller.dart';
 import 'package:dating_app/view/dashboard.dart';
@@ -45,7 +47,8 @@ class _FormPageState extends State<FormPage> {
   List<int> selectedItems = [];
   List<int> ideaSelectedItem = [];
 
-  var imagepath;
+  File? imageFile;
+  final ImagePicker _picker = ImagePicker();
   TextEditingController description = TextEditingController();
   TextEditingController country = TextEditingController();
   TextEditingController perfecture = TextEditingController();
@@ -86,8 +89,24 @@ class _FormPageState extends State<FormPage> {
                                   bool isLastStep =
                                       (currentStep == getSteps().length - 1);
                                   if (isLastStep) {
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                          child: new Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              new CircularProgressIndicator(),
+                                              new Text("Loading"),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+
                                     await authCotntroller.profileCompletion(
-                                        imagepath,
+                                        imageFile!,
                                         description.text.trim(),
                                         selectedInterestNames,
                                         selectedIdealNames,
@@ -130,6 +149,15 @@ class _FormPageState extends State<FormPage> {
     );
   }
 
+  _getFromGallery() async {
+    final ImagePicker _picker = ImagePicker();
+    // Pick an image
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      imageFile = File(image!.path);
+    });
+  }
+
   List<Step> getSteps() {
     return <Step>[
       Step(
@@ -143,8 +171,7 @@ class _FormPageState extends State<FormPage> {
           children: [
             GestureDetector(
               onTap: () {
-                imagepath =
-                    ImagePicker.platform.getImage(source: ImageSource.gallery);
+                _getFromGallery();
               },
               child: Container(
                 height: 200.h,
@@ -153,26 +180,28 @@ class _FormPageState extends State<FormPage> {
                   border: Border.all(color: Color(AppTheme.primaryColor)),
                   borderRadius: BorderRadius.circular(20.r),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.image,
-                      color: Color(AppTheme.primaryColor),
-                    ),
-                    Text(
-                      'Select an Image',
-                      style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
-                          color: black),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                  ],
-                ),
+                child: imageFile == null
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.image,
+                            color: Color(AppTheme.primaryColor),
+                          ),
+                          Text(
+                            'Select an Image',
+                            style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                                color: black),
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                        ],
+                      )
+                    : Image.file(imageFile!),
               ),
             ),
             SizedBox(

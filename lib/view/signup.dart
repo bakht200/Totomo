@@ -14,7 +14,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-import '../services/auth_functions.dart';
+import '../services/helper_functions.dart';
 import '../widgets/gender_selection_widget.dart';
 import '../widgets/primary_button_widget.dart';
 import '../widgets/text_field_widget.dart';
@@ -32,7 +32,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   int _currentValue = 1;
   String? selectedGender;
-  AuthService? authService;
 
   @override
   void initState() {
@@ -298,9 +297,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               primaryColor: Color(AppTheme.primaryColor),
                               textColor: Color(0xFFFAFAFA),
                               onpressFunction: () async {
-                                if (_formKey.currentState!.validate() ||
-                                    _currentValue > 18 ||
+                                if (_formKey.currentState!.validate() &&
+                                    _currentValue > 18 &&
                                     selectedGender != null) {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return Dialog(
+                                        child: new Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            new CircularProgressIndicator(),
+                                            new Text("Loading"),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+
                                   await authController.SignUpFunction(
                                       emailController.text.trim(),
                                       passwordController.text.trim(),

@@ -126,6 +126,22 @@ class _LoginScreenState extends State<LoginScreen> {
                               textColor: Color(0xFFFAFAFA),
                               onpressFunction: () async {
                                 if (_formKey.currentState!.validate()) {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return Dialog(
+                                        child: new Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            new CircularProgressIndicator(),
+                                            new Text("Loading"),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+
                                   try {
                                     await FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
@@ -136,11 +152,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                           builder: (builder) => Dashboard()),
                                     );
                                   } catch (e) {
-                                    print(e);
+                                    Navigator.of(context).pop();
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "There is no user record corresponding to this identifier");
                                   }
                                 } else {
-                                  Fluttertoast.showToast(
-                                      msg: "Please Fill Form");
+                                  // Fluttertoast.showToast(
+                                  //     msg: "Please Fill Form");
                                 }
                               },
                               title: 'Login')),

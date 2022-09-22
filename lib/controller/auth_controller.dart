@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/view/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../view/stepper_form.dart';
@@ -34,32 +36,38 @@ class AuthController extends GetxController {
         'location': '',
         // });
       });
+      Navigator.of(context).pop();
+
       Navigator.of(context).push(
         MaterialPageRoute(builder: (builder) => FormPage()),
       );
     } catch (e) {
-      print(e);
+      Navigator.of(context).pop();
+
+      Fluttertoast.showToast(msg: e.toString());
     }
   }
 
-  profileCompletion(profilePath, description, interests, habbits, city, country,
-      perfecture, context) async {
+  profileCompletion(File profilePath, description, interests, habbits, city,
+      country, perfecture, context) async {
     try {
       List<String> url = [];
       User user = FirebaseAuth.instance.currentUser!;
       final path =
-          firebaseStorage.FirebaseStorage.instance.ref("datingApp${user.uid}");
+          firebaseStorage.FirebaseStorage.instance.ref("datingApp/${user.uid}");
 
       final child = path.child(DateTime.now().toString());
-      await child.putFile(File(profilePath));
+      print(child);
+      await child.putFile(File(profilePath.path));
+
       await child.getDownloadURL().then((value) => {url.add(value)});
 
       await FirebaseFirestore.instance
           .collection("users")
           .doc(user.uid)
           .update({
-        'profileCompleted': url,
-        'profileImage': profilePath,
+        'profileCompleted': true,
+        'profileImage': url,
         'description': description,
         'interests': interests,
         'habbits': habbits,
@@ -67,11 +75,14 @@ class AuthController extends GetxController {
         'country': country,
         'location': perfecture,
       });
+      Navigator.of(context).pop();
+
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => Dashboard()),
           (Route<dynamic> route) => false);
     } catch (e) {
-      print(e);
+      Navigator.of(context).pop();
+      Fluttertoast.showToast(msg: e.toString());
     }
   }
 }
