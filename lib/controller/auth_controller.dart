@@ -45,20 +45,20 @@ class AuthController extends GetxController {
   profileCompletion(profilePath, description, interests, habbits, city, country,
       perfecture, context) async {
     try {
-      // List<String> url = [];
+      List<String> url = [];
       User user = FirebaseAuth.instance.currentUser!;
-      // final path =
-      //     firebaseStorage.FirebaseStorage.instance.ref("datingApp${user.uid}");
+      final path =
+          firebaseStorage.FirebaseStorage.instance.ref("datingApp${user.uid}");
 
-      // final child = path.child(DateTime.now().toString());
-      // await child.putFile(File(profilePath));
-      // await child.getDownloadURL().then((value) => {url.add(value)});
+      final child = path.child(DateTime.now().toString());
+      await child.putFile(File(profilePath));
+      await child.getDownloadURL().then((value) => {url.add(value)});
 
       await FirebaseFirestore.instance
           .collection("users")
           .doc(user.uid)
           .update({
-        'profileCompleted': true,
+        'profileCompleted': url,
         'profileImage': profilePath,
         'description': description,
         'interests': interests,

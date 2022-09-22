@@ -47,6 +47,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   final authController = Get.put(AuthController());
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -64,239 +65,254 @@ class _SignUpScreenState extends State<SignUpScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Hi,Welcome!',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 26.sp,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Image.asset(
-                          'assets/images/handwave.gif',
-                          height: 60.h,
-                        )
-                      ],
-                    ),
-                    Text(
-                      'Connect with your friends today!',
-                      style: TextStyle(
-                          color: Color.fromARGB(221, 76, 67, 67),
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w300),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 3.0.h),
-                          child: Text(
-                            'Enter Full Name',
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Hi,Welcome!',
                             style: TextStyle(
-                              color: Color.fromARGB(221, 76, 67, 67),
-                              fontSize: 14.sp,
+                                color: Colors.black,
+                                fontSize: 26.sp,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          Image.asset(
+                            'assets/images/handwave.gif',
+                            height: 60.h,
+                          )
+                        ],
+                      ),
+                      Text(
+                        'Connect with your friends today!',
+                        style: TextStyle(
+                            color: Color.fromARGB(221, 76, 67, 67),
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w300),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 3.0.h),
+                            child: Text(
+                              'Enter Full Name',
+                              style: TextStyle(
+                                color: Color.fromARGB(221, 76, 67, 67),
+                                fontSize: 14.sp,
+                              ),
                             ),
                           ),
-                        ),
-                        TextFieldWidget(
-                          controller: nameController,
-                          hintText: 'Full Name',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 5.0.h),
-                          child: Text(
-                            'Enter Email Address',
-                            style: TextStyle(
-                              color: Color.fromARGB(221, 76, 67, 67),
-                              fontSize: 14.sp,
+                          TextFieldWidget(
+                            validator: (val) =>
+                                val.isEmpty ? "enter full name" : null,
+                            controller: nameController,
+                            hintText: 'Full Name',
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 5.0.h),
+                            child: Text(
+                              'Enter Email Address',
+                              style: TextStyle(
+                                color: Color.fromARGB(221, 76, 67, 67),
+                                fontSize: 14.sp,
+                              ),
                             ),
                           ),
-                        ),
-                        TextFieldWidget(
-                          controller: emailController,
-                          hintText: 'Email Address',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 5.0.h),
-                          child: Text(
-                            'Enter Password',
-                            style: TextStyle(
-                              color: Color.fromARGB(221, 76, 67, 67),
-                              fontSize: 14.sp,
+                          TextFieldWidget(
+                            validator: (val) =>
+                                val.isEmpty || !val.contains("@")
+                                    ? "enter a valid email"
+                                    : null,
+                            controller: emailController,
+                            hintText: 'Email Address',
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 5.0.h),
+                            child: Text(
+                              'Enter Password',
+                              style: TextStyle(
+                                color: Color.fromARGB(221, 76, 67, 67),
+                                fontSize: 14.sp,
+                              ),
                             ),
                           ),
-                        ),
-                        TextFieldWidget(
-                          controller: passwordController,
-                          hintText: 'Password',
-                        ),
-                      ],
-                    ),
+                          TextFieldWidget(
+                            validator: (val) =>
+                                val.isEmpty ? "enter password" : null,
+                            controller: passwordController,
+                            hintText: 'Password',
+                          ),
+                        ],
+                      ),
 
-                    //NUMBER PICKER
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 5.0.h),
-                          child: Text(
-                            'How old are you?',
-                            style: TextStyle(
-                              color: Color.fromARGB(221, 76, 67, 67),
-                              fontSize: 14.sp,
+                      //NUMBER PICKER
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 5.0.h),
+                            child: Text(
+                              'How old are you?',
+                              style: TextStyle(
+                                color: Color.fromARGB(221, 76, 67, 67),
+                                fontSize: 14.sp,
+                              ),
                             ),
                           ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: 15.0.w,
-                                    vertical: 15.0.h,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFFFFFFF),
-                                    borderRadius: BorderRadius.circular(20.r),
-                                    border: Border.all(
-                                      color: Colors.grey.shade200,
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: 15.0.w,
+                                      vertical: 15.0.h,
                                     ),
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 15.0.w,
-                                  ),
-                                  alignment: Alignment.center,
-                                  height: 40.h,
-                                ),
-                                Positioned(
-                                    child: Container(
-                                  height: 50.h,
-                                  width: 50.w,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(50),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.shade300,
-                                        blurRadius: 15.0.r,
-                                        spreadRadius: 1.0.r,
-                                        offset: const Offset(
-                                          0.0,
-                                          0.0,
-                                        ),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFFFFFFF),
+                                      borderRadius: BorderRadius.circular(20.r),
+                                      border: Border.all(
+                                        color: Colors.grey.shade200,
                                       ),
-                                    ],
-                                  ),
-                                )),
-                                Container(
-                                  alignment: Alignment.center,
-                                  child: NumberPicker(
-                                    axis: Axis.horizontal,
-                                    itemHeight: 45.h,
-                                    itemWidth: 45.0.w,
-                                    step: 1,
-                                    selectedTextStyle: TextStyle(
-                                      fontSize: 20.0.sp,
-                                      color: Color.fromARGB(255, 48, 69, 48),
-                                      fontWeight: FontWeight.w500,
                                     ),
-                                    textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12.0.sp,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 15.0.w,
                                     ),
-                                    itemCount: 7,
-                                    value: _currentValue,
-                                    minValue: 1,
-                                    maxValue: 100,
-                                    onChanged: (v) {
-                                      setState(() {
-                                        _currentValue = v;
-                                      });
-                                    },
+                                    alignment: Alignment.center,
+                                    height: 40.h,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                                  Positioned(
+                                      child: Container(
+                                    height: 50.h,
+                                    width: 50.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(50),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.shade300,
+                                          blurRadius: 15.0.r,
+                                          spreadRadius: 1.0.r,
+                                          offset: const Offset(
+                                            0.0,
+                                            0.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: NumberPicker(
+                                      axis: Axis.horizontal,
+                                      itemHeight: 45.h,
+                                      itemWidth: 45.0.w,
+                                      step: 1,
+                                      selectedTextStyle: TextStyle(
+                                        fontSize: 20.0.sp,
+                                        color: Color.fromARGB(255, 48, 69, 48),
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      textStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12.0.sp,
+                                      ),
+                                      itemCount: 7,
+                                      value: _currentValue,
+                                      minValue: 1,
+                                      maxValue: 100,
+                                      onChanged: (v) {
+                                        setState(() {
+                                          _currentValue = v;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
 
-                    SizedBox(
-                      height: 90.h,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: genders.length,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              splashColor: Colors.pinkAccent,
-                              onTap: () {
-                                setState(() {
-                                  for (var gender in genders) {
-                                    gender.selected = false;
-                                  }
-                                  genders[index].selected = true;
-                                  selectedGender = genders[index].name;
-                                  print(selectedGender);
-                                });
+                      SizedBox(
+                        height: 90.h,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: genders.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                splashColor: Colors.pinkAccent,
+                                onTap: () {
+                                  setState(() {
+                                    for (var gender in genders) {
+                                      gender.selected = false;
+                                    }
+                                    genders[index].selected = true;
+                                    selectedGender = genders[index].name;
+                                    print(selectedGender);
+                                  });
+                                },
+                                child: CustomRadio(genders[index]),
+                              );
+                            }),
+                      ),
+                      /////
+                      ///
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      SizedBox(
+                          width: double.infinity, //
+                          height: 45.h,
+                          child: theme_primary_button_widget(
+                              primaryColor: Color(AppTheme.primaryColor),
+                              textColor: Color(0xFFFAFAFA),
+                              onpressFunction: () async {
+                                if (_formKey.currentState!.validate() ||
+                                    _currentValue > 18 ||
+                                    selectedGender != null) {
+                                  await authController.SignUpFunction(
+                                      emailController.text.trim(),
+                                      passwordController.text.trim(),
+                                      nameController.text.trim(),
+                                      _currentValue,
+                                      selectedGender,
+                                      context);
+                                }
                               },
-                              child: CustomRadio(genders[index]),
-                            );
-                          }),
-                    ),
-                    /////
-                    ///
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    SizedBox(
-                        width: double.infinity, //
-                        height: 45.h,
-                        child: theme_primary_button_widget(
-                            primaryColor: Color(AppTheme.primaryColor),
-                            textColor: Color(0xFFFAFAFA),
-                            onpressFunction: () async {
-                              await authController.SignUpFunction(
-                                  emailController.text.trim(),
-                                  passwordController.text.trim(),
-                                  nameController.text.trim(),
-                                  _currentValue,
-                                  selectedGender,
-                                  context);
-                            },
-                            title: 'Sign Up')),
-                  ],
+                              title: 'Sign Up')),
+                    ],
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
