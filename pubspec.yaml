@@ -57,6 +57,8 @@ dependencies:
   cloud_firestore:
   get:
   firebase_storage: ^10.3.8
+  file_picker:
+  dropdown_button2: ^1.6.3
 
 dev_dependencies:
   flutter_test:

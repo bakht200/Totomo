@@ -1,5 +1,8 @@
+import 'package:dating_app/controller/profile_controller.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../constants/app_theme.dart';
@@ -13,7 +16,29 @@ class DescriptionPostScreen extends StatefulWidget {
 }
 
 class _DescriptionPostScreenState extends State<DescriptionPostScreen> {
-  var cameraFile;
+  final TextEditingController descriptionController = TextEditingController();
+  final List<String> postItems = [
+    'GBV',
+    'Mens health',
+    'Womens health',
+    'Crime',
+    'General',
+    'Kids',
+    'Religion',
+    'Tradition',
+    'Entrepreneurship',
+    'Business Law',
+    'Education',
+    'Sports',
+    'Domestic',
+    'Ads',
+    'Teen Pregnancy',
+    'Health',
+    'Depression',
+    'Anxiety'
+  ];
+  String? postType;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,22 +48,14 @@ class _DescriptionPostScreenState extends State<DescriptionPostScreen> {
         children: [
           Expanded(
               flex: 2,
-              child: cameraFile == null
-                  ? SizedBox(
-                      width: double.infinity / 2,
-                      height: 40.h,
-                      child: theme_primary_button_widget(
-                          primaryColor: Color(AppTheme.primaryColor),
-                          textColor: Color(0xFFFAFAFA),
-                          onpressFunction: () async {
-                            // final ImagePicker _picker = ImagePicker();
-                            // // Pick an image
-                            // final XFile? image = await _picker.pickImage(
-                            //     source: ImageSource.gallery);
-                            // cameraFile = image;
-                          },
-                          title: 'Write a text'))
-                  : Image.file(cameraFile)),
+              child: SizedBox(
+                  width: double.infinity / 2,
+                  height: 40.h,
+                  child: theme_primary_button_widget(
+                      primaryColor: Color(AppTheme.primaryColor),
+                      textColor: Color(0xFFFAFAFA),
+                      onpressFunction: () async {},
+                      title: 'Write a text'))),
           SizedBox(
             height: 10.h,
           ),
@@ -48,6 +65,7 @@ class _DescriptionPostScreenState extends State<DescriptionPostScreen> {
               margin: EdgeInsets.all(12.r),
               height: 200.h,
               child: TextField(
+                controller: descriptionController,
                 maxLines: 15,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(8.0.w),
@@ -70,7 +88,175 @@ class _DescriptionPostScreenState extends State<DescriptionPostScreen> {
               child: theme_primary_button_widget(
                   primaryColor: Color(AppTheme.primaryColor),
                   textColor: Color(0xFFFAFAFA),
-                  onpressFunction: () {},
+                  onpressFunction: () {
+                    if (descriptionController.text.isNotEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return StatefulBuilder(
+                            builder:
+                                (BuildContext context, StateSetter setState) {
+                              return AlertDialog(
+                                  title: Text(
+                                    "Information",
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(AppTheme.primaryColor),
+                                    ),
+                                  ),
+                                  content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text(
+                                          "Post type",
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(AppTheme.primaryColor),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10.h,
+                                        ),
+                                        DropdownButtonHideUnderline(
+                                          child: DropdownButton2(
+                                            isExpanded: true,
+                                            hint: Row(
+                                              children: const [
+                                                Expanded(
+                                                  child: Text(
+                                                    'Select Type',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black,
+                                                    ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            items: postItems
+                                                .map((item) =>
+                                                    DropdownMenuItem<String>(
+                                                      value: item,
+                                                      child: Text(
+                                                        item,
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black,
+                                                        ),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ))
+                                                .toList(),
+                                            value: postType,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                postType = value as String;
+                                              });
+                                            },
+                                            icon: const Icon(
+                                              Icons.arrow_forward_ios_outlined,
+                                            ),
+                                            iconSize: 14,
+                                            buttonHeight: 50,
+                                            buttonWidth: 180,
+                                            buttonPadding:
+                                                const EdgeInsets.only(
+                                                    left: 14, right: 14),
+                                            buttonDecoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                              border: Border.all(
+                                                color: Color(
+                                                    AppTheme.primaryColor),
+                                              ),
+                                              color: Colors.white,
+                                            ),
+                                            buttonElevation: 2,
+                                            itemHeight: 40,
+                                            itemPadding: const EdgeInsets.only(
+                                                left: 14, right: 14),
+                                            dropdownMaxHeight: 200,
+                                            dropdownWidth: 200,
+                                            dropdownPadding: null,
+                                            dropdownDecoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                              color: Colors.white,
+                                            ),
+                                            dropdownElevation: 8,
+                                            scrollbarRadius:
+                                                const Radius.circular(40),
+                                            scrollbarThickness: 6,
+                                            scrollbarAlwaysShow: true,
+                                            offset: const Offset(-20, 0),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10.h,
+                                        ),
+                                      ]),
+                                  actions: <Widget>[
+                                    Container(
+                                      padding:
+                                          EdgeInsets.only(top: 3.h, left: 3.w),
+                                      child: MaterialButton(
+                                        minWidth: 40.w,
+                                        height: 40.h,
+                                        onPressed: () async {
+                                          if (postType == null) {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "Please Select the values.");
+                                          } else {
+                                            // await .insertPost(
+                                            //     null,
+                                            //     "subjectname",
+                                            //     descriptionController.text,
+                                            //     context,
+                                            //     value == false
+                                            //         ? null
+                                            //         : currentLocation,
+                                            //     null,
+                                            //     postType,
+                                            //     contentType,
+                                            //     identityChecker,
+                                            //     imagePath);
+                                          }
+                                        },
+                                        color: Color(AppTheme.primaryColor),
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(7.r),
+                                        ),
+                                        child: Text(
+                                          "Post",
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ]);
+                            },
+                          );
+                        },
+                      );
+                    } else {
+                      Fluttertoast.showToast(
+                          msg: "Please write some description");
+                    }
+                  },
                   title: 'Submit Post')),
           SizedBox(
             height: 20.h,

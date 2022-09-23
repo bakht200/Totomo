@@ -25,11 +25,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   List<int> selectedItems = [];
   final profileController = Get.put(ProfileController());
-  var loading;
+  bool? loading;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchUserData();
   }
