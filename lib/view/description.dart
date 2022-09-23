@@ -3,10 +3,13 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../constants/app_theme.dart';
+import '../constants/secure_storage.dart';
 import '../widgets/primary_button_widget.dart';
+import '../widgets/profile_avatar.dart';
 
 class DescriptionPostScreen extends StatefulWidget {
   const DescriptionPostScreen({Key? key}) : super(key: key);
@@ -17,6 +20,10 @@ class DescriptionPostScreen extends StatefulWidget {
 
 class _DescriptionPostScreenState extends State<DescriptionPostScreen> {
   final TextEditingController descriptionController = TextEditingController();
+  final profileController = Get.put(ProfileController());
+
+  var imagePath;
+  String? userName;
   final List<String> postItems = [
     'GBV',
     'Mens health',
@@ -38,6 +45,18 @@ class _DescriptionPostScreenState extends State<DescriptionPostScreen> {
     'Anxiety'
   ];
   String? postType;
+  @override
+  void initState() {
+    super.initState();
+    fetchCurrentUserName();
+  }
+
+  fetchCurrentUserName() async {
+    userName = await UserSecureStorage.fetchUserName();
+    await profileController.getUserData();
+    imagePath = profileController.userInformation.first['profileImage'];
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +65,28 @@ class _DescriptionPostScreenState extends State<DescriptionPostScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Row(
+            children: [
+              ProfileAvatar(imageUrl: imagePath),
+              SizedBox(width: 8.0.w),
+              Container(
+                height: 30.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        userName == null ? '' : "$userName",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
           Expanded(
               flex: 2,
               child: SizedBox(
@@ -217,19 +258,12 @@ class _DescriptionPostScreenState extends State<DescriptionPostScreen> {
                                                 msg:
                                                     "Please Select the values.");
                                           } else {
-                                            // await .insertPost(
-                                            //     null,
-                                            //     "subjectname",
-                                            //     descriptionController.text,
-                                            //     context,
-                                            //     value == false
-                                            //         ? null
-                                            //         : currentLocation,
-                                            //     null,
-                                            //     postType,
-                                            //     contentType,
-                                            //     identityChecker,
-                                            //     imagePath);
+                                            await profileController.insertPost(
+                                                null,
+                                                descriptionController.text,
+                                                context,
+                                                postType,
+                                                imagePath);
                                           }
                                         },
                                         color: Color(AppTheme.primaryColor),

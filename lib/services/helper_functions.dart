@@ -105,8 +105,6 @@ class HelperFunction {
       List<File> file, descriptionController, postType, imagePath) async {
     try {
       if (file.isEmpty) {
-        String? url;
-
         User? user = FirebaseAuth.instance.currentUser;
         String? userName = await UserSecureStorage.fetchUserName();
         var uniqueId = FirebaseFirestore.instance.collection("posts").doc().id;

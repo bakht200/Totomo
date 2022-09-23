@@ -58,8 +58,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               ),
               const SizedBox(height: 15),
               Container(
-                // elevation: 0,
-                // borderRadius: 10,
                 color: Colors.transparent,
                 child: Form(
                   key: _formKey,
