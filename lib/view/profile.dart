@@ -94,8 +94,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
                             radius: 30.r,
-                            backgroundImage: NetworkImage(
-                                'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
+                            backgroundImage: NetworkImage(profileController
+                                .userInformation.first['profileImage']),
                           ),
                         ),
                         Padding(
