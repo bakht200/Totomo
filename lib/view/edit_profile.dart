@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/view/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -256,30 +257,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                               .then((value) => url = value);
                                         }
 
-                                        // await FirebaseFirestore.instance
-                                        //     .collection("users")
-                                        //     .doc(user?.uid)
-                                        //     .update({
-                                        //   'uid': user?.uid,
-                                        //   'firstName': firstNameController.text.trim(),
-                                        //   'surName': surNameController.text.trim(),
-                                        //   'email': emailController.text.trim(),
-                                        //   'passowrd': passwordController.text.trim(),
-                                        //   'dob': _selectedDate,
-                                        //   'gender': _value == 1
-                                        //       ? 'Male'
-                                        //       : _value == 2
-                                        //           ? 'Female'
-                                        //           : 'Others',
-                                        //   'profileImage': url,
-                                        // });
+                                        await FirebaseFirestore.instance
+                                            .collection("users")
+                                            .doc(user?.uid)
+                                            .update({
+                                          'uid': user!.uid,
+                                          'fullName':
+                                              nameController.text.trim(),
+                                          'email': emailController.text.trim(),
+                                          'passowrd':
+                                              passwordController.text.trim(),
+                                          'description':
+                                              bioController.text.trim()
+                                        });
 
                                         Navigator.pop(context);
                                         Fluttertoast.showToast(
                                             msg:
                                                 "Profile Updated Successfully");
-                                        // Navigator.of(context).push(MaterialPageRoute(
-                                        //     builder: (_) => HomeScreen()));
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (_) => Dashboard()));
                                       }
                                     } else {
                                       Fluttertoast.showToast(
