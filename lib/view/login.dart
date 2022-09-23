@@ -136,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       return Dialog(
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
-                                          children: [
+                                          children: const [
                                             CircularProgressIndicator(),
                                             Text("Loading"),
                                           ],
@@ -181,9 +181,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Navigator.of(context).pop();
                                     Fluttertoast.showToast(msg: e.toString());
                                   }
-                                } else {
-                                  // Fluttertoast.showToast(
-                                  //     msg: "Please Fill Form");
                                 }
                               },
                               title: 'Login')),
