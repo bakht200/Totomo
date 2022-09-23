@@ -147,15 +147,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                         .signInWithEmailAndPassword(
                                             email: email.text.trim(),
                                             password: password.text.trim());
+
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                           builder: (builder) => Dashboard()),
                                     );
                                   } catch (e) {
                                     Navigator.of(context).pop();
-                                    Fluttertoast.showToast(
-                                        msg:
-                                            "There is no user record corresponding to this identifier");
+                                    Fluttertoast.showToast(msg: e.toString());
                                   }
                                 } else {
                                   // Fluttertoast.showToast(

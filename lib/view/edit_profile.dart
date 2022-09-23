@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/view/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../constants/app_theme.dart';
 import '../controller/profile_controller.dart';
 import '../widgets/primary_button_widget.dart';
@@ -127,10 +125,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         offset: const Offset(0, 10))
                                   ],
                                   shape: BoxShape.circle,
-                                  image: const DecorationImage(
+                                  image: DecorationImage(
                                       fit: BoxFit.cover,
                                       image: NetworkImage(
-                                        "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250",
+                                        _image == null
+                                            ? profileController.userInformation
+                                                .first['profileImage']
+                                                .toString()
+                                            : _image!.path,
                                       ))),
                             ),
                             Positioned(
