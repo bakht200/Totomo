@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/view/signup.dart';
 import 'package:dating_app/widgets/text_field_widget.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../constants/secure_storage.dart';
 import '../widgets/primary_button_widget.dart';
 import 'dashboard.dart';
 
@@ -147,6 +149,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                         .signInWithEmailAndPassword(
                                             email: email.text.trim(),
                                             password: password.text.trim());
+                                    User? user =
+                                        FirebaseAuth.instance.currentUser;
+
+                                    await UserSecureStorage.setToken(user!.uid);
+
+                                    await UserSecureStorage.fetchToken();
+
+                                    final snapshot = await FirebaseFirestore
+                                        .instance
+                                        .collection('users')
+                                        .where('uid', isEqualTo: user.uid)
+                                        .get();
+                                    await UserSecureStorage.setUserName(
+                                        snapshot.docs[0]['firstName']);
+                                    await UserSecureStorage.fetchUserName();
 
                                     Navigator.of(context).push(
                                       MaterialPageRoute(

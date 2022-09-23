@@ -59,6 +59,7 @@ dependencies:
   firebase_storage: ^10.3.8
   file_picker:
   dropdown_button2: ^1.6.3
+  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   flutter_test:

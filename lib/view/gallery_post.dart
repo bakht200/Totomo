@@ -8,8 +8,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../constants/app_theme.dart';
+import '../constants/secure_storage.dart';
 import '../controller/profile_controller.dart';
 import '../widgets/primary_button_widget.dart';
+import '../widgets/profile_avatar.dart';
 
 class GalleryPostScreen extends StatefulWidget {
   const GalleryPostScreen({Key? key}) : super(key: key);
@@ -22,8 +24,11 @@ class _GalleryPostScreenState extends State<GalleryPostScreen> {
   var cameraFile;
   final profileController = Get.put(ProfileController());
   final TextEditingController descriptionController = TextEditingController();
+  var imagePath;
+  String? userName;
+
   final List<String> postItems = [
-    'GBV',
+    'Funny',
     'Mens health',
     'Womens health',
     'Crime',
@@ -37,12 +42,25 @@ class _GalleryPostScreenState extends State<GalleryPostScreen> {
     'Sports',
     'Domestic',
     'Ads',
-    'Teen Pregnancy',
+    'Teen',
     'Health',
     'Depression',
     'Anxiety'
   ];
   String? postType;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCurrentUserName();
+  }
+
+  fetchCurrentUserName() async {
+    userName = await UserSecureStorage.fetchUserName();
+    await profileController.getUserData();
+    imagePath = profileController.userInformation.first['profileImage'];
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +69,28 @@ class _GalleryPostScreenState extends State<GalleryPostScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Row(
+            children: [
+              ProfileAvatar(imageUrl: imagePath),
+              SizedBox(width: 8.0.w),
+              Container(
+                height: 30.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        userName == null ? '' : "$userName",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
           Expanded(
               flex: 2,
               child: cameraFile == null
@@ -282,19 +322,12 @@ class _GalleryPostScreenState extends State<GalleryPostScreen> {
                                                 msg:
                                                     "Please Select the values.");
                                           } else {
-                                            // await .insertPost(
-                                            //     null,
-                                            //     "subjectname",
-                                            //     descriptionController.text,
-                                            //     context,
-                                            //     value == false
-                                            //         ? null
-                                            //         : currentLocation,
-                                            //     null,
-                                            //     postType,
-                                            //     contentType,
-                                            //     identityChecker,
-                                            //     imagePath);
+                                            await profileController.insertPost(
+                                                profileController.files,
+                                                descriptionController.text,
+                                                context,
+                                                postType,
+                                                imagePath);
                                           }
                                         },
                                         color: Color(AppTheme.primaryColor),

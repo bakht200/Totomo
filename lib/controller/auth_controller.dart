@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
+import '../constants/secure_storage.dart';
 import '../view/stepper_form.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebaseStorage;
 
@@ -18,6 +19,17 @@ class AuthController extends GetxController {
           .createUserWithEmailAndPassword(email: email, password: password);
 
       User user = FirebaseAuth.instance.currentUser!;
+
+      await UserSecureStorage.setToken(user.uid);
+
+      await UserSecureStorage.fetchToken();
+
+      final snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('uid', isEqualTo: user.uid)
+          .get();
+      await UserSecureStorage.setUserName(snapshot.docs[0]['firstName']);
+      await UserSecureStorage.fetchUserName();
 
       await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
         'uid': user.uid,
@@ -34,7 +46,6 @@ class AuthController extends GetxController {
         'city': '',
         'country': '',
         'location': '',
-        // });
       });
       Navigator.of(context).pop();
 

@@ -1,4 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebaseStorage;
+
+import '../constants/secure_storage.dart';
 
 class HelperFunction {
   Future<void> addUserInfo(userData) async {
@@ -77,11 +83,11 @@ class HelperFunction {
     List userData = [];
 
     try {
-      // String? userId = await UserSecureStorage.fetchToken();
+      String? userId = await UserSecureStorage.fetchToken();
 
       await FirebaseFirestore.instance
           .collection('users')
-          .where("email", isEqualTo: 'bp@gmail.com')
+          .where('uid', isEqualTo: userId)
           .get()
           .then((querySnapshot) {
         querySnapshot.docs.forEach((element) {
@@ -92,6 +98,66 @@ class HelperFunction {
       return userData;
     } catch (e) {
       return null;
+    }
+  }
+
+  Future uploadFile(
+      List<File> file, descriptionController, postType, imagePath) async {
+    try {
+      if (file.isEmpty) {
+        String? url;
+
+        User? user = FirebaseAuth.instance.currentUser;
+        String? userName = await UserSecureStorage.fetchUserName();
+        var uniqueId = FirebaseFirestore.instance.collection("posts").doc().id;
+
+        await FirebaseFirestore.instance.collection("posts").doc(uniqueId).set({
+          'postedBy': user!.uid,
+          'userName': userName,
+          'mediaUrl': [],
+          'like': [],
+          'comment': [],
+          'report': [],
+          'postedAt': DateTime.now(),
+          'description': descriptionController,
+          'id': uniqueId,
+          'postType': postType,
+          'userImage': imagePath
+        });
+      } else {
+        List<String> url = [];
+
+        User? user = FirebaseAuth.instance.currentUser;
+
+        final path = firebaseStorage.FirebaseStorage.instance
+            .ref("safespace/${user!.uid}");
+
+        for (var i = 0; i < file.length; i++) {
+          final child = path.child(DateTime.now().toString());
+          await child.putFile(File(file[i].path));
+          await child.getDownloadURL().then((value) => {url.add(value)});
+        }
+
+        String? userName = await UserSecureStorage.fetchUserName();
+        var uniqueId = FirebaseFirestore.instance.collection("posts").doc().id;
+
+        await FirebaseFirestore.instance.collection("posts").doc(uniqueId).set({
+          'postedBy': user.uid,
+          'userName': userName,
+          'mediaUrl': [url],
+          'like': [],
+          'comment': [],
+          'report': [],
+          'postedAt': DateTime.now(),
+          'description': descriptionController,
+          'id': uniqueId,
+          'postType': postType,
+          'userImage': imagePath
+        });
+      }
+      return "filedUploaded";
+    } on FirebaseException catch (e) {
+      rethrow;
     }
   }
 }
