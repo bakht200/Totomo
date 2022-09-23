@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/view/signup.dart';
+import 'package:dating_app/view/stepper_form.dart';
 import 'package:dating_app/widgets/text_field_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -133,11 +134,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                     barrierDismissible: false,
                                     builder: (BuildContext context) {
                                       return Dialog(
-                                        child: new Row(
+                                        child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            new CircularProgressIndicator(),
-                                            new Text("Loading"),
+                                            CircularProgressIndicator(),
+                                            Text("Loading"),
                                           ],
                                         ),
                                       );
@@ -164,11 +165,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                     await UserSecureStorage.setUserName(
                                         snapshot.docs[0]['firstName']);
                                     await UserSecureStorage.fetchUserName();
-
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (builder) => Dashboard()),
-                                    );
+                                    if (snapshot.docs[0]['profileCompleted'] ==
+                                        true) {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (builder) => Dashboard()),
+                                      );
+                                    } else {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (builder) => FormPage()),
+                                      );
+                                    }
                                   } catch (e) {
                                     Navigator.of(context).pop();
                                     Fluttertoast.showToast(msg: e.toString());

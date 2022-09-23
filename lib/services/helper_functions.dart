@@ -16,15 +16,15 @@ class HelperFunction {
     });
   }
 
-  getUserInfo(String email) async {
-    return FirebaseFirestore.instance
-        .collection("users")
-        .where("email", isEqualTo: email)
-        .get()
-        .catchError((e) {
-      print(e.toString());
-    });
-  }
+  // getUserInfo(String email) async {
+  //   return FirebaseFirestore.instance
+  //       .collection("users")
+  //       .where("email", isEqualTo: email)
+  //       .get()
+  //       .catchError((e) {
+  //     print(e.toString());
+  //   });
+  // }
 
   // getAllUsers() async {
   //   String? userId = await UserSecureStorage.fetchToken();
@@ -130,7 +130,7 @@ class HelperFunction {
         User? user = FirebaseAuth.instance.currentUser;
 
         final path = firebaseStorage.FirebaseStorage.instance
-            .ref("safespace/${user!.uid}");
+            .ref("datingApp/${user!.uid}");
 
         for (var i = 0; i < file.length; i++) {
           final child = path.child(DateTime.now().toString());
