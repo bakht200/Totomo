@@ -62,7 +62,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     setState(() {
       _image = image;
-      print('Image Path $_image');
+
       if (edited == false) {
         edited = true;
       }
