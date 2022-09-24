@@ -41,6 +41,12 @@ class ProfileController extends GetxController {
     update();
   }
 
+  removeSelectedImage(index) async {
+    print(index);
+    files.removeWhere((element) => element == files[index]);
+    update();
+  }
+
   insertPost(file, descriptionController, context, postType, imagePath) async {
     showDialog(
         barrierDismissible: false,
@@ -63,6 +69,7 @@ class ProfileController extends GetxController {
             ),
           );
         });
+    print("calling upload file function");
     var response = await helperFunction.uploadFile(
         file, descriptionController, postType, imagePath);
 

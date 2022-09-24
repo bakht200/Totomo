@@ -102,9 +102,11 @@ class HelperFunction {
   }
 
   Future uploadFile(
-      List<File> file, descriptionController, postType, imagePath) async {
+      List<File>? file, descriptionController, postType, imagePath) async {
     try {
-      if (file.isEmpty) {
+      print("IN UPLOAD FUNCTION");
+      if (file == null) {
+        print("HERE");
         User? user = FirebaseAuth.instance.currentUser;
         String? userName = await UserSecureStorage.fetchUserName();
         var uniqueId = FirebaseFirestore.instance.collection("posts").doc().id;
@@ -112,7 +114,7 @@ class HelperFunction {
         await FirebaseFirestore.instance.collection("posts").doc(uniqueId).set({
           'postedBy': user!.uid,
           'userName': userName,
-          'mediaUrl': [],
+          'mediaUrl': '',
           'like': [],
           'comment': [],
           'report': [],
@@ -123,6 +125,7 @@ class HelperFunction {
           'userImage': imagePath
         });
       } else {
+        print("in else condition");
         List<String> url = [];
 
         User? user = FirebaseAuth.instance.currentUser;
@@ -142,7 +145,7 @@ class HelperFunction {
         await FirebaseFirestore.instance.collection("posts").doc(uniqueId).set({
           'postedBy': user.uid,
           'userName': userName,
-          'mediaUrl': [url],
+          'mediaUrl': url,
           'like': [],
           'comment': [],
           'report': [],

@@ -90,20 +90,28 @@ class _FormPageState extends State<FormPage> {
                                       (currentStep == getSteps().length - 1);
                                   if (isLastStep) {
                                     showDialog(
-                                      context: context,
-                                      barrierDismissible: false,
-                                      builder: (BuildContext context) {
-                                        return Dialog(
-                                          child: new Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              new CircularProgressIndicator(),
-                                              new Text("Loading"),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    );
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (_) {
+                                          return Dialog(
+                                            backgroundColor: Colors.white,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: const [
+                                                  CircularProgressIndicator(),
+                                                  SizedBox(
+                                                    height: 15,
+                                                  ),
+                                                  Text('Loading...')
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        });
 
                                     await authCotntroller.profileCompletion(
                                         imageFile!,

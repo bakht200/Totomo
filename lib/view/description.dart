@@ -54,7 +54,7 @@ class _DescriptionPostScreenState extends State<DescriptionPostScreen> {
   fetchCurrentUserName() async {
     userName = await UserSecureStorage.fetchUserName();
     await profileController.getUserData();
-    imagePath = profileController.userInformation.first['profileImage'];
+    imagePath = profileController.userInformation.first['profileImage'][0];
     setState(() {});
   }
 
@@ -65,28 +65,6 @@ class _DescriptionPostScreenState extends State<DescriptionPostScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              ProfileAvatar(imageUrl: imagePath),
-              SizedBox(width: 8.0.w),
-              Container(
-                height: 30.h,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        userName == null ? '' : "$userName",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
           Expanded(
               flex: 2,
               child: SizedBox(

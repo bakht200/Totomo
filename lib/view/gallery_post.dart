@@ -58,7 +58,7 @@ class _GalleryPostScreenState extends State<GalleryPostScreen> {
   fetchCurrentUserName() async {
     userName = await UserSecureStorage.fetchUserName();
     await profileController.getUserData();
-    imagePath = profileController.userInformation.first['profileImage'];
+    imagePath = profileController.userInformation.first['profileImage'][0];
     setState(() {});
   }
 
@@ -69,98 +69,92 @@ class _GalleryPostScreenState extends State<GalleryPostScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              ProfileAvatar(imageUrl: imagePath),
-              SizedBox(width: 8.0.w),
-              Container(
-                height: 30.h,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        userName == null ? '' : "$userName",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-              flex: 2,
-              child: cameraFile == null
-                  ? SizedBox(
-                      width: double.infinity / 2,
-                      height: 40.h,
-                      child: theme_primary_button_widget(
-                          primaryColor: Color(AppTheme.primaryColor),
-                          textColor: Color(0xFFFAFAFA),
-                          onpressFunction: () async {
-                            profileController.selectImages();
-                          },
-                          title: 'Choose Image from Gallery'))
-                  : AnimatedBuilder(
-                      animation: profileController,
-                      builder: (context, child) {
-                        return SizedBox(
-                          height: 250.h,
-                          child: profileController.files != null
-                              ? Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: AnimatedBuilder(
-                                      animation: profileController,
-                                      builder: (context, child) {
-                                        return ListView.builder(
-                                            itemExtent:
-                                                ScreenUtil().setHeight(246),
-                                            itemCount:
-                                                profileController.files.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              return Stack(children: [
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: 8.0.h,
-                                                      bottom: 8.0.h),
-                                                  child: Image.file(
-                                                      File(profileController
-                                                          .files[index].path),
-                                                      fit: BoxFit.cover),
-                                                ),
-                                                Positioned(
-                                                  right: 0,
-                                                  top: 10,
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        // getImageController
-                                                        //     .removeSelectedImage(
-                                                        //         index);
-                                                      },
-                                                      child: Cutout(
-                                                        color: Colors.red,
-                                                        child: Icon(
-                                                          Icons.close,
-                                                          color: Colors.red,
+          GetBuilder(
+              init: profileController,
+              builder: (context) {
+                return Expanded(
+                    flex: 2,
+                    child: profileController.files.length == 0
+                        ? SizedBox(
+                            width: double.infinity / 2,
+                            height: 40.h,
+                            child: theme_primary_button_widget(
+                                primaryColor: Color(AppTheme.primaryColor),
+                                textColor: Color(0xFFFAFAFA),
+                                onpressFunction: () async {
+                                  profileController.selectImages();
+                                },
+                                title: 'Choose Image from Gallery'))
+                        : AnimatedBuilder(
+                            animation: profileController,
+                            builder: (context, child) {
+                              return SizedBox(
+                                height: 250.h,
+                                child: profileController.files != null
+                                    ? Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: AnimatedBuilder(
+                                            animation: profileController,
+                                            builder: (context, child) {
+                                              return ListView.builder(
+                                                  itemExtent: ScreenUtil()
+                                                      .setHeight(246),
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemCount: profileController
+                                                      .files.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    return Stack(children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 8.0.h,
+                                                                bottom: 8.0.h),
+                                                        child: Image.file(
+                                                            File(
+                                                                profileController
+                                                                    .files[
+                                                                        index]
+                                                                    .path),
+                                                            fit: BoxFit.cover),
+                                                      ),
+                                                      Positioned(
+                                                        right: 0,
+                                                        top: 10,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(12),
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              print('object');
+                                                              profileController
+                                                                  .removeSelectedImage(
+                                                                      index);
+                                                              setState(() {});
+                                                            },
+                                                            child: Cutout(
+                                                              color: Colors.red,
+                                                              child: Icon(
+                                                                Icons.close,
+                                                                color:
+                                                                    Colors.red,
+                                                              ),
+                                                            ),
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ]);
-                                            });
-                                      }))
-                              : const SizedBox(),
-                        );
-                      })),
+                                                    ]);
+                                                  });
+                                            }))
+                                    : const SizedBox(),
+                              );
+                            }));
+              }),
           SizedBox(
             height: 10.h,
           ),

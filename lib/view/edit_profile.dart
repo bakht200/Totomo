@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../constants/app_theme.dart';
 import '../controller/profile_controller.dart';
 import '../widgets/primary_button_widget.dart';
@@ -42,7 +44,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       loading = true;
     });
     await profileController.getUserData();
-    nameController.text = profileController.userInformation.first['firstName'];
+    nameController.text = profileController.userInformation.first['fullName'];
 
     emailController.text = profileController.userInformation.first['email'];
     passwordController.text =
@@ -109,68 +111,56 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Center(
                         child: Stack(
                           children: [
-                            Container(
-                              width: 130.w,
-                              height: 130.h,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 4.w,
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        spreadRadius: 2,
-                                        blurRadius: 10,
-                                        color: Colors.black.withOpacity(0.1),
-                                        offset: const Offset(0, 10))
-                                  ],
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                        _image == null
-                                            ? profileController.userInformation
-                                                .first['profileImage']
-                                                .toString()
-                                            : _image!.path,
-                                      ))),
-                            ),
-                            Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    getImage();
-                                  },
-                                  child: Container(
-                                    height: 40.h,
-                                    width: 40.w,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        width: 4.w,
-                                        color: Theme.of(context)
-                                            .scaffoldBackgroundColor,
-                                      ),
-                                      color: Colors.green,
-                                    ),
-                                    child: const Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
+                            Align(
+                              alignment: Alignment.center,
+                              child: CircleAvatar(
+                                radius: 60.r,
+                                backgroundColor: Color(0xff476cfb),
+                                child: ClipOval(
+                                  child: FullScreenWidget(
+                                    child: SizedBox(
+                                      width: 180.0.w,
+                                      height: 180.0.h,
+                                      child: (_image != null)
+                                          ? Image.file(
+                                              File(_image!.path),
+                                              fit: BoxFit.fill,
+                                            )
+                                          : Image.network(
+                                              profileController.userInformation
+                                                              .first[
+                                                          'profileImage'][0] !=
+                                                      null
+                                                  ? profileController
+                                                      .userInformation
+                                                      .first['profileImage'][0]
+                                                  : "https://i.stack.imgur.com/l60Hf.png",
+                                              fit: BoxFit.fill,
+                                            ),
                                     ),
                                   ),
-                                )),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 50.0.h, left: 60.w),
+                              child: IconButton(
+                                icon: const Icon(
+                                  MdiIcons.camera,
+                                  size: 30.0,
+                                ),
+                                onPressed: () {
+                                  getImage();
+                                },
+                              ),
+                            ),
                           ],
                         ),
                       ),
                       SizedBox(
                         height: 35.h,
                       ),
-                      buildTextField("Full Name", "Dor Alex", false, [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Z]+|\s"),
-                        )
-                      ], (value) {
+                      buildTextField("Full Name", "Dor Alex", false, (value) {
                         if (value!.isEmpty) {
                           return 'Enter Firstname';
                         }
@@ -179,26 +169,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           "E-mail",
                           "alexd@gmail.com",
                           false,
-                          emailController,
                           (val) => val!.isEmpty || !val.contains("@")
                               ? "Enter a valid email"
                               : null,
                           edited,
                           emailController),
-                      buildTextField("Password", "********", true, [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Z]+|\s"),
-                        )
-                      ], (value) {
+                      buildTextField("Password", "********", true, (value) {
                         if (value!.isEmpty) {
                           return 'Enter Firstname';
                         }
                       }, edited, passwordController),
-                      buildTextField("Bio", "Hi i'm, Dor Alex", false, [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Z]+|\s"),
-                        )
-                      ], (value) {
+                      buildTextField("Bio", "Hi i'm, Dor Alex", false, (value) {
                         if (value!.isEmpty) {
                           return 'Enter Firstname';
                         }
@@ -301,10 +282,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
       String labelText,
       String placeholder,
       bool isPasswordTextField,
-      var inputFormatters,
+      // var inputFormatters,
       var validator,
       var edited,
-      var controller) {
+      TextEditingController controller) {
     return Padding(
       padding: EdgeInsets.only(bottom: 35.0.h),
       child: TextField(
@@ -313,7 +294,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             edited = true;
           }
         },
-        inputFormatters: inputFormatters,
+        // inputFormatters: inputFormatters,
         controller: controller,
         obscureText: isPasswordTextField ? showPassword : false,
         decoration: InputDecoration(

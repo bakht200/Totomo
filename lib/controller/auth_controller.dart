@@ -22,15 +22,6 @@ class AuthController extends GetxController {
 
       await UserSecureStorage.setToken(user.uid);
 
-      await UserSecureStorage.fetchToken();
-
-      final snapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .where('uid', isEqualTo: user.uid)
-          .get();
-      await UserSecureStorage.setUserName(snapshot.docs[0]['firstName']);
-      await UserSecureStorage.fetchUserName();
-
       await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
         'uid': user.uid,
         'fullName': name,
@@ -47,6 +38,14 @@ class AuthController extends GetxController {
         'country': '',
         'location': '',
       });
+
+      final snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('uid', isEqualTo: user.uid)
+          .get();
+
+      await UserSecureStorage.setUserName(snapshot.docs[0]['fullName']);
+
       Navigator.of(context).pop();
 
       Navigator.of(context).push(

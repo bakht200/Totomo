@@ -65,7 +65,8 @@ class _ProfilePageState extends State<ProfilePage> {
               padding: EdgeInsets.only(right: 8.0.w),
               child: GestureDetector(
                   onTap: () {
-                    profileController.getUserData();
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (builder) => EditProfilePage()));
                   },
                   child: Icon(
                     Icons.edit,
@@ -94,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: CircleAvatar(
                             radius: 30.r,
                             backgroundImage: NetworkImage(profileController
-                                .userInformation.first['profileImage']),
+                                .userInformation.first['profileImage'][0]),
                           ),
                         ),
                         Padding(
