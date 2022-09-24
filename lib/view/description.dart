@@ -241,7 +241,7 @@ class _DescriptionPostScreenState extends State<DescriptionPostScreen> {
                                                 descriptionController.text,
                                                 context,
                                                 postType,
-                                                imagePath);
+                                                imagePath,'descriptionPost');
                                           }
                                         },
                                         color: Color(AppTheme.primaryColor),

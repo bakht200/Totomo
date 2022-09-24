@@ -1,4 +1,5 @@
 import 'package:dating_app/constants/app_theme.dart';
+import 'package:dating_app/controller/post_controller.dart';
 
 import 'package:dating_app/view/add_post.dart';
 import 'package:dating_app/view/description.dart';
@@ -7,8 +8,10 @@ import 'package:dating_app/view/subscription_page.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../constants/secure_storage.dart';
 import '../widgets/post_item.dart';
 import '../widgets/story_item.dart';
 import 'gallery_post.dart';
@@ -26,6 +29,9 @@ class _HomePageState extends State<HomePage>
   AnimationController? _animationController;
   bool _isSearching = false;
   final TextEditingController _searchQueryController = TextEditingController();
+  final postController = Get.put(PostController());
+  bool loading = false;
+  String? userId;
 
   final BannerAd myBanner = BannerAd(
     adUnitId: 'ca-app-pub-3940256099942544/6300978111',
@@ -46,7 +52,21 @@ class _HomePageState extends State<HomePage>
         CurvedAnimation(curve: Curves.easeInOut, parent: _animationController!);
     _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
 
+    Future.delayed(Duration.zero, () => fetchData());
     super.initState();
+  }
+
+  Future<dynamic> fetchData() async {
+    setState(() {
+      loading = true;
+    });
+    // getImageController.contentTypeSearched("All");
+
+    await postController.getPostList();
+    userId = await UserSecureStorage.fetchToken();
+    setState(() {
+      loading = false;
+    });
   }
 
   List searchCategories = ['cat', 'blog', 'funny', 'weather', 'sports', 'news'];
@@ -333,53 +353,72 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget getBody() {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
+    return loading == true
+        ? const Center(child: CircularProgressIndicator())
+        : SingleChildScrollView(
+            child: Column(
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(8.0.w),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
                   child: Row(
-                      children: List.generate(10, (index) {
-                    return const StoryItem(
-                      img:
-                          'https://st2.depositphotos.com/3310833/7828/v/380/depositphotos_78289624-stock-illustration-flat-hipster-character.jpg?forcejpeg=true',
-                      name: 'Story',
-                    );
-                  })),
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(8.0.w),
+                        child: Row(
+                            children: List.generate(10, (index) {
+                          return const StoryItem(
+                            img:
+                                'https://st2.depositphotos.com/3310833/7828/v/380/depositphotos_78289624-stock-illustration-flat-hipster-character.jpg?forcejpeg=true',
+                            name: 'Story',
+                          );
+                        })),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  color: white.withOpacity(0.3),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  child: AdWidget(ad: myBanner),
+                  width: myBanner.size.width.toDouble(),
+                  height: myBanner.size.height.toDouble(),
+                ),
+                RefreshIndicator(
+                  onRefresh: fetchData,
+                  child: GetBuilder(
+                      init: postController,
+                      builder: (context) {
+                        return Container(
+                          child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: postController.postList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                print(
+                                    postController.postList[index]['mediaUrl']);
+                                print(postController
+                                    .postList[index]['mediaUrl'].length);
+                                return PostItem(
+                                  postImg: postController.postList[index]
+                                      ['mediaUrl'],
+                                  profileImg:
+                                      '${postController.postList[index]['userImage']}',
+                                  name:
+                                      '${postController.postList[index]['userName']}',
+                                  caption:
+                                      '${postController.postList[index]['description']}',
+                                  isLoved: true,
+                                  viewCount: '5',
+                                  likedBy: 'likesBy',
+                                );
+                              }),
+                        );
+                      }),
                 ),
               ],
             ),
-          ),
-          Divider(
-            color: white.withOpacity(0.3),
-          ),
-          Container(
-            alignment: Alignment.center,
-            child: AdWidget(ad: myBanner),
-            width: myBanner.size.width.toDouble(),
-            height: myBanner.size.height.toDouble(),
-          ),
-          Column(
-            children: List.generate(5, (index) {
-              return PostItem(
-                postImg:
-                    'https://st2.depositphotos.com/3310833/7828/v/380/depositphotos_78289624-stock-illustration-flat-hipster-character.jpg?forcejpeg=true',
-                profileImg:
-                    'https://st2.depositphotos.com/3310833/7828/v/380/depositphotos_78289624-stock-illustration-flat-hipster-character.jpg?forcejpeg=true',
-                name: 'Bakht',
-                caption: 'Hello here man how are you',
-                isLoved: true,
-                viewCount: '5',
-                likedBy: 'likesBy',
-              );
-            }),
-          )
-        ],
-      ),
-    );
+          );
   }
 }

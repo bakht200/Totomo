@@ -130,20 +130,27 @@ class _LoginScreenState extends State<LoginScreen> {
                               onpressFunction: () async {
                                 if (_formKey.currentState!.validate()) {
                                   showDialog(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    builder: (BuildContext context) {
-                                      return Dialog(
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: const [
-                                            CircularProgressIndicator(),
-                                            Text("Loading"),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  );
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (_) {
+                                        return Dialog(
+                                          backgroundColor: Colors.white,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 20),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: const [
+                                                CircularProgressIndicator(),
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+                                                Text('Loading...')
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
 
                                   try {
                                     await FirebaseAuth.instance
@@ -163,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         .where('uid', isEqualTo: user.uid)
                                         .get();
                                     await UserSecureStorage.setUserName(
-                                        snapshot.docs[0]['firstName']);
+                                        snapshot.docs[0]['fullName']);
                                     await UserSecureStorage.fetchUserName();
                                     if (snapshot.docs[0]['profileCompleted'] ==
                                         true) {
@@ -178,6 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       );
                                     }
                                   } catch (e) {
+                                    print(e.toString());
                                     Navigator.of(context).pop();
                                     Fluttertoast.showToast(msg: e.toString());
                                   }

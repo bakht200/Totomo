@@ -10,16 +10,16 @@ import '../constants/app_theme.dart';
 class PostItem extends StatelessWidget {
   final String profileImg;
   final String name;
-  final String postImg;
+  var postImg;
   final String caption;
   final isLoved;
   final String likedBy;
   final String viewCount;
 
-  const PostItem({
+  PostItem({
     required this.profileImg,
     required this.name,
-    required this.postImg,
+    this.postImg,
     required this.isLoved,
     required this.likedBy,
     required this.viewCount,
@@ -103,13 +103,21 @@ class PostItem extends StatelessWidget {
           SizedBox(
             height: 7.h,
           ),
-          Container(
-            height: 300.h,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(postImg), fit: BoxFit.cover),
-            ),
-          ),
+          postImg != []
+              ? Container(
+                  height: 200.h,
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: postImg.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          height: 300.h,
+                          child: Image.network(postImg[index]),
+                        );
+                      }),
+                )
+              : SizedBox(),
           SizedBox(
             height: 10.h,
           ),

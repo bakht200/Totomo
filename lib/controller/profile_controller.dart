@@ -47,7 +47,9 @@ class ProfileController extends GetxController {
     update();
   }
 
-  insertPost(file, descriptionController, context, postType, imagePath) async {
+  insertPost(
+      file, descriptionController, context, postType, imagePath, type) async {
+    var response;
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -70,8 +72,13 @@ class ProfileController extends GetxController {
           );
         });
     print("calling upload file function");
-    var response = await helperFunction.uploadFile(
-        file, descriptionController, postType, imagePath);
+    if (type == "cameraPost") {
+      response = await helperFunction.cameraPost(
+          file, descriptionController, postType, imagePath);
+    } else {
+      response = await helperFunction.uploadFile(
+          file, descriptionController, postType, imagePath);
+    }
 
     if (response == "filedUploaded") {
       Navigator.of(context).pop();

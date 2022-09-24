@@ -241,7 +241,8 @@ class _CameraPostScreenState extends State<CameraPostScreen> {
                                                 descriptionController.text,
                                                 context,
                                                 postType,
-                                                imagePath);
+                                                imagePath,
+                                                'cameraPost');
                                           }
                                         },
                                         color: Color(AppTheme.primaryColor),

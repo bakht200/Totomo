@@ -161,4 +161,64 @@ class HelperFunction {
       rethrow;
     }
   }
+
+  Future cameraPost(
+      File file, descriptionController, postType, imagePath) async {
+    try {
+      {
+        print("HERE IN cAMERA");
+        List<String> url = [];
+
+        User? user = FirebaseAuth.instance.currentUser;
+
+        final path = firebaseStorage.FirebaseStorage.instance
+            .ref("datingApp/${user!.uid}");
+
+        final child = path.child(DateTime.now().toString());
+        await child.putFile(File(file.path));
+        await child.getDownloadURL().then((value) => {url.add(value)});
+
+        String? userName = await UserSecureStorage.fetchUserName();
+        var uniqueId = FirebaseFirestore.instance.collection("posts").doc().id;
+
+        await FirebaseFirestore.instance.collection("posts").doc(uniqueId).set({
+          'postedBy': user.uid,
+          'userName': userName,
+          'mediaUrl': url,
+          'like': [],
+          'comment': [],
+          'report': [],
+          'postedAt': DateTime.now(),
+          'description': descriptionController,
+          'id': uniqueId,
+          'postType': postType,
+          'userImage': imagePath
+        });
+      }
+      return "filedUploaded";
+    } on FirebaseException catch (e) {
+      rethrow;
+    }
+  }
+
+  getpostList() async {
+    List post = [];
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('posts')
+          .orderBy("postedAt", descending: true)
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          post.add(element);
+          print(post.first['userName']);
+        });
+      });
+
+      return post;
+    } catch (e) {
+      return null;
+    }
+  }
 }

@@ -321,7 +321,8 @@ class _GalleryPostScreenState extends State<GalleryPostScreen> {
                                                 descriptionController.text,
                                                 context,
                                                 postType,
-                                                imagePath);
+                                                imagePath,
+                                                "galleryPost");
                                           }
                                         },
                                         color: Color(AppTheme.primaryColor),
