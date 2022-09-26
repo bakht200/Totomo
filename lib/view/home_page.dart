@@ -53,7 +53,22 @@ class _HomePageState extends State<HomePage>
     _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
 
     Future.delayed(Duration.zero, () => fetchData());
+    Future.delayed(Duration.zero, () => fetchUserList());
+
     super.initState();
+  }
+
+  Future<dynamic> fetchUserList() async {
+    setState(() {
+      loading = true;
+    });
+    // getImageController.contentTypeSearched("All");
+
+    await postController.getUsers();
+    userId = await UserSecureStorage.fetchToken();
+    setState(() {
+      loading = false;
+    });
   }
 
   Future<dynamic> fetchData() async {
@@ -364,14 +379,21 @@ class _HomePageState extends State<HomePage>
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.all(8.0.w),
-                        child: Row(
-                            children: List.generate(10, (index) {
-                          return const StoryItem(
-                            img:
-                                'https://st2.depositphotos.com/3310833/7828/v/380/depositphotos_78289624-stock-illustration-flat-hipster-character.jpg?forcejpeg=true',
-                            name: 'Story',
-                          );
-                        })),
+                        child: GetBuilder(
+                            init: postController,
+                            builder: (context) {
+                              print(postController.userList.length);
+                              return Row(
+                                  children: List.generate(
+                                      postController.userList.length, (index) {
+                                return StoryItem(
+                                  img: postController.userList[index]
+                                      ['profileImage'][0],
+                                  name: postController.userList[index]
+                                      ['fullName'],
+                                );
+                              }));
+                            }),
                       ),
                     ],
                   ),
@@ -396,10 +418,6 @@ class _HomePageState extends State<HomePage>
                               shrinkWrap: true,
                               itemCount: postController.postList.length,
                               itemBuilder: (BuildContext context, int index) {
-                                print(
-                                    postController.postList[index]['mediaUrl']);
-                                print(postController
-                                    .postList[index]['mediaUrl'].length);
                                 return PostItem(
                                   postImg: postController.postList[index]
                                       ['mediaUrl'],

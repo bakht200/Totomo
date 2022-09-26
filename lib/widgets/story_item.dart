@@ -52,7 +52,7 @@ class StoryItem extends StatelessWidget {
           SizedBox(
             width: 70.w,
             child: Padding(
-              padding: EdgeInsets.only(left: 8.0.w),
+              padding: EdgeInsets.only(left: 10.0.w),
               child: Text(
                 name,
                 overflow: TextOverflow.ellipsis,

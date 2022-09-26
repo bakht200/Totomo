@@ -221,4 +221,25 @@ class HelperFunction {
       return null;
     }
   }
+
+  getUserList() async {
+    List user = [];
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .orderBy("age", descending: true)
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          print(element);
+          user.add(element);
+        });
+      });
+
+      return user;
+    } catch (e) {
+      return null;
+    }
+  }
 }
