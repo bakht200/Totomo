@@ -242,4 +242,26 @@ class HelperFunction {
       return null;
     }
   }
+
+  getSearchNameList(name) async {
+    List user = [];
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .where('fullName', isEqualTo: name)
+          .orderBy("age", descending: true)
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          print(element);
+          user.add(element);
+        });
+      });
+
+      return user;
+    } catch (e) {
+      return null;
+    }
+  }
 }

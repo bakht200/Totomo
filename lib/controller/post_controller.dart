@@ -5,6 +5,7 @@ import '../services/helper_functions.dart';
 class PostController extends GetxController {
   List postList = [];
   List userList = [];
+  var searchList;
 
   HelperFunction helperFunction = HelperFunction();
 
@@ -20,6 +21,14 @@ class PostController extends GetxController {
     var response = await helperFunction.getUserList();
     if (response != null) {
       userList = response;
+    }
+    update();
+  }
+
+  searchUsers(var name) async {
+    var response = await helperFunction.searchByName(name);
+    if (response != null) {
+      searchList = response;
     }
     update();
   }

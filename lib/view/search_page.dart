@@ -26,6 +26,7 @@ class _SearchPageState extends State<SearchPage> {
   bool filterType = false;
   List<Gender> genders = [];
   bool _switchValue = true;
+  bool isSearching = false;
 
   int _currentValue = 1;
   String? selectedGender;
@@ -507,6 +508,7 @@ class _SearchPageState extends State<SearchPage> {
                       borderRadius: BorderRadius.circular(10.r),
                       color: Colors.grey.shade200),
                   child: TextField(
+                    onSubmitted: (value) async {},
                     decoration: InputDecoration(
                         hintText: 'Search by name',
                         border: InputBorder.none,
@@ -550,128 +552,37 @@ class _SearchPageState extends State<SearchPage> {
           height: 15.h,
         ),
         SizedBox(
-            height: size.height / .5,
-            child: filterType
-                ? GetBuilder(
-                    init: postController,
-                    builder: (context) {
-                      return GridView.builder(
-                          itemCount: postController.userList.length,
-                          shrinkWrap: true,
-                          physics: const ScrollPhysics(),
-                          padding: EdgeInsets.all(7.0.w),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  mainAxisSpacing: 16.w,
-                                  childAspectRatio:
-                                      (size.width / (size.height - 100.h)).w,
-                                  crossAxisCount: 3,
-                                  crossAxisSpacing: 10.h),
-                          itemBuilder: (context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  border: Border.all(
-                                      color: Color(AppTheme.primaryColor))),
-                              child: Padding(
-                                padding: EdgeInsets.all(6.0.w),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: CircleAvatar(
-                                        radius: 40.r,
-                                        backgroundImage: NetworkImage(
-                                          postController.userList[index]
-                                              ['profileImage'][0],
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            postController.userList[index]
-                                                ['fullName'],
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.amber,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 3.h,
-                                    ),
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: SizedBox(
-                                        height: 35.h,
-                                        width: 100.w,
-                                        child: Text(
-                                          postController.userList[index]
-                                              ['description'],
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 3.h,
-                                    ),
-                                    Expanded(
-                                      child: SizedBox(
-                                          width: 90.w, //
-                                          height: 30.h,
-                                          child: theme_primary_button_widget(
-                                              primaryColor:
-                                                  Color(AppTheme.primaryColor),
-                                              textColor:
-                                                  const Color(0xFFFAFAFA),
-                                              onpressFunction: () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (builder) =>
-                                                          ChatDetailPage()),
-                                                );
-                                              },
-                                              title: 'Message')),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          });
-                    })
-                : GetBuilder(
-                    init: postController,
-                    builder: (context) {
-                      return ListView.builder(
-                          itemCount: postController.userList.length,
-                          shrinkWrap: true,
-                          physics: const ScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.all(5.0.w),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.r),
-                                    border: Border.all(
-                                        color: Color(AppTheme.primaryColor))),
-                                child: ListTile(
-                                  leading: Padding(
-                                    padding: EdgeInsets.only(bottom: 2.0.h),
+          height: size.height / .5,
+          child: filterType
+              ? GetBuilder(
+                  init: postController,
+                  builder: (context) {
+                    return GridView.builder(
+                        itemCount: postController.userList.length,
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        padding: EdgeInsets.all(7.0.w),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisSpacing: 16.w,
+                            childAspectRatio:
+                                (size.width / (size.height - 100.h)).w,
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 10.h),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.r),
+                                border: Border.all(
+                                    color: Color(AppTheme.primaryColor))),
+                            child: Padding(
+                              padding: EdgeInsets.all(6.0.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    flex: 2,
                                     child: CircleAvatar(
                                       radius: 40.r,
                                       backgroundImage: NetworkImage(
@@ -680,95 +591,182 @@ class _SearchPageState extends State<SearchPage> {
                                       ),
                                     ),
                                   ),
-                                  title: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            postController.userList[index]
-                                                ['fullName'],
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          const Icon(
-                                            Icons.star,
-                                            color: Colors.amber,
-                                          )
-                                        ],
-                                      ),
-                                    ],
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          postController.userList[index]
+                                              ['fullName'],
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
+                                  SizedBox(
+                                    height: 3.h,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: SizedBox(
+                                      height: 35.h,
+                                      width: 100.w,
+                                      child: Text(
                                         postController.userList[index]
                                             ['description'],
                                         textAlign: TextAlign.start,
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             color: Colors.grey,
                                             fontWeight: FontWeight.w500),
                                       ),
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            MdiIcons.map,
-                                            color: Colors.blue,
-                                          ),
-                                          Text(postController.userList[index]
-                                              ['country']),
-                                          const Icon(
-                                            Icons.location_pin,
-                                            color: Colors.red,
-                                          ),
-                                          Text(postController.userList[index]
-                                              ['city']),
-                                        ],
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                  trailing: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      GestureDetector(
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (builder) =>
-                                                      ChatDetailPage()),
-                                            );
-                                          },
-                                          child: Icon(
-                                            Icons.message_rounded,
-                                            color: Colors.black,
-                                          )),
-                                      GestureDetector(
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (builder) =>
-                                                      ProfilePage()),
-                                            );
-                                          },
-                                          child: Icon(
-                                            Icons.person,
-                                            color: Colors.red,
-                                          )),
-                                    ],
+                                  SizedBox(
+                                    height: 3.h,
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                        width: 90.w, //
+                                        height: 30.h,
+                                        child: theme_primary_button_widget(
+                                            primaryColor:
+                                                Color(AppTheme.primaryColor),
+                                            textColor: const Color(0xFFFAFAFA),
+                                            onpressFunction: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (builder) =>
+                                                        ChatDetailPage()),
+                                              );
+                                            },
+                                            title: 'Message')),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                  })
+              : GetBuilder(
+                  init: postController,
+                  builder: (context) {
+                    return ListView.builder(
+                        itemCount: postController.userList.length,
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.all(5.0.w),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  border: Border.all(
+                                      color: Color(AppTheme.primaryColor))),
+                              child: ListTile(
+                                leading: Padding(
+                                  padding: EdgeInsets.only(bottom: 2.0.h),
+                                  child: CircleAvatar(
+                                    radius: 40.r,
+                                    backgroundImage: NetworkImage(
+                                      postController.userList[index]
+                                          ['profileImage'][0],
+                                    ),
                                   ),
                                 ),
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          postController.userList[index]
+                                              ['fullName'],
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      postController.userList[index]
+                                          ['description'],
+                                      textAlign: TextAlign.start,
+                                      style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          MdiIcons.map,
+                                          color: Colors.blue,
+                                        ),
+                                        Text(postController.userList[index]
+                                            ['country']),
+                                        const Icon(
+                                          Icons.location_pin,
+                                          color: Colors.red,
+                                        ),
+                                        Text(postController.userList[index]
+                                            ['city']),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                trailing: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (builder) =>
+                                                    ChatDetailPage()),
+                                          );
+                                        },
+                                        child: Icon(
+                                          Icons.message_rounded,
+                                          color: Colors.black,
+                                        )),
+                                    GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (builder) =>
+                                                    ProfilePage()),
+                                          );
+                                        },
+                                        child: Icon(
+                                          Icons.person,
+                                          color: Colors.red,
+                                        )),
+                                  ],
+                                ),
                               ),
-                            );
-                          });
-                    }))
+                            ),
+                          );
+                        });
+                  }),
+        )
       ],
     ));
   }

@@ -1,3 +1,4 @@
+import 'package:dating_app/view/view_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -142,10 +143,22 @@ class PostItem extends StatelessWidget {
                     SizedBox(
                       width: 20.w,
                     ),
-                    SvgPicture.asset(
-                      "assets/images/comment_icon.svg",
-                      width: 27.w,
-                      color: Colors.black,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (builder) => ViewPost(
+                                profileImg: profileImg,
+                                name: name,
+                                isLoved: isLoved,
+                                likedBy: likedBy,
+                                viewCount: viewCount,
+                                caption: caption)));
+                      },
+                      child: SvgPicture.asset(
+                        "assets/images/comment_icon.svg",
+                        width: 27.w,
+                        color: Colors.black,
+                      ),
                     ),
                     SizedBox(
                       width: 20.w,
