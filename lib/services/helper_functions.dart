@@ -26,19 +26,19 @@ class HelperFunction {
   //   });
   // }
 
-  // getAllUsers() async {
-  //   String? userId = await UserSecureStorage.fetchToken();
-  //   print(userId);
-  //   return FirebaseFirestore.instance
-  //       .collection("users")
-  //       .where('uid', isNotEqualTo: userId)
-  //       .get();
-  // }
+  getAllUsers() async {
+    String? userId = await UserSecureStorage.fetchToken();
+    print(userId);
+    return FirebaseFirestore.instance
+        .collection("users")
+        .where('uid', isNotEqualTo: userId)
+        .get();
+  }
 
   searchByName(String searchField) {
     return FirebaseFirestore.instance
         .collection("users")
-        .where('firstName', isEqualTo: searchField)
+        .where('fullName', isEqualTo: searchField)
         .get();
   }
 

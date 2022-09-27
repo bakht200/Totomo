@@ -90,8 +90,10 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
           //   msg: 'Login Success UID: ${userCredential.user?.uid}',
           // );
 
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (builder) => Dashboard()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (builder) => Dashboard(
+                    index: 0,
+                  )));
         },
         onLoginFailed: (authException, stackTrace) {
           // log(

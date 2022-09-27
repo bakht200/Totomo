@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:dating_app/view/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -6,16 +7,15 @@ import '../view/chat_detail_page.dart';
 
 class ConversationList extends StatefulWidget {
   String? name;
-  String? messageText;
+
   String? imageUrl;
-  String? time;
-  bool? isMessageRead;
-  ConversationList(
-      {@required this.name,
-      @required this.messageText,
-      @required this.imageUrl,
-      @required this.time,
-      @required this.isMessageRead});
+  String? country;
+
+  ConversationList({
+    @required this.name,
+    @required this.imageUrl,
+    @required this.country,
+  });
   @override
   _ConversationListState createState() => _ConversationListState();
 }
@@ -26,7 +26,7 @@ class _ConversationListState extends State<ConversationList> {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ChatDetailPage();
+          return SearchPage();
         }));
       },
       child: Container(
@@ -37,17 +37,6 @@ class _ConversationListState extends State<ConversationList> {
             Expanded(
               child: Row(
                 children: <Widget>[
-                  Badge(
-                    badgeContent: const Text(''),
-                    badgeColor: Colors.green,
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(widget.imageUrl!),
-                      maxRadius: 25.r,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 16.w,
-                  ),
                   Expanded(
                     child: Container(
                       color: Colors.transparent,
@@ -62,14 +51,7 @@ class _ConversationListState extends State<ConversationList> {
                             height: 6.h,
                           ),
                           Text(
-                            widget.messageText!,
-                            style: TextStyle(
-                                fontSize: 13.sp,
-                                color: Colors.grey.shade600,
-                                fontWeight: FontWeight.normal),
-                          ),
-                          Text(
-                            'Tokyo, Japan',
+                            '${widget.country}',
                             style: TextStyle(
                                 fontSize: 13.sp,
                                 color: Colors.grey.shade600,
@@ -81,10 +63,6 @@ class _ConversationListState extends State<ConversationList> {
                   ),
                 ],
               ),
-            ),
-            Text(
-              widget.time!,
-              style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.normal),
             ),
           ],
         ),

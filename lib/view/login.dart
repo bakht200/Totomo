@@ -176,7 +176,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                         true) {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                            builder: (builder) => Dashboard()),
+                                            builder: (builder) => Dashboard(
+                                                  index: 0,
+                                                )),
                                       );
                                     } else {
                                       Navigator.of(context).push(

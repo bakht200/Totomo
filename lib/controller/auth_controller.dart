@@ -88,7 +88,10 @@ class AuthController extends GetxController {
       Navigator.of(context).pop();
 
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => Dashboard()),
+          MaterialPageRoute(
+              builder: (context) => Dashboard(
+                    index: 0,
+                  )),
           (Route<dynamic> route) => false);
     } catch (e) {
       Navigator.of(context).pop();

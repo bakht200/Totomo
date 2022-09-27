@@ -258,9 +258,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         Fluttertoast.showToast(
                                             msg:
                                                 "Profile Updated Successfully");
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (_) => Dashboard()));
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                                builder: (_) => Dashboard(
+                                                      index: 0,
+                                                    )));
                                       }
                                     } else {
                                       Fluttertoast.showToast(

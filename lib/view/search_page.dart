@@ -1,5 +1,7 @@
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/view/chat_detail_page.dart';
+import 'package:dating_app/view/dashboard.dart';
+import 'package:dating_app/view/messaging/search.dart';
 import 'package:dating_app/view/profile.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -643,7 +645,9 @@ class _SearchPageState extends State<SearchPage> {
                                               Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (builder) =>
-                                                        ChatDetailPage()),
+                                                        Dashboard(
+                                                          index: 1,
+                                                        )),
                                               );
                                             },
                                             title: 'Message')),
@@ -685,7 +689,7 @@ class _SearchPageState extends State<SearchPage> {
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           postController.userList[index]
@@ -703,7 +707,7 @@ class _SearchPageState extends State<SearchPage> {
                                   ],
                                 ),
                                 subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
                                       postController.userList[index]
@@ -739,8 +743,9 @@ class _SearchPageState extends State<SearchPage> {
                                         onTap: () {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
-                                                builder: (builder) =>
-                                                    ChatDetailPage()),
+                                                builder: (builder) => Dashboard(
+                                                      index: 1,
+                                                    )),
                                           );
                                         },
                                         child: Icon(

@@ -85,8 +85,10 @@ class ProfileController extends GetxController {
       Fluttertoast.showToast(msg: "Post Added.");
       files.clear();
 
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (builder) => Dashboard()));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (builder) => Dashboard(
+                index: 0,
+              )));
     }
   }
 }

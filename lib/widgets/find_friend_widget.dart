@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:dating_app/view/search_page.dart';
 import 'package:dating_app/widgets/primary_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,9 +28,9 @@ class _FindFriendListState extends State<FindFriendList> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ChatDetailPage();
-        }));
+        // Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //   return ChatDetailPage();
+        // }));
       },
       child: Container(
         padding:
@@ -104,8 +105,7 @@ class _FindFriendListState extends State<FindFriendList> {
                     textColor: const Color(0xFFFAFAFA),
                     onpressFunction: () {
                       Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (builder) => ChatDetailPage()),
+                        MaterialPageRoute(builder: (builder) => SearchPage()),
                       );
                     },
                     title: 'Message')),

@@ -11,15 +11,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'home_page.dart';
+import 'messaging/search.dart';
 
 class Dashboard extends StatefulWidget {
+  int index;
+  Dashboard({required this.index});
   @override
   _DashboardState createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
-  int pageIndex = 0;
-
   String searchQuery = "Search query";
 
   @override
@@ -34,13 +35,13 @@ class _DashboardState extends State<Dashboard> {
   Widget getBody() {
     List<Widget> pages = [
       const HomePage(),
-      ChatPage(),
+      Search(),
       const SearchPage(),
       SubscriptionPage(),
       const ProfilePage(),
     ];
     return IndexedStack(
-      index: pageIndex,
+      index: widget.index,
       children: pages,
     );
   }
@@ -58,15 +59,21 @@ class _DashboardState extends State<Dashboard> {
 
   Widget getFooter() {
     List bottomItems = [
-      pageIndex == 0 ? "assets/images/home (2).png" : "assets/images/home.png",
-      pageIndex == 1
+      widget.index == 0
+          ? "assets/images/home (2).png"
+          : "assets/images/home.png",
+      widget.index == 1
           ? "assets/images/email (1).png"
           : "assets/images/email.png",
-      pageIndex == 2
+      widget.index == 2
           ? "assets/images/magnifying-glass.png"
           : "assets/images/search.png",
-      pageIndex == 3 ? "assets/images/diamond.png" : "assets/images/value.png",
-      pageIndex == 4 ? "assets/images/man-user.png" : "assets/images/user.png",
+      widget.index == 3
+          ? "assets/images/diamond.png"
+          : "assets/images/value.png",
+      widget.index == 4
+          ? "assets/images/man-user.png"
+          : "assets/images/user.png",
     ];
     return Container(
       width: double.infinity,
@@ -95,7 +102,7 @@ class _DashboardState extends State<Dashboard> {
 
   selectedTab(index) {
     setState(() {
-      pageIndex = index;
+      widget.index = index;
     });
   }
 }
