@@ -48,4 +48,20 @@ class PostController extends GetxController {
     }
     update();
   }
+
+  getPostLike(id, userId) async {
+    var response = await helperFunction.likepost(id, userId);
+    if (response == "Updated") {
+      getPostList();
+    }
+    update();
+  }
+
+  removePostLike(id, userId) async {
+    var response = await helperFunction.unLikePost(id, userId);
+    if (response == "Updated") {
+      getPostList();
+    }
+    update();
+  }
 }

@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/controller/post_controller.dart';
 import 'package:dating_app/view/view_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
@@ -12,12 +14,13 @@ import '../constants/app_theme.dart';
 
 class PostItem extends StatelessWidget {
   var data;
-
   var userId;
+  PostController controller;
 
   PostItem({
     required this.data,
     required this.userId,
+    required this.controller,
   });
 
   @override
@@ -122,17 +125,39 @@ class PostItem extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    true
-                        ? SvgPicture.asset(
-                            "assets/images/loved_icon.svg",
-                            width: 27.w,
-                            color: Colors.black,
-                          )
-                        : SvgPicture.asset(
-                            "assets/images/love_icon.svg",
-                            width: 27.w,
-                            color: Colors.black,
-                          ),
+                    GetBuilder(
+                        init: controller,
+                        builder: (context) {
+                          return GestureDetector(
+                            onTap: () {
+                              if (data['like'].contains(userId)) {
+                                controller.removePostLike(
+                                  data['id'],
+                                  userId,
+                                );
+                              } else {
+                                controller.getPostLike(
+                                  data['id'],
+                                  userId,
+                                );
+                              }
+                              //  controller. fetchData(getImageController.contentItemName);
+                            },
+                            child: Container(
+                              child: data['like'].contains(userId)
+                                  ? SvgPicture.asset(
+                                      "assets/images/loved_icon.svg",
+                                      width: 27.w,
+                                      color: Colors.black,
+                                    )
+                                  : SvgPicture.asset(
+                                      "assets/images/love_icon.svg",
+                                      width: 27.w,
+                                      color: Colors.black,
+                                    ),
+                            ),
+                          );
+                        }),
                     SizedBox(
                       width: 20.w,
                     ),

@@ -282,4 +282,35 @@ class HelperFunction {
       return null;
     }
   }
+
+  likepost(id, userId) async {
+    try {
+      await FirebaseFirestore.instance.collection('posts').doc(id).update({
+        "like": FieldValue.arrayUnion([userId])
+      });
+      return "Updated";
+    } catch (e) {
+      return null;
+    }
+  }
+
+  unLikePost(id, userId) async {
+    try {
+      final equipmentCollection =
+          FirebaseFirestore.instance.collection("posts").doc(id);
+
+      final docSnap = await equipmentCollection.get();
+
+      List queue = docSnap.get('like');
+
+      if (queue.contains(userId) == true) {
+        equipmentCollection.update({
+          "like": FieldValue.arrayRemove([userId])
+        });
+      }
+      return "Updated";
+    } catch (e) {
+      return null;
+    }
+  }
 }

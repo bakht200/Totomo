@@ -419,8 +419,10 @@ class _HomePageState extends State<HomePage>
                               itemCount: postController.postList.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return PostItem(
-                                    data: postController.postList[index],
-                                    userId: userId);
+                                  data: postController.postList[index],
+                                  userId: userId,
+                                  controller: postController,
+                                );
                               }),
                         );
                       }),

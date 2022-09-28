@@ -1,7 +1,5 @@
 import 'package:dating_app/constants/app_theme.dart';
-import 'package:dating_app/view/chat_detail_page.dart';
 import 'package:dating_app/view/dashboard.dart';
-import 'package:dating_app/view/messaging/search.dart';
 import 'package:dating_app/view/profile.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -14,7 +12,6 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import '../constants/secure_storage.dart';
 import '../controller/post_controller.dart';
 import '../model/gender_model.dart';
-import '../widgets/gender_selection_widget.dart';
 import '../widgets/primary_button_widget.dart';
 
 class SearchPage extends StatefulWidget {
