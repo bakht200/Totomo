@@ -38,7 +38,7 @@ class PostItem extends StatelessWidget {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: NetworkImage(data['userImage'][0]),
+                              image: NetworkImage(data['userImage']),
                               fit: BoxFit.cover)),
                     ),
                     SizedBox(
@@ -95,7 +95,7 @@ class PostItem extends StatelessWidget {
           SizedBox(
             height: 7.h,
           ),
-          data['mediaUrl'] != []
+          data['mediaUrl'].length != 0
               ? Container(
                   height: 200.h,
                   child: ListView.builder(
@@ -206,7 +206,7 @@ class PostItem extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                         color: Colors.black)),
                 TextSpan(
-                    text: data['description'],
+                    text: "  ${data['description']}",
                     style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w500,

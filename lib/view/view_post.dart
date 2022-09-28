@@ -27,19 +27,20 @@ class _ViewPostState extends State<ViewPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Color(AppTheme.primaryColor)),
-        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(
+          color: Colors.white, //change your color here
+        ),
+        elevation: 0,
+        backgroundColor: Color(AppTheme.appBarBackgroundColor),
         title: Text(
           'View Post',
           style: TextStyle(
-            color: Color(AppTheme.primaryColor),
-            fontSize: 28.0,
+            color: white,
             fontWeight: FontWeight.bold,
-            letterSpacing: -1.2,
+            fontSize: 22.sp,
           ),
         ),
         centerTitle: false,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       body: ViewContainer(data: widget.data, userId: widget.userId),
     );
@@ -73,7 +74,10 @@ class _ViewContainerState extends State<ViewContainer> {
           const SizedBox(height: 4.0),
           Padding(
             padding: EdgeInsets.only(left: 10.0.w),
-            child: Text(widget.data!['description']),
+            child: Text(
+              widget.data!['description'],
+              style: TextStyle(color: Colors.grey[600], fontSize: 20.sp),
+            ),
           ),
           widget.data['mediaUrl'].length != 0
               ? Container(
@@ -102,7 +106,6 @@ class _ViewContainerState extends State<ViewContainer> {
                 Container(
                     padding: const EdgeInsets.all(4.0),
                     decoration: BoxDecoration(
-                      color: Color(AppTheme.primaryColor),
                       shape: BoxShape.circle,
                     ),
                     child: SvgPicture.asset(
@@ -167,9 +170,14 @@ class _ViewContainerState extends State<ViewContainer> {
                                 ListTile(
                                   leading: CircleAvatar(
                                     backgroundColor:
-                                        Color(AppTheme.primaryColor),
+                                        Color(AppTheme.appBarBackgroundColor),
                                     child: Text(
-                                        "${widget.data['comment'][index]['commentedBy'].substring(0, 1)}"),
+                                      "${widget.data['comment'][index]['commentedBy'].substring(0, 1)}",
+                                      style: TextStyle(
+                                          fontSize: 15.0.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
                                   ),
                                   title: Text(
                                     widget.data['comment'][index]
