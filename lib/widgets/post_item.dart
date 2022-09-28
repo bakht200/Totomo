@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/view/view_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../constants/app_theme.dart';
 
@@ -62,7 +64,7 @@ class PostItem extends StatelessWidget {
                                 width: 10.w,
                               ),
                               Text(
-                                'Funny',
+                                data['postType'],
                                 style: TextStyle(
                                     color: Color(AppTheme.primaryColor),
                                     fontStyle: FontStyle.italic,
@@ -77,7 +79,7 @@ class PostItem extends StatelessWidget {
                           children: [
                             const Icon(Icons.location_on, color: Colors.grey),
                             Text(
-                              'Peshawar',
+                              '${timeago.format((data['postedAt'] as Timestamp).toDate())}',
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 13.sp,
