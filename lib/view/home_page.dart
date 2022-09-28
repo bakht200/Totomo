@@ -419,18 +419,8 @@ class _HomePageState extends State<HomePage>
                               itemCount: postController.postList.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return PostItem(
-                                  postImg: postController.postList[index]
-                                      ['mediaUrl'],
-                                  profileImg:
-                                      '${postController.postList[index]['userImage']}',
-                                  name:
-                                      '${postController.postList[index]['userName']}',
-                                  caption:
-                                      '${postController.postList[index]['description']}',
-                                  isLoved: true,
-                                  viewCount: '5',
-                                  likedBy: 'likesBy',
-                                );
+                                    data: postController.postList,
+                                    userId: userId);
                               }),
                         );
                       }),

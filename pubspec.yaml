@@ -61,6 +61,7 @@ dependencies:
   dropdown_button2: ^1.6.3
   flutter_secure_storage: ^5.0.2
   full_screen_image_null_safe: ^2.0.0
+  timeago:
 
 dev_dependencies:
   flutter_test:

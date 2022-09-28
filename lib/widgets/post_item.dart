@@ -9,22 +9,13 @@ import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import '../constants/app_theme.dart';
 
 class PostItem extends StatelessWidget {
-  final String profileImg;
-  final String name;
-  var postImg;
-  final String caption;
-  final isLoved;
-  final String likedBy;
-  final String viewCount;
+  var data;
+
+  var userId;
 
   PostItem({
-    required this.profileImg,
-    required this.name,
-    this.postImg,
-    required this.isLoved,
-    required this.likedBy,
-    required this.viewCount,
-    required this.caption,
+    required this.data,
+    required this.userId,
   });
 
   @override
@@ -47,7 +38,7 @@ class PostItem extends StatelessWidget {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: NetworkImage(profileImg),
+                              image: NetworkImage(data['userImage'][0]),
                               fit: BoxFit.cover)),
                     ),
                     SizedBox(
@@ -61,7 +52,7 @@ class PostItem extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                name,
+                                data['userName'],
                                 style: TextStyle(
                                     color: black,
                                     fontSize: 15.sp,
@@ -104,17 +95,17 @@ class PostItem extends StatelessWidget {
           SizedBox(
             height: 7.h,
           ),
-          postImg != []
+          data['mediaUrl'] != []
               ? Container(
                   height: 200.h,
                   child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: postImg.length,
+                      itemCount: data['mediaUrl'].length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Container(
                           height: 300.h,
-                          child: Image.network(postImg[index]),
+                          child: Image.network(data['mediaUrl'][index]),
                         );
                       }),
                 )
@@ -129,7 +120,7 @@ class PostItem extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    isLoved
+                    true
                         ? SvgPicture.asset(
                             "assets/images/loved_icon.svg",
                             width: 27.w,
@@ -146,13 +137,8 @@ class PostItem extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (builder) => ViewPost(
-                                profileImg: profileImg,
-                                name: name,
-                                isLoved: isLoved,
-                                likedBy: likedBy,
-                                viewCount: viewCount,
-                                caption: caption)));
+                            builder: (builder) =>
+                                ViewPost(data: data, userId: userId)));
                       },
                       child: SvgPicture.asset(
                         "assets/images/comment_icon.svg",
@@ -214,13 +200,13 @@ class PostItem extends StatelessWidget {
               child: RichText(
                   text: TextSpan(children: [
                 TextSpan(
-                    text: "$name ",
+                    text: data['userName'],
                     style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w700,
                         color: Colors.black)),
                 TextSpan(
-                    text: "$caption",
+                    text: data['description'],
                     style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w500,

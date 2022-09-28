@@ -264,4 +264,22 @@ class HelperFunction {
       return null;
     }
   }
+
+  addComment(id, commentText, userName) async {
+    try {
+      await FirebaseFirestore.instance.collection('posts').doc(id).update({
+        "comment": FieldValue.arrayUnion([
+          {
+            'commentedBy': userName,
+            'commentText': commentText,
+            'commentedAt': DateTime.now()
+          }
+        ])
+      });
+      print("HERE");
+      return "Commented";
+    } catch (e) {
+      return null;
+    }
+  }
 }
