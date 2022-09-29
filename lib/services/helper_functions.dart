@@ -101,6 +101,28 @@ class HelperFunction {
     }
   }
 
+  getPost() async {
+    List userData = [];
+
+    try {
+      String? userId = await UserSecureStorage.fetchToken();
+
+      await FirebaseFirestore.instance
+          .collection('posts')
+          .where('postedBy', isEqualTo: userId)
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          userData.add(element);
+        });
+      });
+
+      return userData;
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future uploadFile(
       List<File>? file, descriptionController, postType, imagePath) async {
     try {

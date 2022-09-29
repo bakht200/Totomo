@@ -12,6 +12,7 @@ import '../services/helper_functions.dart';
 class ProfileController extends GetxController {
   List userInformation = [];
   List<File> files = [];
+  List userPost = [];
 
   HelperFunction helperFunction = HelperFunction();
   FilePickerResult? galleryFile;
@@ -20,6 +21,14 @@ class ProfileController extends GetxController {
     var response = await helperFunction.getUserInformation();
     if (response != null) {
       userInformation = response;
+      update();
+    }
+  }
+
+  getUserPost() async {
+    var response = await helperFunction.getPost();
+    if (response != null) {
+      userPost = response;
       update();
     }
   }

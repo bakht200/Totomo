@@ -77,18 +77,15 @@ class PostItem extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Icon(Icons.location_on, color: Colors.grey),
-                            Text(
-                              '${timeago.format((data['postedAt'] as Timestamp).toDate())}',
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 13.sp,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                          ],
+                        Padding(
+                          padding: EdgeInsets.only(left: 8.0.w),
+                          child: Text(
+                            '${timeago.format((data['postedAt'] as Timestamp).toDate())}',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w300),
+                          ),
                         )
                       ],
                     )

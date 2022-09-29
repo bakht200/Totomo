@@ -4,6 +4,7 @@ import 'package:dating_app/view/edit_profile.dart';
 import 'package:dating_app/view/phone_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 import 'package:get/get.dart';
 
 import 'authentication_screen.dart';
@@ -38,6 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
       loading = true;
     });
     await profileController.getUserData();
+    await profileController.getUserPost();
 
     setState(() {
       loading = false;
@@ -295,7 +297,72 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                     ),
-                    _NoPostsMessage(),
+                    SingleChildScrollView(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 8.0.w),
+                              child: Text(
+                                'Recent Posts',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17.0.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            GetBuilder(
+                                init: profileController,
+                                builder: (context) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                        border:
+                                            Border.all(color: Colors.black38)),
+                                    child: Wrap(
+                                        spacing: 2,
+                                        runSpacing: 5,
+                                        children: List.generate(
+                                            profileController.userPost.length,
+                                            (index) {
+                                          return Container(
+                                              width: 70.w,
+                                              height: 100.h,
+                                              child: ListView.builder(
+                                                  itemCount: profileController
+                                                      .userPost[index]
+                                                          ['mediaUrl']
+                                                      .length,
+                                                  itemBuilder:
+                                                      ((context, _index) {
+                                                    return FullScreenWidget(
+                                                      child: Container(
+                                                          width: 70.w,
+                                                          height: 100.h,
+                                                          decoration: BoxDecoration(
+                                                              image: DecorationImage(
+                                                                  image: NetworkImage(
+                                                                    profileController.userPost[index]
+                                                                            [
+                                                                            'mediaUrl']
+                                                                        [
+                                                                        _index],
+                                                                  ),
+                                                                  fit: BoxFit.cover))),
+                                                    );
+                                                  }))
+                                              // decoration: BoxDecoration(
+                                              //     image: DecorationImage(
+                                              //         image: NetworkImage(
+                                              //           '',
+                                              //         ),
+                                              //         fit: BoxFit.cover)),
+                                              );
+                                        })),
+                                  );
+                                })
+                          ]),
+                    )
                   ],
                 ),
               ));
@@ -363,49 +430,6 @@ class _EditProfileButton extends StatelessWidget {
         //   ),
         // ),
       ],
-    );
-  }
-}
-
-class _NoPostsMessage extends StatelessWidget {
-  const _NoPostsMessage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Padding(
-          padding: EdgeInsets.only(left: 8.0.w),
-          child: Text(
-            'Recent Posts',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 17.0.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(border: Border.all(color: Colors.black38)),
-          child: Wrap(
-              spacing: 2,
-              runSpacing: 5,
-              children: List.generate(12, (index) {
-                return Container(
-                  width: 70.w,
-                  height: 100.h,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(
-                            'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80',
-                          ),
-                          fit: BoxFit.cover)),
-                );
-              })),
-        )
-      ]),
     );
   }
 }
