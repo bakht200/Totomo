@@ -32,19 +32,14 @@ class _SearchState extends State<Search> {
     });
   }
 
-  searchUserName() async {
-    if (searchEditingController.text.isNotEmpty) {
-      setState(() {
-        isLoading = true;
-      });
-      await databaseMethods
-          .searchByName(searchEditingController.text)
-          .then((snapshot) {
+  searchUserName(String value) async {
+    if (value.isNotEmpty) {
+      await databaseMethods.searchByName(value).then((snapshot) {
         searchResultSnapshot = snapshot;
         print("$searchResultSnapshot");
         setState(() {
-          isLoading = false;
           haveUserSearched = true;
+          print(searchResultSnapshot?.docs.first["fullName"]);
         });
       });
     }
@@ -187,7 +182,9 @@ class _SearchState extends State<Search> {
                           Expanded(
                             child: TextField(
                               controller: searchEditingController,
-                              // style: simpleTextStyle(),
+                              onChanged: (value) {
+                                searchUserName(value);
+                              },
                               decoration: InputDecoration(
                                   hintText: "search username ...",
                                   hintStyle: TextStyle(
@@ -199,7 +196,7 @@ class _SearchState extends State<Search> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              searchUserName();
+                              // searchUserName();
                             },
                             child: Container(
                                 height: 40,

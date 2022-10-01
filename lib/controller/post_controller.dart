@@ -41,10 +41,10 @@ class PostController extends GetxController {
     if (response == "Commented") {
       getPostList();
       Fluttertoast.showToast(msg: "Comment Added.");
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (builder) => Dashboard(
-                index: 0,
-              )));
+      // Navigator.of(context).push(MaterialPageRoute(
+      //     builder: (builder) => Dashboard(
+      //           index: 0,
+      //         )));
     }
     update();
   }

@@ -1,12 +1,12 @@
 import 'dart:io';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/controller/post_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
+
 import 'package:get/get.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -16,13 +16,20 @@ import '../widgets/profile_avatar.dart';
 class ViewPost extends StatefulWidget {
   var data;
   var userId;
+  PostController postController;
 
-  ViewPost({@required this.data, @required userId});
+  ViewPost(
+      {Key? key,
+      required this.data,
+      required this.userId,
+      required this.postController})
+      : super(key: key);
   @override
   State<ViewPost> createState() => _ViewPostState();
 }
 
 class _ViewPostState extends State<ViewPost> {
+  // final postController = Get.find(PostController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +71,7 @@ class _ViewContainerState extends State<ViewContainer> {
     TextEditingController commentController = TextEditingController();
 
     return Padding(
-      padding: EdgeInsets.only(left: 10.0.w),
+      padding: EdgeInsets.only(left: 10.0.w, right: 10.w),
       child: ListView(
         children: [
           SizedBox(
@@ -82,68 +89,93 @@ class _ViewContainerState extends State<ViewContainer> {
           widget.data['mediaUrl'].length != 0
               ? Container(
                   height: 200.h,
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: widget.data['mediaUrl'].length,
-                      itemBuilder: (BuildContext context, int i) {
-                        return Padding(
-                            padding: EdgeInsets.all(8.0.sp),
-                            child: FullScreenWidget(
-                              child: Image.network(widget.data['mediaUrl'][i]),
-                            ));
-                      }),
-                )
+                  width: MediaQuery.of(context).size.width,
+                  child: CarouselSlider.builder(
+                    options: CarouselOptions(
+                      autoPlay: true,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll:
+                          widget.data['mediaUrl'].length <= 1 ? false : true,
+                      viewportFraction: 0.9,
+                      aspectRatio: 2.0,
+                      initialPage: 2,
+                    ),
+                    itemCount: widget.data['mediaUrl'].length,
+                    itemBuilder: (BuildContext context, int itemIndex,
+                            int pageViewIndex) =>
+                        Stack(
+                      children: [
+                        Container(
+                          height: 200.h,
+                          width: MediaQuery.of(context).size.width,
+                          child: Image.network(
+                            widget.data['mediaUrl'][itemIndex],
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(5.r)),
+                          child: Text(
+                            "${itemIndex + 1}"
+                            "/"
+                            "${widget.data['mediaUrl'].length}",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ))
               : SizedBox(),
           SizedBox(
             height: 10.h,
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 8.0.w, right: 10.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                    padding: const EdgeInsets.all(4.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset(
-                      "assets/images/loved_icon.svg",
-                      width: 27.w,
-                      color: Colors.black,
-                    )),
-                const SizedBox(width: 4.0),
-                Expanded(
-                  child: Text(
-                    "${widget.data['like'].length}",
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ),
-                // Container(
-                //   padding: const EdgeInsets.all(4.0),
-                //   decoration:  BoxDecoration(
-                //     color: Color(AppTheme.primaryColor),
-                //     shape: BoxShape.circle,
-                //   ),
-                //   child: const Icon(
-                //     Icons.report,
-                //     size: 10.0,
-                //     color: Colors.white,
-                //   ),
-                // ),
-                // const SizedBox(width: 4.0),
-                // Text(
-                //   "${widget.data['report'].length}",
-                //   style: TextStyle(
-                //     color: Colors.grey[600],
-                //   ),
-                // ),
-              ],
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(left: 8.0.w, right: 10.w),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //     children: [
+          //       // Container(
+          //       //     padding: const EdgeInsets.all(4.0),
+          //       //     decoration: BoxDecoration(
+          //       //       shape: BoxShape.circle,
+          //       //     ),
+          //       //     child: SvgPicture.asset(
+          //       //       "assets/images/loved_icon.svg",
+          //       //       width: 27.w,
+          //       //       color: Colors.black,
+          //       //     )),
+          //       // const SizedBox(width: 4.0),
+          //       // Expanded(
+          //       //   child: Text(
+          //       //     "${widget.data['like'].length}",
+          //       //     style: TextStyle(
+          //       //       color: Colors.grey[600],
+          //       //     ),
+          //       //   ),
+          //       // ),
+          //       // Container(
+          //       //   padding: const EdgeInsets.all(4.0),
+          //       //   decoration:  BoxDecoration(
+          //       //     color: Color(AppTheme.primaryColor),
+          //       //     shape: BoxShape.circle,
+          //       //   ),
+          //       //   child: const Icon(
+          //       //     Icons.report,
+          //       //     size: 10.0,
+          //       //     color: Colors.white,
+          //       //   ),
+          //       // ),
+          //       // const SizedBox(width: 4.0),
+          //       // Text(
+          //       //   "${widget.data['report'].length}",
+          //       //   style: TextStyle(
+          //       //     color: Colors.grey[600],
+          //       //   ),
+          //       // ),
+          //     ],
+          //   ),
+          // ),
           Text(
             'Comments',
             style: TextStyle(
@@ -160,54 +192,62 @@ class _ViewContainerState extends State<ViewContainer> {
                       shrinkWrap: true,
                       itemCount: widget.data['comment'].length,
                       itemBuilder: ((context, index) {
-                        return Padding(
-                          padding: EdgeInsets.all(8.0.w),
-                          child: Container(
-                            color: Color.fromARGB(255, 189, 208, 196),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundColor:
-                                        Color(AppTheme.appBarBackgroundColor),
-                                    child: Text(
-                                      "${widget.data['comment'][index]['commentedBy'].substring(0, 1)}",
+                        return Column(
+                          children: [
+                            Container(
+                              color: Color.fromARGB(255, 189, 208, 196),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundColor:
+                                          Color(AppTheme.appBarBackgroundColor),
+                                      child: Text(
+                                        "${widget.data['comment'][index]['commentedBy'].substring(0, 1)}",
+                                        style: TextStyle(
+                                            fontSize: 14.0.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                    title: Text(
+                                      widget.data['comment'][index]
+                                          ['commentedBy'],
                                       style: TextStyle(
-                                          fontSize: 15.0.sp,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
+                                        fontSize: 13.0.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          widget.data['comment'][index]
+                                              ['commentText'],
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14.sp),
+                                        ),
+                                        Text(
+                                          " ${timeago.format((widget.data['comment'][index]['commentedAt'] as Timestamp).toDate())}",
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 12.sp),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  title: Text(
-                                    widget.data['comment'][index]
-                                        ['commentedBy'],
-                                    style: TextStyle(
-                                      fontSize: 15.0.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  subtitle: Text(
-                                    " ${timeago.format((widget.data['comment'][index]['commentedAt'] as Timestamp).toDate())}",
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 12.sp),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 40.0.w),
-                                  child: Text(
-                                    widget.data['comment'][index]
-                                        ['commentText'],
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 14.sp),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                          ],
                         );
                       })),
                 )
@@ -228,7 +268,7 @@ class _ViewContainerState extends State<ViewContainer> {
                     padding: EdgeInsets.all(8.0),
                     child: TextField(
                       controller: commentController,
-                      maxLines: 8, //or null
+                      maxLines: 6, //or null
                       decoration: InputDecoration.collapsed(
                           hintText: "Enter your text here"),
                     ),

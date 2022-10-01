@@ -197,7 +197,9 @@ class _PostItemState extends State<PostItem> {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (builder) => ViewPost(
-                                data: widget.data, userId: widget.userId)));
+                                data: widget.data,
+                                userId: widget.userId,
+                                postController: widget.controller)));
                       },
                       child: SvgPicture.asset(
                         "assets/images/comment_icon.svg",
@@ -254,6 +256,23 @@ class _PostItemState extends State<PostItem> {
           SizedBox(
             height: 12.h,
           ),
+          Padding(
+              padding: EdgeInsets.only(left: 15.w, right: 15.w),
+              child: RichText(
+                  text: TextSpan(children: [
+                TextSpan(
+                    text: '${widget.data['like'].length}',
+                    style: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black)),
+                TextSpan(
+                    text: "  Likes",
+                    style: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black)),
+              ]))),
           Padding(
               padding: EdgeInsets.only(left: 15.w, right: 15.w),
               child: RichText(
