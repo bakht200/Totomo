@@ -371,11 +371,8 @@ class _SettingPageState extends State<SettingPage> {
                         Padding(
                           padding: EdgeInsets.only(left: 8.0.w),
                           child: GestureDetector(
-                            onTap: () async {
-                              Navigator.pop(context);
-                            },
                             child: Text(
-                              'Sign out',
+                              '',
                               style: AppTheme.appBarSubHeadingStyle,
                             ),
                           ),

@@ -753,8 +753,9 @@ class _SearchPageState extends State<SearchPage> {
                                         onTap: () {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
-                                                builder: (builder) =>
-                                                    ProfilePage()),
+                                                builder: (builder) => Dashboard(
+                                                      index: 4,
+                                                    )),
                                           );
                                         },
                                         child: Icon(

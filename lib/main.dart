@@ -8,6 +8,7 @@ import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 main() async {
@@ -28,12 +29,10 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return FirebasePhoneAuthProvider(
-            child: MaterialApp(
+            child: GetMaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-              home: Dashboard(
-                index: 0,
-              ),
+              home: OnBoardingScreen(),
             ),
           );
         });

@@ -5,6 +5,7 @@ import 'package:dating_app/controller/auth_controller.dart';
 import 'package:dating_app/view/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
@@ -88,7 +89,51 @@ class _FormPageState extends State<FormPage> {
                                 onpressFunction: () async {
                                   bool isLastStep =
                                       (currentStep == getSteps().length - 1);
-                                  if (isLastStep) {
+                                  if (!isLastStep) {
+                                    print("HERE");
+                                    if (currentStep == 0) {
+                                      if (imageFile!.path == null ||
+                                          description.text.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg: "Please fill the form");
+                                      } else {
+                                        setState(() {
+                                          currentStep += 1;
+                                        });
+                                      }
+                                    } else if (currentStep == 1) {
+                                      print("CURRENT STEP 1");
+
+                                      if (selectedInterestNames.length < 4) {
+                                        Fluttertoast.showToast(
+                                            msg: "Please select you intetest");
+                                      } else {
+                                        setState(() {
+                                          currentStep += 1;
+                                        });
+                                      }
+                                    } else if (currentStep == 2) {
+                                      if (selectedIdealNames.length < 2) {
+                                        Fluttertoast.showToast(
+                                            msg: "Please select you ideal");
+                                      } else {
+                                        setState(() {
+                                          currentStep += 1;
+                                        });
+                                      }
+                                    } else if (currentStep == 3) {
+                                      if (city.text.isEmpty ||
+                                          perfecture.text.isEmpty ||
+                                          country.text.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg: "Please fill the form");
+                                      } else {
+                                        setState(() {
+                                          currentStep += 1;
+                                        });
+                                      }
+                                    }
+                                  } else if (isLastStep) {
                                     showDialog(
                                         barrierDismissible: false,
                                         context: context,
@@ -122,10 +167,6 @@ class _FormPageState extends State<FormPage> {
                                         country.text.trim(),
                                         perfecture.text.trim(),
                                         context);
-                                  } else {
-                                    setState(() {
-                                      currentStep += 1;
-                                    });
                                   }
                                 },
                                 title: 'Next')),

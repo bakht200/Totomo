@@ -248,9 +248,10 @@ class HelperFunction {
     List user = [];
 
     try {
+      String? userId = await UserSecureStorage.fetchToken();
       await FirebaseFirestore.instance
           .collection('users')
-          .orderBy("age", descending: true)
+          .where("uid", isNotEqualTo: userId)
           .get()
           .then((querySnapshot) {
         querySnapshot.docs.forEach((element) {
