@@ -1,3 +1,5 @@
+import 'package:carousel_indicator/carousel_indicator.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/controller/post_controller.dart';
 import 'package:dating_app/view/view_post.dart';
@@ -12,7 +14,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import '../constants/app_theme.dart';
 
-class PostItem extends StatelessWidget {
+class PostItem extends StatefulWidget {
   var data;
   var userId;
   PostController controller;
@@ -23,6 +25,13 @@ class PostItem extends StatelessWidget {
     required this.controller,
   });
 
+  @override
+  State<PostItem> createState() => _PostItemState();
+}
+
+class _PostItemState extends State<PostItem> {
+  CarouselController controller = CarouselController();
+  int pageIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -43,7 +52,7 @@ class PostItem extends StatelessWidget {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: NetworkImage(data['userImage']),
+                              image: NetworkImage(widget.data['userImage']),
                               fit: BoxFit.cover)),
                     ),
                     SizedBox(
@@ -57,7 +66,7 @@ class PostItem extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                data['userName'],
+                                widget.data['userName'],
                                 style: TextStyle(
                                     color: black,
                                     fontSize: 15.sp,
@@ -67,7 +76,7 @@ class PostItem extends StatelessWidget {
                                 width: 10.w,
                               ),
                               Text(
-                                data['postType'],
+                                widget.data['postType'],
                                 style: TextStyle(
                                     color: Color(AppTheme.primaryColor),
                                     fontStyle: FontStyle.italic,
@@ -80,7 +89,7 @@ class PostItem extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(left: 8.0.w),
                           child: Text(
-                            '${timeago.format((data['postedAt'] as Timestamp).toDate())}',
+                            '${timeago.format((widget.data['postedAt'] as Timestamp).toDate())}',
                             style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 13.sp,
@@ -97,20 +106,46 @@ class PostItem extends StatelessWidget {
           SizedBox(
             height: 7.h,
           ),
-          data['mediaUrl'].length != 0
+          widget.data['mediaUrl'].length != 0
               ? Container(
                   height: 200.h,
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: data['mediaUrl'].length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: 300.h,
-                          child: Image.network(data['mediaUrl'][index]),
-                        );
-                      }),
-                )
+                  width: MediaQuery.of(context).size.width,
+                  child: CarouselSlider.builder(
+                    options: CarouselOptions(
+                      autoPlay: true,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll:
+                          widget.data['mediaUrl'].length <= 1 ? false : true,
+                      viewportFraction: 0.9,
+                      aspectRatio: 2.0,
+                      initialPage: 2,
+                    ),
+                    itemCount: widget.data['mediaUrl'].length,
+                    itemBuilder: (BuildContext context, int itemIndex,
+                            int pageViewIndex) =>
+                        Stack(
+                      children: [
+                        Container(
+                          height: 200.h,
+                          width: MediaQuery.of(context).size.width,
+                          child: Image.network(
+                            widget.data['mediaUrl'][itemIndex],
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(5.r)),
+                          child: Text(
+                            "${itemIndex + 1}"
+                            "/"
+                            "${widget.data['mediaUrl'].length}",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ))
               : SizedBox(),
           SizedBox(
             height: 10.h,
@@ -123,25 +158,25 @@ class PostItem extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     GetBuilder(
-                        init: controller,
+                        init: widget.controller,
                         builder: (context) {
                           return GestureDetector(
                             onTap: () {
-                              if (data['like'].contains(userId)) {
-                                controller.removePostLike(
-                                  data['id'],
-                                  userId,
+                              if (widget.data['like'].contains(widget.userId)) {
+                                widget.controller.removePostLike(
+                                  widget.data['id'],
+                                  widget.userId,
                                 );
                               } else {
-                                controller.getPostLike(
-                                  data['id'],
-                                  userId,
+                                widget.controller.getPostLike(
+                                  widget.data['id'],
+                                  widget.userId,
                                 );
                               }
                               //  controller. fetchData(getImageController.contentItemName);
                             },
                             child: Container(
-                              child: data['like'].contains(userId)
+                              child: widget.data['like'].contains(widget.userId)
                                   ? SvgPicture.asset(
                                       "assets/images/loved_icon.svg",
                                       width: 27.w,
@@ -161,8 +196,8 @@ class PostItem extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (builder) =>
-                                ViewPost(data: data, userId: userId)));
+                            builder: (builder) => ViewPost(
+                                data: widget.data, userId: widget.userId)));
                       },
                       child: SvgPicture.asset(
                         "assets/images/comment_icon.svg",
@@ -224,13 +259,13 @@ class PostItem extends StatelessWidget {
               child: RichText(
                   text: TextSpan(children: [
                 TextSpan(
-                    text: data['userName'],
+                    text: widget.data['userName'],
                     style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w700,
                         color: Colors.black)),
                 TextSpan(
-                    text: "  ${data['description']}",
+                    text: "  ${widget.data['description']}",
                     style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w500,

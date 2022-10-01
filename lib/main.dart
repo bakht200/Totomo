@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
             child: GetMaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-              home: OnBoardingScreen(),
+              home: SplashScreen(),
             ),
           );
         });

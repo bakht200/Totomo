@@ -78,7 +78,9 @@ class _FormPageState extends State<FormPage> {
                   return Padding(
                     padding: EdgeInsets.all(20.0.w),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: currentStep == 0
+                          ? MainAxisAlignment.center
+                          : MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         SizedBox(
                             width: 70.w,
@@ -90,9 +92,8 @@ class _FormPageState extends State<FormPage> {
                                   bool isLastStep =
                                       (currentStep == getSteps().length - 1);
                                   if (!isLastStep) {
-                                    print("HERE");
                                     if (currentStep == 0) {
-                                      if (imageFile!.path == null ||
+                                      if (imageFile == null ||
                                           description.text.isEmpty) {
                                         Fluttertoast.showToast(
                                             msg: "Please fill the form");
@@ -122,9 +123,9 @@ class _FormPageState extends State<FormPage> {
                                         });
                                       }
                                     } else if (currentStep == 3) {
-                                      if (city.text.isEmpty ||
-                                          perfecture.text.isEmpty ||
-                                          country.text.isEmpty) {
+                                      if (city.text == '' ||
+                                          perfecture.text == '' ||
+                                          country.text == '') {
                                         Fluttertoast.showToast(
                                             msg: "Please fill the form");
                                       } else {
@@ -170,20 +171,22 @@ class _FormPageState extends State<FormPage> {
                                   }
                                 },
                                 title: 'Next')),
-                        SizedBox(
-                            width: 70.w, //
-                            height: 45.h,
-                            child: theme_primary_button_widget(
-                                primaryColor: Colors.black,
-                                textColor: const Color(0xFFFAFAFA),
-                                onpressFunction: () {
-                                  currentStep == 0
-                                      ? null
-                                      : setState(() {
-                                          currentStep -= 1;
-                                        });
-                                },
-                                title: 'Back')),
+                        currentStep == 0
+                            ? SizedBox()
+                            : SizedBox(
+                                width: 70.w, //
+                                height: 45.h,
+                                child: theme_primary_button_widget(
+                                    primaryColor: Colors.black,
+                                    textColor: const Color(0xFFFAFAFA),
+                                    onpressFunction: () {
+                                      currentStep == 0
+                                          ? null
+                                          : setState(() {
+                                              currentStep -= 1;
+                                            });
+                                    },
+                                    title: 'Back')),
                       ],
                     ),
                   );

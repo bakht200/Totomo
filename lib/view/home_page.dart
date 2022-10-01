@@ -390,51 +390,52 @@ class _HomePageState extends State<HomePage>
   Widget getBody() {
     return loading == true
         ? const Center(child: CircularProgressIndicator())
-        : SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(8.0.w),
-                        child: GetBuilder(
-                            init: postController,
-                            builder: (context) {
-                              print(postController.userList.length);
-                              return Row(
-                                  children: List.generate(
-                                      postController.userList.length, (index) {
-                                return StoryItem(
-                                  img: postController.userList[index]
-                                      ['profileImage'][0],
-                                  name: postController.userList[index]
-                                      ['fullName'],
-                                );
-                              }));
-                            }),
-                      ),
-                    ],
+        : RefreshIndicator(
+            onRefresh: fetchData,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.all(8.0.w),
+                          child: GetBuilder(
+                              init: postController,
+                              builder: (context) {
+                                print(postController.userList.length);
+                                return Row(
+                                    children: List.generate(
+                                        postController.userList.length,
+                                        (index) {
+                                  return StoryItem(
+                                    img: postController.userList[index]
+                                        ['profileImage'][0],
+                                    name: postController.userList[index]
+                                        ['fullName'],
+                                  );
+                                }));
+                              }),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Divider(
-                  color: white.withOpacity(0.3),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  child: AdWidget(ad: myBanner),
-                  width: myBanner.size.width.toDouble(),
-                  height: myBanner.size.height.toDouble(),
-                ),
-                RefreshIndicator(
-                  onRefresh: fetchData,
-                  child: GetBuilder(
+                  Divider(
+                    color: white.withOpacity(0.3),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: AdWidget(ad: myBanner),
+                    width: myBanner.size.width.toDouble(),
+                    height: myBanner.size.height.toDouble(),
+                  ),
+                  GetBuilder(
                       init: postController,
                       builder: (context) {
                         return Container(
                           child: ListView.builder(
-                              scrollDirection: Axis.vertical,
+                              physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: postController.postList.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -446,8 +447,8 @@ class _HomePageState extends State<HomePage>
                               }),
                         );
                       }),
-                ),
-              ],
+                ],
+              ),
             ),
           );
   }
