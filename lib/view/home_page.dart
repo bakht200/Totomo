@@ -1,10 +1,16 @@
+import 'dart:async';
+
 import 'package:dating_app/constants/app_theme.dart';
+import 'package:dating_app/controller/auth_controller.dart';
 import 'package:dating_app/controller/post_controller.dart';
+import 'package:dating_app/controller/profile_controller.dart';
 
 import 'package:dating_app/view/add_post.dart';
 import 'package:dating_app/view/description.dart';
+import 'package:dating_app/view/login.dart';
 import 'package:dating_app/view/setting.dart';
 import 'package:dating_app/view/subscription_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -208,6 +214,20 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
               PopupMenuItem(
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+                  await UserSecureStorage.deleteSecureStorage();
+
+                  Timer(Duration(milliseconds: 300),
+                      () => Get.delete<ProfileController>());
+                  Timer(Duration(milliseconds: 300),
+                      () => Get.delete<AuthController>());
+                  Timer(Duration(milliseconds: 300),
+                      () => Get.delete<PostController>());
+
+                  Get.offUntil(GetPageRoute(page: () => LoginScreen()),
+                      ModalRoute.withName('toNewLogin'));
+                },
                 value: 2,
                 child: Row(
                   children: [
