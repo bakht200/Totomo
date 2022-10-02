@@ -173,7 +173,6 @@ class _PostItemState extends State<PostItem> {
                                   widget.userId,
                                 );
                               }
-                              //  controller. fetchData(getImageController.contentItemName);
                             },
                             child: Container(
                               child: widget.data['like'].contains(widget.userId)
@@ -195,11 +194,11 @@ class _PostItemState extends State<PostItem> {
                     ),
                     GestureDetector(
                       onTap: () {
+                        print("TAPPING");
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (builder) => ViewPost(
-                                data: widget.data,
-                                userId: widget.userId,
-                                postController: widget.controller)));
+                                  postId: widget.data['id'],
+                                )));
                       },
                       child: SvgPicture.asset(
                         "assets/images/comment_icon.svg",
