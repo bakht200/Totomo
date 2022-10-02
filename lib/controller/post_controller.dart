@@ -7,15 +7,25 @@ import '../services/helper_functions.dart';
 
 class PostController extends GetxController {
   List postList = [];
+  List viewPostList = [];
+
   List userList = [];
   var searchList;
 
   HelperFunction helperFunction = HelperFunction();
 
-  getPostList() async {
-    var response = await helperFunction.getpostList();
-    if (response != null) {
-      postList = response;
+  getPostList(var postId) async {
+    if (postId != null) {
+      var response = await helperFunction.getpostList(postId);
+      if (response != null) {
+        viewPostList = response;
+        print(viewPostList);
+      }
+    } else {
+      var response = await helperFunction.getpostList(postId);
+      if (response != null) {
+        postList = response;
+      }
     }
     update();
   }
@@ -39,12 +49,8 @@ class PostController extends GetxController {
   submitComment(id, userName, commentText, context) async {
     var response = await helperFunction.addComment(id, commentText, userName);
     if (response == "Commented") {
-      getPostList();
+      getPostList(null);
       Fluttertoast.showToast(msg: "Comment Added.");
-      // Navigator.of(context).push(MaterialPageRoute(
-      //     builder: (builder) => Dashboard(
-      //           index: 0,
-      //         )));
     }
     update();
   }
@@ -52,7 +58,7 @@ class PostController extends GetxController {
   getPostLike(id, userId) async {
     var response = await helperFunction.likepost(id, userId);
     if (response == "Updated") {
-      getPostList();
+      getPostList(null);
     }
     update();
   }
@@ -60,7 +66,7 @@ class PostController extends GetxController {
   removePostLike(id, userId) async {
     var response = await helperFunction.unLikePost(id, userId);
     if (response == "Updated") {
-      getPostList();
+      getPostList(null);
     }
     update();
   }

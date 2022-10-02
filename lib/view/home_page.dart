@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage>
     });
     // getImageController.contentTypeSearched("All");
 
-    await postController.getPostList();
+    await postController.getPostList(null);
     userId = await UserSecureStorage.fetchToken();
     setState(() {
       loading = false;

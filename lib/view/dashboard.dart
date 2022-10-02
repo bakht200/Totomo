@@ -69,8 +69,8 @@ class _DashboardState extends State<Dashboard> {
           ? "assets/images/magnifying-glass.png"
           : "assets/images/search.png",
       widget.index == 3
-          ? "assets/images/diamond.png"
-          : "assets/images/value.png",
+          ? "assets/images/diamond (2).png"
+          : "assets/images/diamond (1).png",
       widget.index == 4
           ? "assets/images/man-user.png"
           : "assets/images/user.png",

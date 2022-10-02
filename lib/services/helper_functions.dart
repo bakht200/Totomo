@@ -223,20 +223,34 @@ class HelperFunction {
     }
   }
 
-  getpostList() async {
+  getpostList(postId) async {
     List post = [];
 
     try {
-      await FirebaseFirestore.instance
-          .collection('posts')
-          .orderBy("postedAt", descending: true)
-          .get()
-          .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          post.add(element);
-          print(post.first['userName']);
+      if (postId != null) {
+        await FirebaseFirestore.instance
+            .collection('posts')
+            .orderBy("postedAt", descending: true)
+            .where('id', isEqualTo: postId)
+            .get()
+            .then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            post.add(element);
+            print(post.first['userName']);
+          });
         });
-      });
+      } else {
+        await FirebaseFirestore.instance
+            .collection('posts')
+            .orderBy("postedAt", descending: true)
+            .get()
+            .then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            post.add(element);
+            print(post.first['userName']);
+          });
+        });
+      }
 
       return post;
     } catch (e) {
@@ -299,7 +313,7 @@ class HelperFunction {
           }
         ])
       });
-      print("HERE");
+
       return "Commented";
     } catch (e) {
       return null;
