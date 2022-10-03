@@ -196,7 +196,8 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
               PopupMenuItem(
-                value: 1,
+                //  onTap: ,
+                value: 2,
                 child: Row(
                   children: [
                     const Icon(Icons.category, color: Colors.white),
@@ -214,21 +215,7 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
               PopupMenuItem(
-                onTap: () async {
-                  await FirebaseAuth.instance.signOut();
-                  await UserSecureStorage.deleteSecureStorage();
-
-                  Timer(Duration(milliseconds: 300),
-                      () => Get.delete<ProfileController>());
-                  Timer(Duration(milliseconds: 300),
-                      () => Get.delete<AuthController>());
-                  Timer(Duration(milliseconds: 300),
-                      () => Get.delete<PostController>());
-
-                  Get.offUntil(GetPageRoute(page: () => LoginScreen()),
-                      ModalRoute.withName('toNewLogin'));
-                },
-                value: 2,
+                value: 3,
                 child: Row(
                   children: [
                     const Icon(
@@ -253,12 +240,26 @@ class _HomePageState extends State<HomePage>
             elevation: 0,
             shape: Border.all(width: 0.5),
             offset: const Offset(0, kToolbarHeight),
-            onSelected: (value) {
+            onSelected: (value) async {
+              print(value);
               if (value == 1) {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (builder) => SettingPage()));
+              } else if (value == 3) {
+                await FirebaseAuth.instance.signOut();
+                await UserSecureStorage.deleteSecureStorage();
+
+                Timer(Duration(milliseconds: 300),
+                    () => Get.delete<ProfileController>());
+                Timer(Duration(milliseconds: 300),
+                    () => Get.delete<AuthController>());
+                Timer(Duration(milliseconds: 300),
+                    () => Get.delete<PostController>());
+
+                Get.offUntil(GetPageRoute(page: () => LoginScreen()),
+                    ModalRoute.withName('toNewLogin'));
               } else if (value == 2) {
-                print("LOGOUT");
+                showAlertDialog(context);
               }
             },
           ),
@@ -451,5 +452,44 @@ class _HomePageState extends State<HomePage>
               ),
             ),
           );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {},
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text(
+        'Create Category',
+        style: TextStyle(fontSize: 23.sp, fontWeight: FontWeight.bold),
+      ),
+      content: TextField(
+        autofocus: true,
+        decoration:
+            InputDecoration(labelText: 'Category Name', hintText: 'eg. Funny'),
+      ),
+      actions: <Widget>[
+        FlatButton(
+            child: const Text('Cancel'),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        FlatButton(
+            child: const Text('Submit'),
+            onPressed: () {
+              Navigator.pop(context);
+            })
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

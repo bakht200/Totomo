@@ -252,28 +252,28 @@ class _SettingPageState extends State<SettingPage> {
                       ],
                     ),
                   ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.notifications,
-                      color: Color(AppTheme.primaryColor),
-                      size: 25.h,
-                    ),
-                    title: Text('Notification',
-                        style: AppTheme.settingListTileHeadingStyle),
-                    trailing: Wrap(
-                      spacing: 5,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 5.0.h),
-                          child: Icon(
-                            Icons.navigate_next,
-                            size: 35.sp,
-                            color: Color(AppTheme.primaryColor),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // ListTile(
+                  //   leading: Icon(
+                  //     Icons.notifications,
+                  //     color: Color(AppTheme.primaryColor),
+                  //     size: 25.h,
+                  //   ),
+                  //   title: Text('Notification',
+                  //       style: AppTheme.settingListTileHeadingStyle),
+                  //   trailing: Wrap(
+                  //     spacing: 5,
+                  //     children: <Widget>[
+                  //       Padding(
+                  //         padding: EdgeInsets.only(top: 5.0.h),
+                  //         child: Icon(
+                  //           Icons.navigate_next,
+                  //           size: 35.sp,
+                  //           color: Color(AppTheme.primaryColor),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   ListTile(
                     leading: Icon(
                       Icons.remove_red_eye,
