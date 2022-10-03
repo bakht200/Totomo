@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/controller/auth_controller.dart';
 import 'package:dating_app/controller/post_controller.dart';
 import 'package:dating_app/controller/profile_controller.dart';
+import 'package:dating_app/model/category_model.dart';
 
 import 'package:dating_app/view/add_post.dart';
 import 'package:dating_app/view/description.dart';
@@ -14,8 +17,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/secure_storage.dart';
 import '../widgets/post_item.dart';
@@ -35,9 +40,12 @@ class _HomePageState extends State<HomePage>
   AnimationController? _animationController;
   bool _isSearching = false;
   final TextEditingController _searchQueryController = TextEditingController();
+  final TextEditingController categoryNameController = TextEditingController();
+
   final postController = Get.put(PostController());
   bool loading = false;
   String? userId;
+  List<String> selectedCategory = [];
 
   final BannerAd myBanner = BannerAd(
     adUnitId: 'ca-app-pub-3940256099942544/6300978111',
@@ -45,6 +53,9 @@ class _HomePageState extends State<HomePage>
     request: AdRequest(),
     listener: BannerAdListener(),
   );
+
+  String? searchedValue;
+  List<String> holdingCategories = [];
 
   @override
   void initState() {
@@ -69,8 +80,13 @@ class _HomePageState extends State<HomePage>
       loading = true;
     });
     // getImageController.contentTypeSearched("All");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
+    prefs.setStringList('selectedGames', holdingCategories);
+    selectedCategory = prefs.getStringList('selectedGames')!;
     await postController.getUsers();
+    await postController.getCategories();
+
     userId = await UserSecureStorage.fetchToken();
     setState(() {
       loading = false;
@@ -90,7 +106,28 @@ class _HomePageState extends State<HomePage>
     });
   }
 
-  List searchCategories = ['cat', 'blog', 'funny', 'weather', 'sports', 'news'];
+  Future<dynamic> searchDataList(searchedDta) async {
+    setState(() {
+      loading = true;
+    });
+    // getImageController.contentTypeSearched("All");
+
+    await postController.searchPostList(searchedDta);
+
+    setState(() {
+      loading = false;
+    });
+  }
+
+  Future<void> addToSP(List<String> tList) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    for (var i = 0; i < tList.length; i++) {
+      holdingCategories.add(tList[i]);
+    }
+    prefs.setStringList('selectedGames', holdingCategories);
+
+    selectedCategory = prefs.getStringList('selectedGames')!;
+  }
 
   Widget _buildSearchField() {
     return TextField(
@@ -139,6 +176,17 @@ class _HomePageState extends State<HomePage>
                       children: <Widget>[
                         ListTile(
                           leading: const Icon(
+                            Icons.read_more,
+                            color: Colors.red,
+                          ),
+                          title: const Text('All'),
+                          onTap: () {
+                            Future.delayed(Duration.zero, () => fetchData());
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          leading: const Icon(
                             Icons.diamond,
                             color: Colors.amber,
                           ),
@@ -164,6 +212,7 @@ class _HomePageState extends State<HomePage>
                           ),
                           title: const Text('New'),
                           onTap: () {
+                            searchDataList('new');
                             Navigator.pop(context);
                           },
                         ),
@@ -345,40 +394,45 @@ class _HomePageState extends State<HomePage>
       children: [
         Expanded(
             child: ListView.builder(
-                itemCount: searchCategories.length,
+                itemCount: postController.categoryList.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (_isSearching) {
-                          _isSearching = false;
-                        } else {
-                          _isSearching = true;
-                        }
-                      });
+                    onTap: () async {
+                      selectedCategory.contains([
+                        "${postController.categoryList[index]['categoryName']}"
+                      ])
+                          ? addToSP([
+                              postController.categoryList[index]
+                                  ['categoryName'],
+                            ])
+                          : null;
                     },
                     child: ListTile(
                       trailing: Container(
                           decoration: BoxDecoration(
-                              color: (index == 2 || index == 3)
-                                  ? (Colors.green)
-                                  : Colors.red,
+                              color: selectedCategory.contains([
+                                "${postController.categoryList[index]['categoryName']}"
+                              ])
+                                  ? Colors.red
+                                  : Colors.green,
                               borderRadius: BorderRadius.circular(30.r)),
                           child: IconButton(
                             icon: Icon(
-                              (index == 2 || index == 3)
-                                  ? Icons.add
-                                  : Icons.minimize,
+                              selectedCategory.contains([
+                                "${postController.categoryList[index]['categoryName']}"
+                              ])
+                                  ? Icons.minimize
+                                  : Icons.add,
                               color: Colors.white,
                             ),
                             onPressed: null,
                           )),
                       title: Text(
-                        searchCategories[index].toString(),
+                        postController.categoryList[index]['categoryName'],
                         style: TextStyle(fontSize: 16.sp),
                       ),
                       leading: const Icon(
-                        Icons.access_alarm_sharp,
+                        Icons.category,
                         color: Colors.purple,
                       ),
                     ),
@@ -425,6 +479,48 @@ class _HomePageState extends State<HomePage>
                   Divider(
                     color: white.withOpacity(0.3),
                   ),
+                  selectedCategory.isNotEmpty
+                      ? GetBuilder<PostController>(builder: (itemController) {
+                          return Padding(
+                            padding: EdgeInsets.only(left: 8.0.w),
+                            child: Container(
+                              height: 40.h,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: selectedCategory.length,
+                                itemBuilder: (builde, index) {
+                                  return GestureDetector(
+                                    onTap: () async {
+                                      await itemController.updateColor(index);
+                                      // Future.delayed(
+                                      //     Duration.zero,
+                                      //     () => itemController.fetchItemList(
+                                      //         itemController.searchItemName,
+                                      //         signInController.categoriesList[index].name));
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 2.0.w, right: 2.0.w),
+                                      child: Container(
+                                        decoration: filterButtonStyle(index),
+                                        child: FittedBox(
+                                            child: Padding(
+                                          padding: EdgeInsets.all(5.0.w),
+                                          child: Text(
+                                            "${selectedCategory[index]}",
+                                            style: filterButtonTextStyle(index),
+                                          ),
+                                        )),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        })
+                      : const Text('NOTHING'),
                   Container(
                     alignment: Alignment.center,
                     child: AdWidget(ad: myBanner),
@@ -467,6 +563,7 @@ class _HomePageState extends State<HomePage>
         style: TextStyle(fontSize: 23.sp, fontWeight: FontWeight.bold),
       ),
       content: TextField(
+        controller: categoryNameController,
         autofocus: true,
         decoration:
             InputDecoration(labelText: 'Category Name', hintText: 'eg. Funny'),
@@ -480,7 +577,23 @@ class _HomePageState extends State<HomePage>
         FlatButton(
             child: const Text('Submit'),
             onPressed: () {
-              Navigator.pop(context);
+              try {
+                var uniqueId =
+                    FirebaseFirestore.instance.collection("category").doc().id;
+
+                FirebaseFirestore.instance
+                    .collection('category')
+                    .doc(uniqueId)
+                    .set({
+                  'categoryName': categoryNameController.text.trim(),
+                  'id': uniqueId,
+                });
+                Navigator.pop(context);
+                Fluttertoast.showToast(msg: "Category submitted");
+              } catch (e) {
+                Navigator.pop(context);
+                Fluttertoast.showToast(msg: "Category failed");
+              }
             })
       ],
     );
@@ -491,5 +604,34 @@ class _HomePageState extends State<HomePage>
         return alert;
       },
     );
+  }
+
+  filterButtonTextStyle(index) {
+    if (index == postController.filterbutton) {
+      return AppTheme.themeFilledButtonTextStyle;
+    } else {
+      return TextStyle(
+        color: Color(AppTheme.primaryColor),
+        fontWeight: FontWeight.bold,
+        // fontFamily: AppTheme.acherusGrotesqueFamilyMedium,
+      );
+    }
+  }
+
+  filterButtonStyle(index) {
+    if (index == postController.filterbutton) {
+      return BoxDecoration(
+          border: Border.all(
+            color: Color(AppTheme.primaryColor),
+          ),
+          color: Color(AppTheme.primaryColor),
+          borderRadius: BorderRadius.all(Radius.circular(3.r)));
+    } else {
+      return BoxDecoration(
+          border: Border.all(
+            color: Color(AppTheme.primaryColor),
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(3.r)));
+    }
   }
 }

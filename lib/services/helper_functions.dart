@@ -258,6 +258,31 @@ class HelperFunction {
     }
   }
 
+  getSearchPostList(postId) async {
+    List post = [];
+
+    try {
+      final Timestamp now = Timestamp.fromDate(DateTime.now());
+      final Timestamp yesterday = Timestamp.fromDate(
+        DateTime.now().subtract(const Duration(days: 1)),
+      );
+
+      await FirebaseFirestore.instance
+          .collection('posts')
+          .where('postedAt', isLessThan: now, isGreaterThan: yesterday)
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          post.add(element);
+        });
+      });
+
+      return post;
+    } catch (e) {
+      return null;
+    }
+  }
+
   getUserList() async {
     List user = [];
 
@@ -275,6 +300,27 @@ class HelperFunction {
       });
 
       return user;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  getCategoryList() async {
+    List category = [];
+
+    try {
+      String? userId = await UserSecureStorage.fetchToken();
+      await FirebaseFirestore.instance
+          .collection('category')
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          print(element);
+          category.add(element);
+        });
+      });
+
+      return category;
     } catch (e) {
       return null;
     }
@@ -350,4 +396,8 @@ class HelperFunction {
       return null;
     }
   }
+
+  //  addCategory(categoryData) {
+
+  // }
 }

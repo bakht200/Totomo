@@ -10,9 +10,17 @@ class PostController extends GetxController {
   List viewPostList = [];
 
   List userList = [];
+  List categoryList = [];
+
   var searchList;
+  var filterbutton;
 
   HelperFunction helperFunction = HelperFunction();
+
+  updateColor(int index) async {
+    filterbutton = index;
+    update();
+  }
 
   getPostList(var postId) async {
     if (postId != null) {
@@ -30,10 +38,27 @@ class PostController extends GetxController {
     update();
   }
 
+  searchPostList(postData) async {
+    var response = await helperFunction.getSearchPostList(postData);
+    if (response != null) {
+      postList = response;
+    }
+
+    update();
+  }
+
   getUsers() async {
     var response = await helperFunction.getUserList();
     if (response != null) {
       userList = response;
+    }
+    update();
+  }
+
+  getCategories() async {
+    var response = await helperFunction.getCategoryList();
+    if (response != null) {
+      categoryList = response;
     }
     update();
   }
