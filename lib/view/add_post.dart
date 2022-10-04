@@ -1,5 +1,8 @@
 import 'package:camera_camera/camera_camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/controller/post_controller.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,38 +25,22 @@ class _CameraPostScreenState extends State<CameraPostScreen> {
   var cameraFile = null;
   final TextEditingController descriptionController = TextEditingController();
   final profileController = Get.put(ProfileController());
+  final postController = Get.put(PostController());
+
   var imagePath;
   String? userName;
 
-  final List<String> postItems = [
-    'GBV',
-    'Mens health',
-    'Womens health',
-    'Crime',
-    'General',
-    'Kids',
-    'Religion',
-    'Tradition',
-    'Entrepreneurship',
-    'Business Law',
-    'Education',
-    'Sports',
-    'Domestic',
-    'Ads',
-    'Teen Pregnancy',
-    'Health',
-    'Depression',
-    'Anxiety'
-  ];
   String? postType;
   @override
   void initState() {
     super.initState();
+
     fetchCurrentUserName();
   }
 
   fetchCurrentUserName() async {
     userName = await UserSecureStorage.fetchUserName();
+    await postController.getCategories();
     await profileController.getUserData();
     imagePath = profileController.userInformation.first['profileImage'][0];
     setState(() {});
@@ -138,87 +125,80 @@ class _CameraPostScreenState extends State<CameraPostScreen> {
                                         SizedBox(
                                           height: 10.h,
                                         ),
-                                        DropdownButtonHideUnderline(
-                                          child: DropdownButton2(
-                                            isExpanded: true,
-                                            hint: Row(
-                                              children: const [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Select Type',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black,
-                                                    ),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            items: postItems
-                                                .map((item) =>
-                                                    DropdownMenuItem<String>(
-                                                      value: item,
-                                                      child: Text(
-                                                        item,
-                                                        style: const TextStyle(
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black,
+                                        StreamBuilder<QuerySnapshot>(
+                                            stream: FirebaseFirestore.instance
+                                                .collection('category')
+                                                .snapshots(),
+                                            builder: (context, snapshot) {
+                                              if (!snapshot.hasData)
+                                                return Center(
+                                                  child:
+                                                      CupertinoActivityIndicator(),
+                                                );
+                                              var length =
+                                                  snapshot.data!.docs.length;
+                                              DocumentSnapshot ds = snapshot
+                                                  .data!.docs[length - 1];
+
+                                              return Container(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 16.0.h),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      flex: 4,
+                                                      child: InputDecorator(
+                                                        decoration: InputDecoration(
+                                                            labelText:
+                                                                'e.g Funny',
+                                                            labelStyle: TextStyle(
+                                                                fontSize: 13.sp,
+                                                                color:
+                                                                    Colors.grey[
+                                                                        400])),
+                                                        isEmpty:
+                                                            postType == null,
+                                                        child:
+                                                            DropdownButtonHideUnderline(
+                                                          child:
+                                                              DropdownButton2(
+                                                            value: postType,
+                                                            isDense: true,
+                                                            onChanged: (String?
+                                                                newValue) {
+                                                              setState(() {
+                                                                postType =
+                                                                    newValue;
+                                                              });
+                                                            },
+                                                            items: snapshot
+                                                                .data!.docs
+                                                                .map((DocumentSnapshot
+                                                                    document) {
+                                                              return DropdownMenuItem<
+                                                                      String>(
+                                                                  value: document[
+                                                                      'categoryName'],
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(5.0)),
+                                                                    height:
+                                                                        100.0,
+                                                                    child: Text(
+                                                                        document[
+                                                                            'categoryName']),
+                                                                  ));
+                                                            }).toList(),
+                                                          ),
                                                         ),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
                                                       ),
-                                                    ))
-                                                .toList(),
-                                            value: postType,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                postType = value as String;
-                                              });
-                                            },
-                                            icon: const Icon(
-                                              Icons.arrow_forward_ios_outlined,
-                                            ),
-                                            iconSize: 14,
-                                            buttonHeight: 50,
-                                            buttonWidth: 180,
-                                            buttonPadding:
-                                                const EdgeInsets.only(
-                                                    left: 14, right: 14),
-                                            buttonDecoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(14),
-                                              border: Border.all(
-                                                color: Color(
-                                                    AppTheme.primaryColor),
-                                              ),
-                                              color: Colors.white,
-                                            ),
-                                            buttonElevation: 2,
-                                            itemHeight: 40,
-                                            itemPadding: const EdgeInsets.only(
-                                                left: 14, right: 14),
-                                            dropdownMaxHeight: 200,
-                                            dropdownWidth: 200,
-                                            dropdownPadding: null,
-                                            dropdownDecoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(14),
-                                              color: Colors.white,
-                                            ),
-                                            dropdownElevation: 8,
-                                            scrollbarRadius:
-                                                const Radius.circular(40),
-                                            scrollbarThickness: 6,
-                                            scrollbarAlwaysShow: true,
-                                            offset: const Offset(-20, 0),
-                                          ),
-                                        ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            }),
                                         SizedBox(
                                           height: 10.h,
                                         ),

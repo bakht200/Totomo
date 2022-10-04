@@ -1,18 +1,13 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/controller/auth_controller.dart';
 import 'package:dating_app/controller/post_controller.dart';
 import 'package:dating_app/controller/profile_controller.dart';
-import 'package:dating_app/model/category_model.dart';
-
 import 'package:dating_app/view/add_post.dart';
 import 'package:dating_app/view/description.dart';
 import 'package:dating_app/view/login.dart';
 import 'package:dating_app/view/setting.dart';
-import 'package:dating_app/view/subscription_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
@@ -80,9 +75,9 @@ class _HomePageState extends State<HomePage>
       loading = true;
     });
     // getImageController.contentTypeSearched("All");
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    selectedCategory = prefs.getStringList('selectedGames')!;
+    // selectedCategory = prefs.getStringList('selectedGames')!;
     await postController.getUsers();
     await postController.getCategories();
 
