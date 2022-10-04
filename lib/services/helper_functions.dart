@@ -258,24 +258,36 @@ class HelperFunction {
     }
   }
 
-  getSearchPostList(postId) async {
+  getSearchPostList(postId, type) async {
     List post = [];
 
     try {
-      final Timestamp now = Timestamp.fromDate(DateTime.now());
-      final Timestamp yesterday = Timestamp.fromDate(
-        DateTime.now().subtract(const Duration(days: 1)),
-      );
+      if (type == 'date') {
+        final Timestamp now = Timestamp.fromDate(DateTime.now());
+        final Timestamp yesterday = Timestamp.fromDate(
+          DateTime.now().subtract(const Duration(days: 1)),
+        );
 
-      await FirebaseFirestore.instance
-          .collection('posts')
-          .where('postedAt', isLessThan: now, isGreaterThan: yesterday)
-          .get()
-          .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          post.add(element);
+        await FirebaseFirestore.instance
+            .collection('posts')
+            .where('postedAt', isLessThan: now, isGreaterThan: yesterday)
+            .get()
+            .then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            post.add(element);
+          });
         });
-      });
+      } else {
+        await FirebaseFirestore.instance
+            .collection('posts')
+            .where('postType', isEqualTo: postId)
+            .get()
+            .then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            post.add(element);
+          });
+        });
+      }
 
       return post;
     } catch (e) {

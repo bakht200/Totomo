@@ -82,7 +82,6 @@ class _HomePageState extends State<HomePage>
     // getImageController.contentTypeSearched("All");
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.setStringList('selectedGames', holdingCategories);
     selectedCategory = prefs.getStringList('selectedGames')!;
     await postController.getUsers();
     await postController.getCategories();
@@ -106,13 +105,13 @@ class _HomePageState extends State<HomePage>
     });
   }
 
-  Future<dynamic> searchDataList(searchedDta) async {
+  Future<dynamic> searchDataList(searchedDta, type) async {
     setState(() {
       loading = true;
     });
     // getImageController.contentTypeSearched("All");
 
-    await postController.searchPostList(searchedDta);
+    await postController.searchPostList(searchedDta, type);
 
     setState(() {
       loading = false;
@@ -212,7 +211,7 @@ class _HomePageState extends State<HomePage>
                           ),
                           title: const Text('New'),
                           onTap: () {
-                            searchDataList('new');
+                            searchDataList('new', 'date');
                             Navigator.pop(context);
                           },
                         ),
@@ -398,29 +397,28 @@ class _HomePageState extends State<HomePage>
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () async {
-                      selectedCategory.contains([
-                        "${postController.categoryList[index]['categoryName']}"
-                      ])
-                          ? addToSP([
+                      selectedCategory.contains(postController
+                              .categoryList[index]['categoryName'])
+                          ? selectedCategory.remove(postController
+                              .categoryList[index]['categoryName'])
+                          : addToSP([
                               postController.categoryList[index]
                                   ['categoryName'],
-                            ])
-                          : null;
+                            ]);
+                      setState(() {});
                     },
                     child: ListTile(
                       trailing: Container(
                           decoration: BoxDecoration(
-                              color: selectedCategory.contains([
-                                "${postController.categoryList[index]['categoryName']}"
-                              ])
+                              color: selectedCategory.contains(postController
+                                      .categoryList[index]['categoryName'])
                                   ? Colors.red
                                   : Colors.green,
                               borderRadius: BorderRadius.circular(30.r)),
                           child: IconButton(
                             icon: Icon(
-                              selectedCategory.contains([
-                                "${postController.categoryList[index]['categoryName']}"
-                              ])
+                              selectedCategory.contains(postController
+                                      .categoryList[index]['categoryName'])
                                   ? Icons.minimize
                                   : Icons.add,
                               color: Colors.white,
@@ -450,6 +448,55 @@ class _HomePageState extends State<HomePage>
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  selectedCategory.isNotEmpty
+                      ? GetBuilder<PostController>(builder: (postController) {
+                          return Padding(
+                            padding: EdgeInsets.only(left: 8.0.w),
+                            child: Container(
+                              height: 40.h,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: selectedCategory.length,
+                                itemBuilder: (builde, index) {
+                                  return GestureDetector(
+                                    onTap: () async {
+                                      await postController.updateColor(index);
+                                      Future.delayed(
+                                        Duration.zero,
+                                        () => searchDataList(
+                                            selectedCategory[index],
+                                            'category'),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 2.0.w, right: 2.0.w),
+                                      child: Container(
+                                        decoration: filterButtonStyle(index),
+                                        child: FittedBox(
+                                            child: Padding(
+                                          padding: EdgeInsets.all(8.0.w),
+                                          child: Text(
+                                            "${selectedCategory[index]}",
+                                            style: filterButtonTextStyle(index),
+                                          ),
+                                        )),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        })
+                      : const Text('NOTHING'),
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -459,7 +506,6 @@ class _HomePageState extends State<HomePage>
                           child: GetBuilder(
                               init: postController,
                               builder: (context) {
-                                print(postController.userList.length);
                                 return Row(
                                     children: List.generate(
                                         postController.userList.length,
@@ -479,48 +525,6 @@ class _HomePageState extends State<HomePage>
                   Divider(
                     color: white.withOpacity(0.3),
                   ),
-                  selectedCategory.isNotEmpty
-                      ? GetBuilder<PostController>(builder: (itemController) {
-                          return Padding(
-                            padding: EdgeInsets.only(left: 8.0.w),
-                            child: Container(
-                              height: 40.h,
-                              width: MediaQuery.of(context).size.width,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: selectedCategory.length,
-                                itemBuilder: (builde, index) {
-                                  return GestureDetector(
-                                    onTap: () async {
-                                      await itemController.updateColor(index);
-                                      // Future.delayed(
-                                      //     Duration.zero,
-                                      //     () => itemController.fetchItemList(
-                                      //         itemController.searchItemName,
-                                      //         signInController.categoriesList[index].name));
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 2.0.w, right: 2.0.w),
-                                      child: Container(
-                                        decoration: filterButtonStyle(index),
-                                        child: FittedBox(
-                                            child: Padding(
-                                          padding: EdgeInsets.all(5.0.w),
-                                          child: Text(
-                                            "${selectedCategory[index]}",
-                                            style: filterButtonTextStyle(index),
-                                          ),
-                                        )),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          );
-                        })
-                      : const Text('NOTHING'),
                   Container(
                     alignment: Alignment.center,
                     child: AdWidget(ad: myBanner),

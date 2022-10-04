@@ -38,8 +38,8 @@ class PostController extends GetxController {
     update();
   }
 
-  searchPostList(postData) async {
-    var response = await helperFunction.getSearchPostList(postData);
+  searchPostList(postData, type) async {
+    var response = await helperFunction.getSearchPostList(postData, type);
     if (response != null) {
       postList = response;
     }
