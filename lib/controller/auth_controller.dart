@@ -35,8 +35,8 @@ class AuthController extends GetxController {
         'interests': '',
         'habbits': '',
         'city': '',
-        'country': '',
-        'location': '',
+        'region': '',
+        'perfecture': '',
       });
 
       final snapshot = await FirebaseFirestore.instance
@@ -67,7 +67,7 @@ class AuthController extends GetxController {
           firebaseStorage.FirebaseStorage.instance.ref("datingApp/${user.uid}");
 
       final child = path.child(DateTime.now().toString());
-      print(child);
+
       await child.putFile(File(profilePath.path));
 
       await child.getDownloadURL().then((value) => {url.add(value)});
@@ -82,8 +82,8 @@ class AuthController extends GetxController {
         'interests': interests,
         'habbits': habbits,
         'city': city,
-        'country': country,
-        'location': perfecture,
+        'region': country,
+        'perfecture': perfecture,
       });
       Navigator.of(context).pop();
 

@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/view/dashboard.dart';
 import 'package:dating_app/view/profile.dart';
@@ -438,7 +441,44 @@ class _SearchPageState extends State<SearchPage> {
                                             primaryColor:
                                                 Color(AppTheme.primaryColor),
                                             textColor: Color(0xFFFAFAFA),
-                                            onpressFunction: () {},
+                                            onpressFunction: () async {
+                                              await FirebaseFirestore.instance
+                                                  .collection('users')
+                                                  .where(
+                                                    "age",
+                                                    isEqualTo: 43,
+                                                  )
+                                                  .where(
+                                                    "city",
+                                                    isEqualTo: 'peshawar',
+                                                  )
+                                                  .where(
+                                                    "country",
+                                                    isEqualTo: 'pakistan',
+                                                  )
+                                                  .where(
+                                                    "gender",
+                                                    isEqualTo: 'Male',
+                                                  )
+                                                  .where(
+                                                    "profileCompleted",
+                                                    isEqualTo: false,
+                                                  )
+                                                  .where(
+                                                    "fullName",
+                                                    isEqualTo: 'moin ali',
+                                                  )
+                                                  .get()
+                                                  .then((querySnapshot) {
+                                                querySnapshot.docs
+                                                    .forEach((element) {
+                                                  List user = [];
+                                                  print(element['fullName']);
+                                                  // user.add(element);
+                                                  // print(user.first['fullName']);
+                                                });
+                                              });
+                                            },
                                             title: 'Search')),
                                   ),
                                   SizedBox(
