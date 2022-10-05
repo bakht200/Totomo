@@ -422,7 +422,47 @@ class HelperFunction {
     }
   }
 
-  //  addCategory(categoryData) {
+  getSearchUserList(region, prefecture, city, gender, userType, age) async {
+    List user = [];
 
-  // }
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .where(
+            "region",
+            isEqualTo: region,
+          )
+          .where(
+            "prefecture",
+            isEqualTo: prefecture,
+          )
+          .where(
+            "city",
+            isEqualTo: city,
+          )
+          .where(
+            "gender",
+            isEqualTo: gender,
+          )
+          .where(
+            "userType",
+            isEqualTo: userType,
+          )
+          .where(
+            "age",
+            isEqualTo: age,
+          )
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          user.add(element);
+          // print(user.first['fullName']);
+        });
+      });
+
+      return user;
+    } catch (e) {
+      return null;
+    }
+  }
 }

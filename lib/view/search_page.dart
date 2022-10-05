@@ -14,6 +14,7 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../constants/secure_storage.dart';
 import '../controller/post_controller.dart';
+import '../controller/profile_controller.dart';
 import '../model/gender_model.dart';
 import '../widgets/primary_button_widget.dart';
 
@@ -37,6 +38,8 @@ class _SearchPageState extends State<SearchPage> {
   final double _max = 60;
   SfRangeValues _values = const SfRangeValues(40.0, 60.0);
   final postController = Get.put(PostController());
+  final profileController = Get.put(ProfileController());
+
   bool loading = false;
   String? userId;
 
@@ -58,6 +61,21 @@ class _SearchPageState extends State<SearchPage> {
 
     await postController.getUsers(userId);
     userId = await UserSecureStorage.fetchToken();
+    setState(() {
+      loading = false;
+    });
+  }
+
+  Future<dynamic> fetchSearchedUserList(
+      region, prefecture, city, gender, userType, age) async {
+    setState(() {
+      loading = true;
+    });
+    // getImageController.contentTypeSearched("All");
+
+    await postController.getSearchedUser(
+        region, prefecture, city, gender, userType, age);
+
     setState(() {
       loading = false;
     });
@@ -266,43 +284,44 @@ class _SearchPageState extends State<SearchPage> {
                                               ],
                                             ),
                                           ),
-                                          ListTile(
-                                            leading: Icon(
-                                              Icons.location_pin,
-                                              color: Colors.red,
-                                              size: 25.h,
-                                            ),
-                                            title: Row(
-                                              children: [
-                                                Text('Nearest',
-                                                    style: TextStyle(
-                                                      color: Color(0xFF555555),
-                                                      fontSize: 15.sp,
-                                                    )),
-                                                const Icon(
-                                                  Icons.star,
-                                                  color: Colors.amber,
-                                                )
-                                              ],
-                                            ),
-                                            trailing: Wrap(
-                                              spacing: 5,
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: 5.0.h),
-                                                  child: CupertinoSwitch(
-                                                    value: _switchValue,
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        _switchValue = value;
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                          // ListTile(
+                                          //   leading: Icon(
+                                          //     Icons.location_pin,
+                                          //     color: Colors.red,
+                                          //     size: 25.h,
+                                          //   ),
+                                          //   title: Row(
+                                          //     children: [
+                                          //       Text('Nearest',
+                                          //           style: TextStyle(
+                                          //             color: Color(0xFF555555),
+                                          //             fontSize: 15.sp,
+                                          //           )),
+                                          //       const Icon(
+                                          //         Icons.star,
+                                          //         color: Colors.amber,
+                                          //       )
+                                          //     ],
+                                          //   ),
+                                          //   trailing: Wrap(
+                                          //     spacing: 5,
+                                          //     children: <Widget>[
+                                          //       Padding(
+                                          //         padding: EdgeInsets.only(
+                                          //             top: 5.0.h),
+                                          //         child: CupertinoSwitch(
+                                          //           value: _switchValue,
+                                          //           onChanged: (value) {
+                                          //             setState(() {
+                                          //               _switchValue = value;
+                                          //             });
+                                          //           },
+                                          //         ),
+                                          //       ),
+                                          //     ],
+                                          //   ),
+                                          // ),
+
                                           Divider(),
                                           Row(
                                             children: [
@@ -340,7 +359,6 @@ class _SearchPageState extends State<SearchPage> {
                                                           selectedGender =
                                                               genders[index]
                                                                   .name;
-                                                          print(selectedGender);
                                                         });
                                                       },
                                                       child: Card(
@@ -442,42 +460,19 @@ class _SearchPageState extends State<SearchPage> {
                                                 Color(AppTheme.primaryColor),
                                             textColor: Color(0xFFFAFAFA),
                                             onpressFunction: () async {
-                                              await FirebaseFirestore.instance
-                                                  .collection('users')
-                                                  .where(
-                                                    "age",
-                                                    isEqualTo: 43,
-                                                  )
-                                                  .where(
-                                                    "city",
-                                                    isEqualTo: 'peshawar',
-                                                  )
-                                                  .where(
-                                                    "country",
-                                                    isEqualTo: 'pakistan',
-                                                  )
-                                                  .where(
-                                                    "gender",
-                                                    isEqualTo: 'Male',
-                                                  )
-                                                  .where(
-                                                    "profileCompleted",
-                                                    isEqualTo: false,
-                                                  )
-                                                  .where(
-                                                    "fullName",
-                                                    isEqualTo: 'moin ali',
-                                                  )
-                                                  .get()
-                                                  .then((querySnapshot) {
-                                                querySnapshot.docs
-                                                    .forEach((element) {
-                                                  List user = [];
-                                                  print(element['fullName']);
-                                                  // user.add(element);
-                                                  // print(user.first['fullName']);
-                                                });
-                                              });
+                                              fetchSearchedUserList(
+                                                  profileController
+                                                      .userInformation
+                                                      .first['region'],
+                                                  profileController
+                                                      .userInformation
+                                                      .first['perfecture'],
+                                                  profileController
+                                                      .userInformation
+                                                      .first['city'],
+                                                  selectedGender,
+                                                  _groupValue,
+                                                  _values);
                                             },
                                             title: 'Search')),
                                   ),

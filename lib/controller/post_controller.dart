@@ -55,6 +55,15 @@ class PostController extends GetxController {
     update();
   }
 
+  getSearchedUser(region, prefecture, city, gender, userType, age) async {
+    var response = await helperFunction.getSearchUserList(
+        region, prefecture, city, gender, userType, age);
+    if (response != null) {
+      userList = response;
+    }
+    update();
+  }
+
   getCategories() async {
     var response = await helperFunction.getCategoryList();
     if (response != null) {
