@@ -37,6 +37,7 @@ class AuthController extends GetxController {
         'city': '',
         'region': '',
         'perfecture': '',
+        'userType': 'free'
       });
 
       final snapshot = await FirebaseFirestore.instance
@@ -84,6 +85,7 @@ class AuthController extends GetxController {
         'city': city,
         'region': country,
         'perfecture': perfecture,
+        'userType': 'free'
       });
       Navigator.of(context).pop();
 
