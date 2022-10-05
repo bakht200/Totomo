@@ -295,21 +295,34 @@ class HelperFunction {
     }
   }
 
-  getUserList() async {
+  getUserList(id) async {
     List user = [];
 
     try {
-      String? userId = await UserSecureStorage.fetchToken();
-      await FirebaseFirestore.instance
-          .collection('users')
-          .where("uid", isNotEqualTo: userId)
-          .get()
-          .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          print(element);
-          user.add(element);
+      if (id == null) {
+        String? userId = await UserSecureStorage.fetchToken();
+        await FirebaseFirestore.instance
+            .collection('users')
+            .where("uid", isNotEqualTo: userId)
+            .get()
+            .then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            print(element);
+            user.add(element);
+          });
         });
-      });
+      } else {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .where("fullName", isEqualTo: id)
+            .get()
+            .then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            print(element);
+            user.add(element);
+          });
+        });
+      }
 
       return user;
     } catch (e) {

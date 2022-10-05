@@ -47,8 +47,8 @@ class PostController extends GetxController {
     update();
   }
 
-  getUsers() async {
-    var response = await helperFunction.getUserList();
+  getUsers(userId) async {
+    var response = await helperFunction.getUserList(userId);
     if (response != null) {
       userList = response;
     }

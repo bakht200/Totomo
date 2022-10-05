@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage>
     // SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // selectedCategory = prefs.getStringList('selectedGames')!;
-    await postController.getUsers();
+    await postController.getUsers(null);
     await postController.getCategories();
 
     userId = await UserSecureStorage.fetchToken();
@@ -487,7 +487,7 @@ class _HomePageState extends State<HomePage>
                             ),
                           );
                         })
-                      : const Text('NOTHING'),
+                      : const SizedBox(),
                   SizedBox(
                     height: 10.h,
                   ),

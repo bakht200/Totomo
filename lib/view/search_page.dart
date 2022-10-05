@@ -43,17 +43,17 @@ class _SearchPageState extends State<SearchPage> {
     genders.add(Gender("Male", MdiIcons.genderMale, false));
     genders.add(Gender("Female", MdiIcons.genderFemale, false));
     genders.add(Gender("Others", MdiIcons.genderTransgender, false));
-    Future.delayed(Duration.zero, () => fetchUserList());
+    Future.delayed(Duration.zero, () => fetchUserList(null));
     super.initState();
   }
 
-  Future<dynamic> fetchUserList() async {
+  Future<dynamic> fetchUserList(userId) async {
     setState(() {
       loading = true;
     });
     // getImageController.contentTypeSearched("All");
 
-    await postController.getUsers();
+    await postController.getUsers(userId);
     userId = await UserSecureStorage.fetchToken();
     setState(() {
       loading = false;
@@ -507,7 +507,15 @@ class _SearchPageState extends State<SearchPage> {
                       borderRadius: BorderRadius.circular(10.r),
                       color: Colors.grey.shade200),
                   child: TextField(
-                    onSubmitted: (value) async {},
+                    onSubmitted: (value) async {
+                      if (value == null) {
+                        Future.delayed(
+                            Duration.zero, () => fetchUserList(value));
+                      } else {
+                        Future.delayed(
+                            Duration.zero, () => fetchUserList(null));
+                      }
+                    },
                     decoration: InputDecoration(
                         hintText: 'Search by name',
                         border: InputBorder.none,
@@ -682,11 +690,11 @@ class _SearchPageState extends State<SearchPage> {
                                   ),
                                 ),
                                 title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           postController.userList[index]
@@ -704,7 +712,7 @@ class _SearchPageState extends State<SearchPage> {
                                   ],
                                 ),
                                 subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       postController.userList[index]
