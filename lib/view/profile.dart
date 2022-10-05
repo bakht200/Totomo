@@ -31,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    fetchUserData();
+    Future.delayed(Duration.zero, () => fetchUserData());
   }
 
   Future fetchUserData() async {
@@ -137,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             ),
                                             Text(
                                               profileController.userInformation
-                                                  .first['country'],
+                                                  .first['region'],
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14.0.sp,

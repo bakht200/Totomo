@@ -422,10 +422,15 @@ class HelperFunction {
     }
   }
 
-  getSearchUserList(region, prefecture, city, gender, userType, age) async {
+  getSearchUserList(region, prefecture, city, gender, userType, startingAge,
+      endingAge) async {
     List user = [];
 
     try {
+      // print("HERE");
+      String? userId = await UserSecureStorage.fetchToken();
+      print(userId);
+
       await FirebaseFirestore.instance
           .collection('users')
           .where(
@@ -433,7 +438,7 @@ class HelperFunction {
             isEqualTo: region,
           )
           .where(
-            "prefecture",
+            "perfecture",
             isEqualTo: prefecture,
           )
           .where(
@@ -446,19 +451,20 @@ class HelperFunction {
           )
           .where(
             "userType",
-            isEqualTo: userType,
+            isEqualTo: 'free',
           )
-          .where(
-            "age",
-            isEqualTo: age,
-          )
+          .where("age",
+              isGreaterThanOrEqualTo: startingAge,
+              isLessThanOrEqualTo: endingAge)
+          // .where('uid', isNotEqualTo: userId)
           .get()
           .then((querySnapshot) {
         querySnapshot.docs.forEach((element) {
           user.add(element);
-          // print(user.first['fullName']);
         });
       });
+
+      print(user);
 
       return user;
     } catch (e) {

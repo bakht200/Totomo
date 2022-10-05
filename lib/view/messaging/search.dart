@@ -56,7 +56,7 @@ class _SearchState extends State<Search> {
                   return userTile(
                     searchResultSnapshot?.docs[index]["fullName"],
                     searchResultSnapshot?.docs[index]["profileImage"][0],
-                    "${searchResultSnapshot?.docs[index]["country"]}, ${searchResultSnapshot?.docs[index]["city"]}",
+                    "${searchResultSnapshot?.docs[index]["region"]}, ${searchResultSnapshot?.docs[index]["city"]}",
                   );
                 }),
           )

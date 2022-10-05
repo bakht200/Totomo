@@ -66,15 +66,15 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
-  Future<dynamic> fetchSearchedUserList(
-      region, prefecture, city, gender, userType, age) async {
+  Future<dynamic> fetchSearchedUserList(region, prefecture, city, gender,
+      userType, startingAge, endingAge) async {
     setState(() {
       loading = true;
     });
     // getImageController.contentTypeSearched("All");
 
     await postController.getSearchedUser(
-        region, prefecture, city, gender, userType, age);
+        region, prefecture, city, gender, userType, startingAge, endingAge);
 
     setState(() {
       loading = false;
@@ -460,19 +460,32 @@ class _SearchPageState extends State<SearchPage> {
                                                 Color(AppTheme.primaryColor),
                                             textColor: Color(0xFFFAFAFA),
                                             onpressFunction: () async {
-                                              fetchSearchedUserList(
-                                                  profileController
-                                                      .userInformation
-                                                      .first['region'],
-                                                  profileController
-                                                      .userInformation
-                                                      .first['perfecture'],
-                                                  profileController
-                                                      .userInformation
-                                                      .first['city'],
-                                                  selectedGender,
-                                                  _groupValue,
-                                                  _values);
+                                              String usertype = 'A';
+
+                                              // if (_groupValue == 0) {
+                                              //   usertype = 'All users';
+                                              // } else {
+                                              //   usertype = 'paid';
+                                              // }
+
+                                              Future.delayed(
+                                                  Duration.zero,
+                                                  () => fetchSearchedUserList(
+                                                      profileController
+                                                          .userInformation
+                                                          .first['region'],
+                                                      profileController
+                                                          .userInformation
+                                                          .first['perfecture'],
+                                                      profileController
+                                                          .userInformation
+                                                          .first['city'],
+                                                      selectedGender,
+                                                      usertype,
+                                                      _values.start,
+                                                      _values.end));
+                                              // setState(() {});
+                                              Navigator.of(context).pop();
                                             },
                                             title: 'Search')),
                                   ),
@@ -524,296 +537,332 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget getBody() {
     var size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-        child: Column(
-      children: <Widget>[
-        SafeArea(
-          child: Padding(
-            padding: EdgeInsets.only(top: 8.0.h),
-            child: Row(
-              children: <Widget>[
-                SizedBox(
-                  width: 10.w,
-                ),
-                Container(
-                  width: size.width - 55.w,
-                  height: 45.h,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      color: Colors.grey.shade200),
-                  child: TextField(
-                    onSubmitted: (value) async {
-                      if (value == null) {
-                        Future.delayed(
-                            Duration.zero, () => fetchUserList(value));
-                      } else {
-                        Future.delayed(
-                            Duration.zero, () => fetchUserList(null));
-                      }
-                    },
-                    decoration: InputDecoration(
-                        hintText: 'Search by name',
-                        border: InputBorder.none,
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: black.withOpacity(0.3),
-                        )),
-                    style: TextStyle(color: black.withOpacity(0.3)),
-                  ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                GestureDetector(
-                  child: filterType
-                      ? Image.asset(
-                          'assets/images/row.png',
-                          height: 30.h,
-                          width: 20.w,
-                        )
-                      : Image.asset(
-                          'assets/images/layout.png',
-                          height: 30.h,
-                          width: 20.w,
-                        ),
-                  onTap: () {
-                    setState(() {
-                      if (filterType) {
-                        filterType = false;
-                      } else {
-                        filterType = true;
-                      }
-                    });
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 15.h,
-        ),
-        SizedBox(
-          height: size.height / .5,
-          child: filterType
-              ? GetBuilder(
-                  init: postController,
-                  builder: (context) {
-                    return GridView.builder(
-                        itemCount: postController.userList.length,
-                        shrinkWrap: true,
-                        physics: const ScrollPhysics(),
-                        padding: EdgeInsets.all(7.0.w),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisSpacing: 16.w,
-                            childAspectRatio:
-                                (size.width / (size.height - 100.h)).w,
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 10.h),
-                        itemBuilder: (context, index) {
-                          return Container(
+    return loading == true
+        ? const Center(child: CircularProgressIndicator())
+        : GetBuilder(
+            init: postController,
+            builder: (context) {
+              return SingleChildScrollView(
+                  child: Column(
+                children: <Widget>[
+                  SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 8.0.h),
+                      child: Row(
+                        children: <Widget>[
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          Container(
+                            width: size.width - 55.w,
+                            height: 45.h,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.r),
-                                border: Border.all(
-                                    color: Color(AppTheme.primaryColor))),
-                            child: Padding(
-                              padding: EdgeInsets.all(6.0.w),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: CircleAvatar(
-                                      radius: 40.r,
-                                      backgroundImage: NetworkImage(
-                                        postController.userList[index]
-                                            ['profileImage'][0],
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          postController.userList[index]
-                                              ['fullName'],
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 3.h,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: SizedBox(
-                                      height: 35.h,
-                                      width: 100.w,
-                                      child: Text(
-                                        postController.userList[index]
-                                            ['description'],
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 3.h,
-                                  ),
-                                  Expanded(
-                                    child: SizedBox(
-                                        width: 90.w, //
-                                        height: 30.h,
-                                        child: theme_primary_button_widget(
-                                            primaryColor:
-                                                Color(AppTheme.primaryColor),
-                                            textColor: const Color(0xFFFAFAFA),
-                                            onpressFunction: () {
-                                              Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (builder) =>
-                                                        Dashboard(
-                                                          index: 1,
-                                                        )),
-                                              );
-                                            },
-                                            title: 'Message')),
-                                  ),
-                                ],
-                              ),
+                                borderRadius: BorderRadius.circular(10.r),
+                                color: Colors.grey.shade200),
+                            child: TextField(
+                              onSubmitted: (value) async {
+                                if (value == null) {
+                                  Future.delayed(Duration.zero,
+                                      () => fetchUserList(value));
+                                } else {
+                                  Future.delayed(
+                                      Duration.zero, () => fetchUserList(null));
+                                }
+                              },
+                              decoration: InputDecoration(
+                                  hintText: 'Search by name',
+                                  border: InputBorder.none,
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color: black.withOpacity(0.3),
+                                  )),
+                              style: TextStyle(color: black.withOpacity(0.3)),
                             ),
-                          );
-                        });
-                  })
-              : GetBuilder(
-                  init: postController,
-                  builder: (context) {
-                    return ListView.builder(
-                        itemCount: postController.userList.length,
-                        shrinkWrap: true,
-                        physics: const ScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.all(5.0.w),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  border: Border.all(
-                                      color: Color(AppTheme.primaryColor))),
-                              child: ListTile(
-                                leading: Padding(
-                                  padding: EdgeInsets.only(bottom: 2.0.h),
-                                  child: CircleAvatar(
-                                    radius: 40.r,
-                                    backgroundImage: NetworkImage(
-                                      postController.userList[index]
-                                          ['profileImage'][0],
-                                    ),
+                          ),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          GestureDetector(
+                            child: filterType
+                                ? Image.asset(
+                                    'assets/images/row.png',
+                                    height: 30.h,
+                                    width: 20.w,
+                                  )
+                                : Image.asset(
+                                    'assets/images/layout.png',
+                                    height: 30.h,
+                                    width: 20.w,
                                   ),
-                                ),
-                                title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          postController.userList[index]
-                                              ['fullName'],
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
+                            onTap: () {
+                              setState(() {
+                                if (filterType) {
+                                  filterType = false;
+                                } else {
+                                  filterType = true;
+                                }
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  SizedBox(
+                    height: size.height / .5,
+                    child: filterType
+                        ? GetBuilder(
+                            init: postController,
+                            builder: (context) {
+                              return GridView.builder(
+                                  itemCount: postController.userList.length,
+                                  shrinkWrap: true,
+                                  physics: const ScrollPhysics(),
+                                  padding: EdgeInsets.all(7.0.w),
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          mainAxisSpacing: 16.w,
+                                          childAspectRatio: (size.width /
+                                                  (size.height - 100.h))
+                                              .w,
+                                          crossAxisCount: 3,
+                                          crossAxisSpacing: 10.h),
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                          border: Border.all(
+                                              color: Color(
+                                                  AppTheme.primaryColor))),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(6.0.w),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              flex: 2,
+                                              child: CircleAvatar(
+                                                radius: 40.r,
+                                                backgroundImage: NetworkImage(
+                                                  postController.userList[index]
+                                                      ['profileImage'][0],
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    postController
+                                                            .userList[index]
+                                                        ['fullName'],
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Icon(
+                                                    Icons.star,
+                                                    color: Colors.amber,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 3.h,
+                                            ),
+                                            Align(
+                                              alignment: Alignment.topLeft,
+                                              child: SizedBox(
+                                                height: 35.h,
+                                                width: 100.w,
+                                                child: Text(
+                                                  postController.userList[index]
+                                                      ['description'],
+                                                  textAlign: TextAlign.start,
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 3.h,
+                                            ),
+                                            Expanded(
+                                              child: SizedBox(
+                                                  width: 90.w, //
+                                                  height: 30.h,
+                                                  child:
+                                                      theme_primary_button_widget(
+                                                          primaryColor: Color(
+                                                              AppTheme
+                                                                  .primaryColor),
+                                                          textColor:
+                                                              const Color(
+                                                                  0xFFFAFAFA),
+                                                          onpressFunction: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .push(
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (builder) =>
+                                                                          Dashboard(
+                                                                            index:
+                                                                                1,
+                                                                          )),
+                                                            );
+                                                          },
+                                                          title: 'Message')),
+                                            ),
+                                          ],
                                         ),
-                                        const Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      postController.userList[index]
-                                          ['description'],
-                                      textAlign: TextAlign.start,
-                                      style: const TextStyle(
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          MdiIcons.map,
-                                          color: Colors.blue,
+                                      ),
+                                    );
+                                  });
+                            })
+                        : GetBuilder(
+                            init: postController,
+                            builder: (context) {
+                              return ListView.builder(
+                                  itemCount: postController.userList.length,
+                                  shrinkWrap: true,
+                                  physics: const ScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsets.all(5.0.w),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8.r),
+                                            border: Border.all(
+                                                color: Color(
+                                                    AppTheme.primaryColor))),
+                                        child: ListTile(
+                                          leading: Padding(
+                                            padding:
+                                                EdgeInsets.only(bottom: 2.0.h),
+                                            child: CircleAvatar(
+                                              radius: 40.r,
+                                              backgroundImage: NetworkImage(
+                                                postController.userList[index]
+                                                    ['profileImage'][0],
+                                              ),
+                                            ),
+                                          ),
+                                          title: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    postController
+                                                            .userList[index]
+                                                        ['fullName'],
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  const Icon(
+                                                    Icons.star,
+                                                    color: Colors.amber,
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          subtitle: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                postController.userList[index]
+                                                    ['description'],
+                                                textAlign: TextAlign.start,
+                                                style: const TextStyle(
+                                                    color: Colors.grey,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  const Icon(
+                                                    MdiIcons.map,
+                                                    color: Colors.blue,
+                                                  ),
+                                                  Text(postController
+                                                          .userList[index]
+                                                      ['region']),
+                                                  const Icon(
+                                                    Icons.location_pin,
+                                                    color: Colors.red,
+                                                  ),
+                                                  Text(postController
+                                                      .userList[index]['city']),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          trailing: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (builder) =>
+                                                              Dashboard(
+                                                                index: 1,
+                                                              )),
+                                                    );
+                                                  },
+                                                  child: Icon(
+                                                    Icons.message_rounded,
+                                                    color: Colors.black,
+                                                  )),
+                                              GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (builder) =>
+                                                              Dashboard(
+                                                                index: 4,
+                                                              )),
+                                                    );
+                                                  },
+                                                  child: Icon(
+                                                    Icons.person,
+                                                    color: Colors.red,
+                                                  )),
+                                            ],
+                                          ),
                                         ),
-                                        Text(postController.userList[index]
-                                            ['country']),
-                                        const Icon(
-                                          Icons.location_pin,
-                                          color: Colors.red,
-                                        ),
-                                        Text(postController.userList[index]
-                                            ['city']),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                trailing: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (builder) => Dashboard(
-                                                      index: 1,
-                                                    )),
-                                          );
-                                        },
-                                        child: Icon(
-                                          Icons.message_rounded,
-                                          color: Colors.black,
-                                        )),
-                                    GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (builder) => Dashboard(
-                                                      index: 4,
-                                                    )),
-                                          );
-                                        },
-                                        child: Icon(
-                                          Icons.person,
-                                          color: Colors.red,
-                                        )),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        });
-                  }),
-        )
-      ],
-    ));
+                                      ),
+                                    );
+                                  });
+                            }),
+                  )
+                ],
+              ));
+            });
   }
 }

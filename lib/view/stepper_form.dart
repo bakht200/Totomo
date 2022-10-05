@@ -490,7 +490,7 @@ class _FormPageState extends State<FormPage> {
             Padding(
               padding: EdgeInsets.only(left: 12.0.w),
               child: Text(
-                'Enter your Country',
+                'Enter your Region',
                 style: TextStyle(
                     fontSize: 12.sp, color: black, fontWeight: FontWeight.bold),
               ),
@@ -508,7 +508,7 @@ class _FormPageState extends State<FormPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.r),
                     ),
-                    hintText: "Enter your Country",
+                    hintText: "Enter your Region",
                     fillColor: Colors.grey[100],
                     filled: true,
                   ),
