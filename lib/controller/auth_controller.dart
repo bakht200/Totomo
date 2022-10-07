@@ -37,7 +37,8 @@ class AuthController extends GetxController {
         'city': '',
         'region': '',
         'perfecture': '',
-        'userType': 'free'
+        'userType': 'free',
+        'subscriptionTime':'',
       });
 
       final snapshot = await FirebaseFirestore.instance

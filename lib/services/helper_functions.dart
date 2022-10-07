@@ -427,9 +427,8 @@ class HelperFunction {
     List user = [];
 
     try {
-      // print("HERE");
+      print("HERE");
       String? userId = await UserSecureStorage.fetchToken();
-      print(userId);
 
       await FirebaseFirestore.instance
           .collection('users')
@@ -463,7 +462,7 @@ class HelperFunction {
           user.add(element);
         });
       });
-
+      print("AFTER CALLING FUNCTION");
       print(user);
 
       return user;

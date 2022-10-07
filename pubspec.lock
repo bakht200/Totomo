@@ -377,6 +377,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
+  flutter_stripe:
+    dependency: "direct main"
+    description:
+      name: flutter_stripe
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.1.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -408,6 +415,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "9.2.0"
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   full_screen_image_null_safe:
     dependency: "direct main"
     description:
@@ -430,7 +444,7 @@ packages:
     source: hosted
     version: "2.0.1"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -513,6 +527,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.4"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.7.0"
   lints:
     dependency: transitive
     description:
@@ -840,6 +861,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  stripe_android:
+    dependency: transitive
+    description:
+      name: stripe_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.1.0"
+  stripe_ios:
+    dependency: transitive
+    description:
+      name: stripe_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.1.0"
+  stripe_platform_interface:
+    dependency: transitive
+    description:
+      name: stripe_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.1.0"
   syncfusion_flutter_core:
     dependency: transitive
     description:

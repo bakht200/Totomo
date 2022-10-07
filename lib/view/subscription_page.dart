@@ -1,8 +1,12 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/constants/app_theme.dart';
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:http/http.dart' as http;
 
 import '../widgets/primary_button_widget.dart';
 
@@ -14,6 +18,8 @@ class SubscriptionPage extends StatefulWidget {
 }
 
 class _SubscriptionPageState extends State<SubscriptionPage> {
+  Map<String, dynamic>? paymentIntentData;
+
   var subscriptionList = [
     {
       'index': '1',
@@ -90,51 +96,58 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         onTap: () {
                           setState(() {
                             selectedIndex = index;
+                            print(selectedIndex);
                           });
                         },
                         child: Stack(
                           children: [
-                            Card(
-                                color: selectedIndex == index
-                                    ? Colors.white
-                                    : Colors.grey[200],
-                                child: Container(
-                                  height: 100.h,
-                                  width: 90.w,
-                                  alignment: Alignment.center,
-                                  margin: EdgeInsets.all(5.0.w),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                          subscriptionList[index]['index']
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  color: selectedIndex == index
+                                      ? Colors.white
+                                      : Colors.grey[200],
+                                  child: Container(
+                                    height: 100.h,
+                                    width: 90.w,
+                                    alignment: Alignment.center,
+                                    margin: EdgeInsets.all(5.0.w),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                            subscriptionList[index]['index']
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Text(
+                                            subscriptionList[index]['name']
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        SizedBox(height: 10.h),
+                                        Divider(
+                                          height: 2.h,
+                                        ),
+                                        Text(
+                                          subscriptionList[index]['price']
                                               .toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text(
-                                          subscriptionList[index]['name']
+                                          style:
+                                              TextStyle(color: Colors.black38),
+                                        ),
+                                        Text(
+                                          subscriptionList[index]['total']
                                               .toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      SizedBox(height: 10.h),
-                                      Divider(
-                                        height: 2.h,
-                                      ),
-                                      Text(
-                                        subscriptionList[index]['price']
-                                            .toString(),
-                                        style: TextStyle(color: Colors.black38),
-                                      ),
-                                      Text(
-                                        subscriptionList[index]['total']
-                                            .toString(),
-                                        style: TextStyle(color: Colors.black38),
-                                      ),
-                                    ],
-                                  ),
-                                )),
+                                          style:
+                                              TextStyle(color: Colors.black38),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                            ),
                             selectedIndex == index
                                 ? Positioned(
                                     left: 4,
@@ -204,7 +217,28 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                       primaryColor: Color(AppTheme.primaryColor),
                       textColor: Color(0xFFFAFAFA),
                       onpressFunction: () {
-                        // Navigator.of(context).pop();
+                        if (selectedIndex == -1) {
+                        } else {
+                          if (selectedIndex == 0) {
+                            makePayment(
+                              subscriptionList[0]['index'],
+                              subscriptionList[0]['name'],
+                              subscriptionList[0]['price'],
+                            );
+                          } else if (selectedIndex == 1) {
+                            makePayment(
+                              subscriptionList[0]['index'],
+                              subscriptionList[1]['name'],
+                              subscriptionList[1]['price'],
+                            );
+                          } else if (selectedIndex == 2) {
+                            makePayment(
+                              subscriptionList[0]['index'],
+                              subscriptionList[2]['name'],
+                              subscriptionList[2]['price'],
+                            );
+                          }
+                        }
                       },
                       title: 'Continue')),
             ],
@@ -212,5 +246,109 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         ),
       ),
     );
+  }
+
+  Future<void> makePayment(index, subscriptionTime, subscriptionPrice) async {
+    try {
+      paymentIntentData = await createPaymentIntent('20', 'USD');
+
+      await Stripe.instance
+          .initPaymentSheet(
+              paymentSheetParameters: SetupPaymentSheetParameters(
+                  paymentIntentClientSecret:
+                      paymentIntentData!['client_secret'],
+                  allowsDelayedPaymentMethods: true,
+
+                  //testEnv: true,
+                  style: ThemeMode.dark,
+                  //  merchantCountryCode: 'US',
+                  merchantDisplayName: 'ANNIE'))
+          .then((value) {});
+
+      displayPaymentSheet(index, subscriptionTime);
+    } catch (e, s) {
+      print('exception:$e$s');
+    }
+  }
+
+  displayPaymentSheet(index, subscriptionTime) async {
+    try {
+      await Stripe.instance
+          .presentPaymentSheet(
+              parameters: PresentPaymentSheetParameters(
+        clientSecret: paymentIntentData!['client_secret'],
+        confirmPayment: true,
+      ))
+          .then((newValue) async {
+        User user = FirebaseAuth.instance.currentUser!;
+        if (subscriptionTime == 'MONTH') {
+          print("here in month");
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(user.uid)
+              .update({
+            'userType': 'paid',
+            'subscriptionTime': DateTime.now().add(Duration(days: 30)),
+          });
+        } else if (subscriptionTime == 'MONTHS') {
+          print("here in months");
+
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(user.uid)
+              .update({
+            'userType': 'paid',
+            'subscriptionTime': DateTime.now().add(Duration(days: 180)),
+          });
+        } else if (subscriptionTime == 'YEAR') {
+          print("here in year");
+
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(user.uid)
+              .update({
+            'userType': 'paid',
+            'subscriptionTime': DateTime.now().add(Duration(days: 365)),
+          });
+        }
+
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("paid successfully")));
+
+        paymentIntentData = null;
+      }).onError((error, stackTrace) {});
+    } on StripeException catch (e) {
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                content: Text("Cancelled "),
+              ));
+    } catch (e) {}
+  }
+
+  createPaymentIntent(String amount, String currency) async {
+    try {
+      Map<String, dynamic> body = {
+        'amount': calculateAmount(amount),
+        'currency': currency,
+        'payment_method_types[]': 'card'
+      };
+
+      var response = await http.post(
+          Uri.parse('https://api.stripe.com/v1/payment_intents'),
+          body: body,
+          headers: {
+            'Authorization':
+                'Bearer sk_test_51LmBnzFGPLNyrnFGoOHkZCf5A3t2xaaBSRAtUcs3WY2ZbM0PuAISQEeFrpwRKWiWJyxzTspq3qSWiCIWM13dLKhD00RTkzlzzs',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          });
+
+      return jsonDecode(response.body);
+    } catch (err) {}
+  }
+
+  calculateAmount(String amount) {
+    final a = (int.parse(amount)) * 100;
+    return a.toString();
   }
 }
