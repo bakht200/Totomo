@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatelessWidget {
+  var obsecure;
   var hintText;
   var controller;
   var validator;
 
   TextFieldWidget(
-      {required this.hintText,
+      {required this.obsecure,
+      required this.hintText,
       required this.controller,
       required this.validator});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obsecure,
       controller: controller,
       validator: validator,
       decoration: InputDecoration(

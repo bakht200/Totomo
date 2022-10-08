@@ -108,6 +108,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           TextFieldWidget(
+                            obsecure: false,
                             validator: (val) =>
                                 val.isEmpty ? "enter full name" : null,
                             controller: nameController,
@@ -132,6 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           TextFieldWidget(
+                            obsecure: false,
                             validator: (val) =>
                                 val.isEmpty || !val.contains("@")
                                     ? "enter a valid email"
@@ -158,6 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           TextFieldWidget(
+                            obsecure: true,
                             validator: (val) =>
                                 val.isEmpty ? "enter password" : null,
                             controller: passwordController,

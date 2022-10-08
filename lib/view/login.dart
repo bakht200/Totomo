@@ -85,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           TextFieldWidget(
+                            obsecure: false,
                             controller: email,
                             hintText: 'Email Address',
                             validator: (val) =>
@@ -111,6 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           TextFieldWidget(
+                            obsecure: true,
                             validator: (val) =>
                                 val.isEmpty ? "enter password" : null,
                             controller: password,
@@ -169,6 +171,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                         .collection('users')
                                         .where('uid', isEqualTo: user.uid)
                                         .get();
+                                    // if ((snapshot.docs[0]['subscriptionTime']) >
+                                    //     (DateTime.now())) {
+                                    //   print("HERE GREATER");
+                                    // }
                                     await UserSecureStorage.setUserName(
                                         snapshot.docs[0]['fullName']);
                                     await UserSecureStorage.fetchUserName();

@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:intl/intl.dart';
 
 import '../constants/secure_storage.dart';
 import '../view/stepper_form.dart';
@@ -47,6 +48,7 @@ class AuthController extends GetxController {
           .get();
 
       await UserSecureStorage.setUserName(snapshot.docs[0]['fullName']);
+
       await UserSecureStorage.setUserSubscription(snapshot.docs[0]['userType']);
 
       Navigator.of(context).pop();
