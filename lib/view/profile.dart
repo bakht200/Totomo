@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/constants/app_theme.dart';
 import 'package:dating_app/controller/profile_controller.dart';
 import 'package:dating_app/view/edit_profile.dart';
@@ -6,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
+import '../constants/secure_storage.dart';
 import 'authentication_screen.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -27,6 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
   List<int> selectedItems = [];
   final profileController = Get.put(ProfileController());
   bool? loading;
+  var userSubscription;
 
   @override
   void initState() {
@@ -40,6 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
     });
     await profileController.getUserData();
     await profileController.getUserPost();
+    userSubscription = await UserSecureStorage.fetchUserSubscription();
 
     setState(() {
       loading = false;
@@ -82,13 +87,47 @@ class _ProfilePageState extends State<ProfilePage> {
             : SingleChildScrollView(
                 child: Column(
                   children: [
-                    Container(
-                      height: 150.h,
-                      width: MediaQuery.of(context).size.width,
-                      child: Image.asset(
-                        'assets/images/googlemap.png',
-                        fit: BoxFit.fitWidth,
-                      ),
+                    Stack(
+                      children: [
+                        Container(
+                          height: 150.h,
+                          width: MediaQuery.of(context).size.width,
+                          child: Image.asset(
+                            'assets/images/googlemap.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                        userSubscription == 'paid'
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                ),
+                                height: 20.h,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Subscription will be expires at:  ',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11.0.sp,
+                                      ),
+                                    ),
+                                    Text(
+                                      DateFormat('EEE, M/d/y K:mm:ss').format(
+                                          (profileController.userInformation
+                                                      .first['subscriptionTime']
+                                                  as Timestamp)
+                                              .toDate()),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 13.0.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ))
+                            : SizedBox(),
+                      ],
                     ),
                     Row(
                       children: [
@@ -117,10 +156,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Icon(
-                                    Icons.diamond,
-                                    color: Colors.amber,
-                                  ),
+                                  userSubscription == 'paid'
+                                      ? Icon(
+                                          Icons.diamond,
+                                          color: Colors.amber,
+                                        )
+                                      : SizedBox(),
                                   Column(
                                     children: [
                                       Padding(

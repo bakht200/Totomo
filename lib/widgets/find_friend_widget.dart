@@ -60,10 +60,6 @@ class _FindFriendListState extends State<FindFriendList> {
                                 widget.name!,
                                 style: TextStyle(fontSize: 16.sp),
                               ),
-                              Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              )
                             ],
                           ),
                           Text(

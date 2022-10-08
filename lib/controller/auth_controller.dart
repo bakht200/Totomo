@@ -38,7 +38,7 @@ class AuthController extends GetxController {
         'region': '',
         'perfecture': '',
         'userType': 'free',
-        'subscriptionTime':'',
+        'subscriptionTime': '',
       });
 
       final snapshot = await FirebaseFirestore.instance
@@ -47,6 +47,7 @@ class AuthController extends GetxController {
           .get();
 
       await UserSecureStorage.setUserName(snapshot.docs[0]['fullName']);
+      await UserSecureStorage.setUserSubscription(snapshot.docs[0]['userType']);
 
       Navigator.of(context).pop();
 
@@ -86,7 +87,8 @@ class AuthController extends GetxController {
         'city': city,
         'region': country,
         'perfecture': perfecture,
-        'userType': 'free'
+        'userType': 'free',
+        'subscriptionTime': '',
       });
       Navigator.of(context).pop();
 

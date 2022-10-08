@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants/secure_storage.dart';
 import '../widgets/primary_button_widget.dart';
 
 class SubscriptionPage extends StatefulWidget {
@@ -19,6 +20,7 @@ class SubscriptionPage extends StatefulWidget {
 
 class _SubscriptionPageState extends State<SubscriptionPage> {
   Map<String, dynamic>? paymentIntentData;
+  var userSubscription;
 
   var subscriptionList = [
     {
@@ -68,6 +70,18 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     },
   ];
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    fetchUserSubscription();
+    super.initState();
+  }
+
+  fetchUserSubscription() async {
+    userSubscription = await UserSecureStorage.fetchUserSubscription();
+    print(userSubscription);
+  }
+
   int? selectedIndex;
   @override
   Widget build(BuildContext context) {
@@ -78,11 +92,18 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
           padding: EdgeInsets.all(10.0.w),
           child: Column(
             children: [
-              Text(
-                'Unlock Everything',
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-              ),
-              Text('MEET ANYONE MORE EASILY!',
+              userSubscription == 'paid'
+                  ? Text(
+                      'Hurrah!',
+                      style: TextStyle(
+                          fontSize: 20.sp, fontWeight: FontWeight.bold),
+                    )
+                  : Text(
+                      'Unlock Everything',
+                      style: TextStyle(
+                          fontSize: 20.sp, fontWeight: FontWeight.bold),
+                    ),
+              Text('YOU ALREADY USING OUR PREMIUM VERSION',
                   style:
                       TextStyle(fontSize: 12.sp, fontStyle: FontStyle.italic)),
               SizedBox(
@@ -191,56 +212,71 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                       );
                     }),
               ),
-              Text(
-                'Do you have a coupon?',
-                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0.w),
-                child: const TextField(
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.greenAccent, width: 1.0),
+              userSubscription == 'paid'
+                  ? SizedBox()
+                  : Text(
+                      'Do you have a coupon?',
+                      style: TextStyle(
+                          fontSize: 14.sp, fontWeight: FontWeight.bold),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red, width: 1.0),
+              userSubscription == 'paid'
+                  ? SizedBox()
+                  : Padding(
+                      padding: EdgeInsets.all(8.0.w),
+                      child: const TextField(
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.greenAccent, width: 1.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 1.0),
+                          ),
+                          hintText: 'Write your coupon code',
+                        ),
+                      ),
                     ),
-                    hintText: 'Write your coupon code',
-                  ),
-                ),
-              ),
-              SizedBox(
-                  width: double.infinity, //
-                  height: 45.h,
-                  child: theme_primary_button_widget(
-                      primaryColor: Color(AppTheme.primaryColor),
-                      textColor: Color(0xFFFAFAFA),
-                      onpressFunction: () {
-                        if (selectedIndex == -1) {
-                        } else {
-                          if (selectedIndex == 0) {
-                            makePayment(
-                              subscriptionList[0]['index'],
-                              subscriptionList[0]['name'],
-                              subscriptionList[0]['price'],
-                            );
-                          } else if (selectedIndex == 1) {
-                            makePayment(
-                              subscriptionList[0]['index'],
-                              subscriptionList[1]['name'],
-                              subscriptionList[1]['price'],
-                            );
-                          } else if (selectedIndex == 2) {
-                            makePayment(
-                              subscriptionList[0]['index'],
-                              subscriptionList[2]['name'],
-                              subscriptionList[2]['price'],
-                            );
-                          }
-                        }
-                      },
-                      title: 'Continue')),
+              userSubscription == 'paid'
+                  ? SizedBox(
+                      width: double.infinity, //
+                      height: 45.h,
+                      child: theme_primary_button_widget(
+                          primaryColor: Color(AppTheme.primaryColor),
+                          textColor: Color(0xFFFAFAFA),
+                          onpressFunction: null,
+                          title: 'Already Paid'))
+                  : SizedBox(
+                      width: double.infinity, //
+                      height: 45.h,
+                      child: theme_primary_button_widget(
+                          primaryColor: Color(AppTheme.primaryColor),
+                          textColor: Color(0xFFFAFAFA),
+                          onpressFunction: () {
+                            if (selectedIndex == -1) {
+                            } else {
+                              if (selectedIndex == 0) {
+                                makePayment(
+                                  subscriptionList[0]['index'],
+                                  subscriptionList[0]['name'],
+                                  subscriptionList[0]['price'],
+                                );
+                              } else if (selectedIndex == 1) {
+                                makePayment(
+                                  subscriptionList[0]['index'],
+                                  subscriptionList[1]['name'],
+                                  subscriptionList[1]['price'],
+                                );
+                              } else if (selectedIndex == 2) {
+                                makePayment(
+                                  subscriptionList[0]['index'],
+                                  subscriptionList[2]['name'],
+                                  subscriptionList[2]['price'],
+                                );
+                              }
+                            }
+                          },
+                          title: 'Continue')),
             ],
           ),
         ),

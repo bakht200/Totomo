@@ -172,6 +172,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     await UserSecureStorage.setUserName(
                                         snapshot.docs[0]['fullName']);
                                     await UserSecureStorage.fetchUserName();
+                                    await UserSecureStorage.setUserSubscription(
+                                        snapshot.docs[0]['userType']);
                                     if (snapshot.docs[0]['profileCompleted'] ==
                                         true) {
                                       Navigator.of(context).push(

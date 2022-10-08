@@ -20,6 +20,7 @@ class Chat extends StatefulWidget {
 class _ChatState extends State<Chat> {
   Stream<QuerySnapshot>? chats;
   String? userName;
+  var userSubscription;
   TextEditingController messageEditingController = TextEditingController();
   Widget chatMessages() {
     return StreamBuilder<QuerySnapshot>(
@@ -58,6 +59,7 @@ class _ChatState extends State<Chat> {
   @override
   void initState() {
     getUserName();
+
     HelperFunction().getChats(widget.chatRoomId).then((val) {
       setState(() {
         chats = val;
@@ -68,6 +70,7 @@ class _ChatState extends State<Chat> {
 
   getUserName() async {
     userName = await UserSecureStorage.fetchUserName();
+    userSubscription = await UserSecureStorage.fetchUserSubscription();
   }
 
   @override
@@ -118,10 +121,12 @@ class _ChatState extends State<Chat> {
                 SizedBox(
                   width: 12.w,
                 ),
-                Icon(
-                  Icons.diamond,
-                  color: Colors.amber,
-                ),
+                userSubscription == 'paid'
+                    ? Icon(
+                        Icons.diamond,
+                        color: Colors.amber,
+                      )
+                    : SizedBox(),
                 SizedBox(
                   width: 10.w,
                 ),

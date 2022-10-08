@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage>
   bool loading = false;
   String? userId;
   List<String> selectedCategory = [];
+  var userSubscription;
 
   final BannerAd myBanner = BannerAd(
     adUnitId: 'ca-app-pub-3940256099942544/6300978111',
@@ -82,6 +83,7 @@ class _HomePageState extends State<HomePage>
     await postController.getCategories();
 
     userId = await UserSecureStorage.fetchToken();
+    userSubscription = await UserSecureStorage.fetchUserSubscription();
     setState(() {
       loading = false;
     });
