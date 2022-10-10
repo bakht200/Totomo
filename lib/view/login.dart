@@ -171,28 +171,96 @@ class _LoginScreenState extends State<LoginScreen> {
                                         .collection('users')
                                         .where('uid', isEqualTo: user.uid)
                                         .get();
-                                    // if ((snapshot.docs[0]['subscriptionTime']) >
-                                    //     (DateTime.now())) {
-                                    //   print("HERE GREATER");
-                                    // }
-                                    await UserSecureStorage.setUserName(
-                                        snapshot.docs[0]['fullName']);
-                                    await UserSecureStorage.fetchUserName();
-                                    await UserSecureStorage.setUserSubscription(
-                                        snapshot.docs[0]['userType']);
-                                    if (snapshot.docs[0]['profileCompleted'] ==
-                                        true) {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (builder) => Dashboard(
-                                                  index: 0,
-                                                )),
-                                      );
+                                    if (snapshot.docs[0]['subscriptionTime'] !=
+                                        '') {
+                                      DateTime date = DateTime.parse(snapshot
+                                          .docs[0]['subscriptionTime']
+                                          .toDate()
+                                          .toString());
+
+                                      if (DateTime.now().isBefore(date)) {
+                                        await UserSecureStorage.setUserName(
+                                            snapshot.docs[0]['fullName']);
+                                        await UserSecureStorage.fetchUserName();
+                                        await UserSecureStorage
+                                            .setUserSubscription(
+                                                snapshot.docs[0]['userType']);
+                                        if (snapshot.docs[0]
+                                                ['profileCompleted'] ==
+                                            true) {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (builder) => Dashboard(
+                                                      index: 0,
+                                                    )),
+                                          );
+                                        } else {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (builder) =>
+                                                    FormPage()),
+                                          );
+                                        }
+                                      } else {
+                                        await FirebaseFirestore.instance
+                                            .collection("users")
+                                            .doc(user.uid)
+                                            .update({
+                                          'userType': 'free',
+                                          'subscriptionTime': '',
+                                        });
+
+                                        final snapshot = await FirebaseFirestore
+                                            .instance
+                                            .collection('users')
+                                            .where('uid', isEqualTo: user.uid)
+                                            .get();
+
+                                        await UserSecureStorage.setUserName(
+                                            snapshot.docs[0]['fullName']);
+                                        await UserSecureStorage.fetchUserName();
+                                        await UserSecureStorage
+                                            .setUserSubscription(
+                                                snapshot.docs[0]['userType']);
+                                        if (snapshot.docs[0]
+                                                ['profileCompleted'] ==
+                                            true) {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (builder) => Dashboard(
+                                                      index: 0,
+                                                    )),
+                                          );
+                                        } else {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (builder) =>
+                                                    FormPage()),
+                                          );
+                                        }
+                                      }
                                     } else {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (builder) => FormPage()),
-                                      );
+                                      await UserSecureStorage.setUserName(
+                                          snapshot.docs[0]['fullName']);
+                                      await UserSecureStorage.fetchUserName();
+                                      await UserSecureStorage
+                                          .setUserSubscription(
+                                              snapshot.docs[0]['userType']);
+                                      if (snapshot.docs[0]
+                                              ['profileCompleted'] ==
+                                          true) {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (builder) => Dashboard(
+                                                    index: 0,
+                                                  )),
+                                        );
+                                      } else {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (builder) => FormPage()),
+                                        );
+                                      }
                                     }
                                   } catch (e) {
                                     print(e.toString());
