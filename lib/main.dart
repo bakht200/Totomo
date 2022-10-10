@@ -36,7 +36,28 @@ class MyApp extends StatelessWidget {
           return FirebasePhoneAuthProvider(
             child: GetMaterialApp(
               debugShowCheckedModeBanner: false,
-              theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+                useMaterial3: true,
+                textTheme: TextTheme(
+                  headlineLarge: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  headline2: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.w200,
+                    color: Color(0xff8c92a5),
+                  ),
+                  headline4: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w100,
+                    color: Colors.white,
+                    letterSpacing: 1.3,
+                  ),
+                ),
+              ),
               home: SplashScreen(),
             ),
           );

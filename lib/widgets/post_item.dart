@@ -2,6 +2,7 @@ import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/controller/post_controller.dart';
+import 'package:dating_app/view/get_coins.dart';
 import 'package:dating_app/view/view_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,6 +33,7 @@ class PostItem extends StatefulWidget {
 class _PostItemState extends State<PostItem> {
   CarouselController controller = CarouselController();
   int pageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -215,7 +217,7 @@ class _PostItemState extends State<PostItem> {
                             lottieBuilder: LottieBuilder.asset(
                                 'assets/images/5084-gold-coin.json'),
                             color: Colors.white,
-                            msg: 'Watch ads for send a gold or buy 100 golds!',
+                            msg: 'Watch ads for send a gold or buy golds!',
                             title: 'Send a gold',
                             context: context,
                             actions: [
@@ -232,6 +234,9 @@ class _PostItemState extends State<PostItem> {
                               IconsButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (builder) => GetCoins()));
+                                  //  GetGoldWidget();
                                 },
                                 text: 'Buy',
                                 iconData: Icons.diamond_outlined,
