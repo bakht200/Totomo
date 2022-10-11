@@ -144,7 +144,8 @@ class HelperFunction {
           'description': descriptionController,
           'id': uniqueId,
           'postType': postType,
-          'userImage': imagePath
+          'userImage': imagePath,
+          'coins': []
         });
       } else {
         print("in else condition");
@@ -175,7 +176,8 @@ class HelperFunction {
           'description': descriptionController,
           'id': uniqueId,
           'postType': postType,
-          'userImage': imagePath
+          'userImage': imagePath,
+          'coins': []
         });
       }
       return "filedUploaded";
@@ -214,7 +216,8 @@ class HelperFunction {
           'description': descriptionController,
           'id': uniqueId,
           'postType': postType,
-          'userImage': imagePath
+          'userImage': imagePath,
+          'coins': []
         });
       }
       return "filedUploaded";
@@ -402,6 +405,40 @@ class HelperFunction {
     }
   }
 
+  giveCoin(id, userId, postedBy) async {
+    try {
+      print("typed");
+      ////COIN GIVER
+      final equipmentCollection =
+          FirebaseFirestore.instance.collection("users").doc(userId);
+
+      final docSnap = await equipmentCollection.get();
+
+      var queue = docSnap.get('coins');
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .update({"coins": queue - 1});
+////TAKER COINS
+      final a = FirebaseFirestore.instance.collection("users").doc(postedBy);
+
+      final b = await a.get();
+
+      var c = b.get('coins');
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(postedBy)
+          .update({"coins": c + 1});
+
+      await FirebaseFirestore.instance.collection('posts').doc(id).update({
+        "coins": FieldValue.arrayUnion([userId])
+      });
+      return "Updated";
+    } catch (e) {
+      return null;
+    }
+  }
+
   unLikePost(id, userId) async {
     try {
       final equipmentCollection =
@@ -427,7 +464,6 @@ class HelperFunction {
     List user = [];
 
     try {
-      print("HERE");
       String? userId = await UserSecureStorage.fetchToken();
 
       await FirebaseFirestore.instance
@@ -450,7 +486,7 @@ class HelperFunction {
           )
           .where(
             "userType",
-            isEqualTo: 'free',
+            isEqualTo: userType,
           )
           .where("age",
               isGreaterThanOrEqualTo: startingAge,

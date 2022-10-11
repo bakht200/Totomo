@@ -40,6 +40,7 @@ class AuthController extends GetxController {
         'perfecture': '',
         'userType': 'free',
         'subscriptionTime': '',
+        'coins': 0,
       });
 
       final snapshot = await FirebaseFirestore.instance
@@ -91,6 +92,7 @@ class AuthController extends GetxController {
         'perfecture': perfecture,
         'userType': 'free',
         'subscriptionTime': '',
+        'coins': 0,
       });
       Navigator.of(context).pop();
 

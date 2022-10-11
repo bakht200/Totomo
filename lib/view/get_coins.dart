@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -150,7 +151,7 @@ class _GetCoinsState extends State<GetCoins> {
                     primaryColor: Color(AppTheme.primaryColor),
                     textColor: Color(0xFFFAFAFA),
                     onpressFunction: () {
-                      makePayment();
+                      makePayment(subscriptionList[selectedIndex!]['name']);
                     },
                     title: 'Buy Now')),
           ],
@@ -159,7 +160,7 @@ class _GetCoinsState extends State<GetCoins> {
     );
   }
 
-  Future<void> makePayment() async {
+  Future<void> makePayment(var coinName) async {
     try {
       paymentIntentData = await createPaymentIntent('20', 'USD');
 
@@ -176,13 +177,13 @@ class _GetCoinsState extends State<GetCoins> {
                   merchantDisplayName: 'ANNIE'))
           .then((value) {});
 
-      displayPaymentSheet();
+      displayPaymentSheet(coinName);
     } catch (e, s) {
       print('exception:$e$s');
     }
   }
 
-  displayPaymentSheet() async {
+  displayPaymentSheet(var coinName) async {
     try {
       await Stripe.instance
           .presentPaymentSheet(
@@ -191,40 +192,38 @@ class _GetCoinsState extends State<GetCoins> {
         confirmPayment: true,
       ))
           .then((newValue) async {
-        // User user = FirebaseAuth.instance.currentUser!;
-        // if (subscriptionTime == 'MONTH') {
-        //   print("here in month");
-        //   await FirebaseFirestore.instance
-        //       .collection("users")
-        //       .doc(user.uid)
-        //       .update({
-        //     'userType': 'paid',
-        //     'subscriptionTime': DateTime.now().add(Duration(days: 30)),
-        //   });
-        // } else if (subscriptionTime == 'MONTHS') {
-        //   print("here in months");
+        User user = FirebaseAuth.instance.currentUser!;
+        if (coinName == 'Bronze') {
+          print("here in month");
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(user.uid)
+              .update({
+            'coins': 10,
+          });
+        } else if (coinName == 'Silver') {
+          print("here in months");
 
-        //   await FirebaseFirestore.instance
-        //       .collection("users")
-        //       .doc(user.uid)
-        //       .update({
-        //     'userType': 'paid',
-        //     'subscriptionTime': DateTime.now().add(Duration(days: 180)),
-        //   });
-        // } else if (subscriptionTime == 'YEAR') {
-        //   print("here in year");
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(user.uid)
+              .update({
+            'coins': 50,
+          });
+        } else if (coinName == 'Premium') {
+          print("here in year");
 
-        //   await FirebaseFirestore.instance
-        //       .collection("users")
-        //       .doc(user.uid)
-        //       .update({
-        //     'userType': 'paid',
-        //     'subscriptionTime': DateTime.now().add(Duration(days: 365)),
-        //   });
-        // }
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(user.uid)
+              .update({
+            'coins': 100,
+          });
+        }
 
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("paid successfully")));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Coins purchased successfully")));
+        Navigator.of(context).pop();
 
         paymentIntentData = null;
       }).onError((error, stackTrace) {});

@@ -98,6 +98,15 @@ class PostController extends GetxController {
     update();
   }
 
+  giveCoin(id, userId, postedBy) async {
+    var response = await helperFunction.giveCoin(id, userId, postedBy);
+    if (response == "Updated") {
+      Fluttertoast.showToast(msg: "Coins has been given.");
+      getPostList(null);
+    }
+    update();
+  }
+
   removePostLike(id, userId) async {
     var response = await helperFunction.unLikePost(id, userId);
     if (response == "Updated") {

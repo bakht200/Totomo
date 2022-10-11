@@ -67,20 +67,6 @@ class _ProfilePageState extends State<ProfilePage> {
               fontSize: 22.sp,
             ),
           ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 8.0.w),
-              child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (builder) => EditProfilePage()));
-                  },
-                  child: Icon(
-                    Icons.edit,
-                    color: Colors.white,
-                  )),
-            ),
-          ],
         ),
         body: loading == true
             ? const Center(child: CircularProgressIndicator())
@@ -218,6 +204,32 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                     ],
                                   ),
+                                  // Column(
+                                  //   children: [
+                                  //     Padding(
+                                  //       padding: EdgeInsets.all(8.0.w),
+                                  //       child: Column(
+                                  //         children: [
+                                  //           Icon(
+                                  //             Icons.diamond,
+                                  //             color: Colors.yellow,
+                                  //           ),
+                                  //           Text(
+                                  //             profileController
+                                  //                 .userInformation
+                                  //                 .first['coins']
+                                  //                 .toString(),
+                                  //             style: TextStyle(
+                                  //               color: Colors.black,
+                                  //               fontSize: 14.0.sp,
+                                  //               fontWeight: FontWeight.w400,
+                                  //             ),
+                                  //           )
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                               GestureDetector(

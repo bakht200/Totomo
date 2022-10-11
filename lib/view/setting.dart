@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../constants/app_theme.dart';
 import '../controller/profile_controller.dart';
+import 'edit_profile.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -112,124 +113,8 @@ class _SettingPageState extends State<SettingPage> {
                   Divider(),
                   ListTile(
                     onTap: () {
-                      // showModalBottomSheet(
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.only(
-                      //         topLeft: Radius.circular(30.r),
-                      //         topRight: Radius.circular(30.r),
-                      //       ),
-                      //     ),
-                      //     context: context,
-                      //     builder: (BuildContext context) {
-                      //       return Padding(
-                      //           padding: EdgeInsets.all(8.0.w),
-                      //           child: Wrap(children: <Widget>[
-                      //             Padding(
-                      //               padding: EdgeInsets.all(8.0.w),
-                      //               child: Center(
-                      //                 child: Container(
-                      //                   height: 3.h,
-                      //                   width: MediaQuery.of(context).size.width / 2,
-                      //                   decoration: BoxDecoration(
-                      //                       borderRadius: BorderRadius.circular(20.r),
-                      //                       color: Colors.grey),
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             SizedBox(
-                      //               height: 20.h,
-                      //             ),
-                      //             Padding(
-                      //               padding: EdgeInsets.all(8.0.w),
-                      //               child: Column(
-                      //                   crossAxisAlignment: CrossAxisAlignment.start,
-                      //                   children: [
-                      //                     Text(
-                      //                       'Change Name',
-                      //                       style: AppTheme.subHeadingStyle,
-                      //                     ),
-                      //                     SizedBox(
-                      //                       height: 10.h,
-                      //                     ),
-                      //                     Text(
-                      //                       'This name will be displayed to the other users.',
-                      //                       style: AppTheme.listSubHeadingStyle,
-                      //                     ),
-                      //                     SizedBox(
-                      //                       height: 20.h,
-                      //                     ),
-                      //                     TextFormField(
-                      //                       controller: nameEditingController,
-                      //                       inputFormatters: [
-                      //                         FilteringTextInputFormatter.allow(
-                      //                             RegExp('[a-z A-Z]')),
-                      //                       ],
-                      //                       keyboardType: TextInputType.text,
-                      //                       decoration: InputDecoration(
-                      //                         hintText: 'Name',
-                      //                         fillColor: Colors.white,
-                      //                         errorBorder: OutlineInputBorder(
-                      //                           borderSide: BorderSide(
-                      //                             color: Color(AppTheme.primaryColor),
-                      //                           ),
-                      //                         ),
-                      //                         focusedErrorBorder: OutlineInputBorder(
-                      //                           borderSide: BorderSide(
-                      //                             color: Color(AppTheme.primaryColor),
-                      //                           ),
-                      //                         ),
-                      //                         focusedBorder: OutlineInputBorder(
-                      //                           borderSide: BorderSide(
-                      //                             color: Color(AppTheme.primaryColor),
-                      //                           ),
-                      //                         ),
-                      //                         enabledBorder: OutlineInputBorder(
-                      //                           borderSide: BorderSide(
-                      //                             color:
-                      //                                 Theme.of(context).primaryColor,
-                      //                           ),
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                     SizedBox(
-                      //                       height: 30.h,
-                      //                     ),
-                      //                     SizedBox(
-                      //                       width: width,
-                      //                       height: height / 20,
-                      //                       child: ElevatedButton(
-                      //                           child: Text(
-                      //                             'Save',
-                      //                           ),
-                      //                           style:
-                      //                               AppTheme.themeFilledButtonStyle,
-                      //                           onPressed: () {
-                      //                             Navigator.pop(context);
-                      //                           }),
-                      //                     ),
-                      //                     SizedBox(
-                      //                       height: 10.h,
-                      //                     ),
-                      //                     Container(
-                      //                       width: width,
-                      //                       height: height / 20,
-                      //                       child: ElevatedButton(
-                      //                         child: Text('Cancel',
-                      //                             style: AppTheme
-                      //                                 .unFilledButtonTextStyle),
-                      //                         style: AppTheme.unfilledButtonStyle,
-                      //                         onPressed: () {
-                      //                           Navigator.pop(context);
-                      //                         },
-                      //                       ),
-                      //                     ),
-                      //                     SizedBox(
-                      //                       height: 20.h,
-                      //                     ),
-                      //                   ]),
-                      //             ),
-                      //           ]));
-                      //     });
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (builder) => EditProfilePage()));
                     },
                     leading: Image.asset(
                       'assets/images/tag.png',
@@ -274,28 +159,28 @@ class _SettingPageState extends State<SettingPage> {
                   //     ],
                   //   ),
                   // ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.remove_red_eye,
-                      color: Color(AppTheme.primaryColor),
-                      size: 25.h,
-                    ),
-                    title: Text('Appearance',
-                        style: AppTheme.settingListTileHeadingStyle),
-                    trailing: Wrap(
-                      spacing: 5,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 5.0.h),
-                          child: Icon(
-                            Icons.navigate_next,
-                            size: 35.sp,
-                            color: Color(AppTheme.primaryColor),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // ListTile(
+                  //   leading: Icon(
+                  //     Icons.remove_red_eye,
+                  //     color: Color(AppTheme.primaryColor),
+                  //     size: 25.h,
+                  //   ),
+                  //   title: Text('Appearance',
+                  //       style: AppTheme.settingListTileHeadingStyle),
+                  //   trailing: Wrap(
+                  //     spacing: 5,
+                  //     children: <Widget>[
+                  //       Padding(
+                  //         padding: EdgeInsets.only(top: 5.0.h),
+                  //         child: Icon(
+                  //           Icons.navigate_next,
+                  //           size: 35.sp,
+                  //           color: Color(AppTheme.primaryColor),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   ListTile(
                     leading: Icon(
                       Icons.lock,

@@ -196,7 +196,6 @@ class _PostItemState extends State<PostItem> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        print("TAPPING");
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (builder) => ViewPost(
                                   postId: widget.data['id'],
@@ -211,47 +210,71 @@ class _PostItemState extends State<PostItem> {
                     SizedBox(
                       width: 20.w,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Dialogs.materialDialog(
-                            lottieBuilder: LottieBuilder.asset(
-                                'assets/images/5084-gold-coin.json'),
-                            color: Colors.white,
-                            msg: 'Watch ads for send a gold or buy golds!',
-                            title: 'Send a gold',
-                            context: context,
-                            actions: [
-                              IconsButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                text: 'Watch Add',
-                                iconData: Icons.video_collection,
-                                color: Color(AppTheme.primaryColor),
-                                textStyle: TextStyle(color: Colors.white),
-                                iconColor: Colors.white,
-                              ),
-                              IconsButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (builder) => GetCoins()));
-                                  //  GetGoldWidget();
-                                },
-                                text: 'Buy',
-                                iconData: Icons.diamond_outlined,
-                                color: Colors.blue,
-                                textStyle: TextStyle(color: Colors.white),
-                                iconColor: Colors.white,
-                              ),
-                            ]);
-                      },
-                      child: Icon(
-                        Icons.diamond,
-                        color: Colors.amber,
-                        size: 35.sp,
-                      ),
-                    ),
+                    widget.userId == widget.data['postedBy']
+                        ? SizedBox()
+                        : GestureDetector(
+                            onTap: () async {
+                              final equipmentCollection = FirebaseFirestore
+                                  .instance
+                                  .collection("users")
+                                  .doc(widget.userId);
+
+                              final docSnap = await equipmentCollection.get();
+
+                              var queue = docSnap.get('coins');
+                              print(queue);
+                              if (queue != 0) {
+                                widget.controller.giveCoin(widget.data['id'],
+                                    widget.userId, widget.data['postedBy']);
+                              } else {
+                                Dialogs.materialDialog(
+                                    lottieBuilder: LottieBuilder.asset(
+                                        'assets/images/5084-gold-coin.json'),
+                                    color: Colors.white,
+                                    msg:
+                                        'Watch ads for send a gold or buy golds!',
+                                    title: 'Send a gold',
+                                    context: context,
+                                    actions: [
+                                      IconsButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        text: 'Watch Add',
+                                        iconData: Icons.video_collection,
+                                        color: Color(AppTheme.primaryColor),
+                                        textStyle:
+                                            TextStyle(color: Colors.white),
+                                        iconColor: Colors.white,
+                                      ),
+                                      IconsButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (builder) =>
+                                                      GetCoins()));
+                                          //  GetGoldWidget();
+                                        },
+                                        text: 'Buy',
+                                        iconData: Icons.diamond_outlined,
+                                        color: Colors.blue,
+                                        textStyle:
+                                            TextStyle(color: Colors.white),
+                                        iconColor: Colors.white,
+                                      ),
+                                    ]);
+                              }
+                              // else{
+
+                              // }
+                            },
+                            child: Icon(
+                              Icons.diamond,
+                              color: Colors.amber,
+                              size: 35.sp,
+                            ),
+                          ),
                   ],
                 ),
               ],

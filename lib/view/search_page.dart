@@ -435,7 +435,7 @@ class _SearchPageState extends State<SearchPage> {
                                                   ],
                                                 ),
                                                 _myRadioButton(
-                                                  title: "All Member",
+                                                  title: "Free",
                                                   value: 0,
                                                   onChanged: (newValue) =>
                                                       setState(() =>
@@ -493,7 +493,16 @@ class _SearchPageState extends State<SearchPage> {
                                                           Color(0xFFFAFAFA),
                                                       onpressFunction:
                                                           () async {
-                                                        String usertype = 'A';
+                                                        String? usertype;
+
+                                                        if (_groupValue == 0) {
+                                                          usertype = 'free';
+                                                        } else if (_groupValue ==
+                                                            1) {
+                                                          usertype = 'paid';
+                                                        }
+
+                                                        print(usertype);
 
                                                         if (selectedGender !=
                                                                 null &&
@@ -843,10 +852,6 @@ class _SearchPageState extends State<SearchPage> {
                                                                   FontWeight
                                                                       .bold),
                                                         ),
-                                                        const Icon(
-                                                          Icons.star,
-                                                          color: Colors.amber,
-                                                        )
                                                       ],
                                                     ),
                                                   ],
@@ -908,23 +913,6 @@ class _SearchPageState extends State<SearchPage> {
                                                         child: Icon(
                                                           Icons.message_rounded,
                                                           color: Colors.black,
-                                                        )),
-                                                    GestureDetector(
-                                                        onTap: () {
-                                                          Navigator.of(context)
-                                                              .push(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (builder) =>
-                                                                        Dashboard(
-                                                                          index:
-                                                                              4,
-                                                                        )),
-                                                          );
-                                                        },
-                                                        child: Icon(
-                                                          Icons.person,
-                                                          color: Colors.red,
                                                         )),
                                                   ],
                                                 ),
