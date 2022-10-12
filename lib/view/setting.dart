@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:dating_app/view/feedback_screen.dart';
+import 'package:dating_app/view/help_screen.dart';
+import 'package:dating_app/view/privacy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -181,70 +184,89 @@ class _SettingPageState extends State<SettingPage> {
                   //     ],
                   //   ),
                   // ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.lock,
-                      color: Color(AppTheme.primaryColor),
-                      size: 25.h,
-                    ),
-                    title: Text('Privacy & Security',
-                        style: AppTheme.settingListTileHeadingStyle),
-                    trailing: Wrap(
-                      spacing: 5,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 5.0.h),
-                          child: Icon(
-                            Icons.navigate_next,
-                            size: 35.sp,
-                            color: Color(AppTheme.primaryColor),
+
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (builder) => PrivacyScreen()));
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.lock,
+                        color: Color(AppTheme.primaryColor),
+                        size: 25.h,
+                      ),
+                      title: Text('Privacy & Security',
+                          style: AppTheme.settingListTileHeadingStyle),
+                      trailing: Wrap(
+                        spacing: 5,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0.h),
+                            child: Icon(
+                              Icons.navigate_next,
+                              size: 35.sp,
+                              color: Color(AppTheme.primaryColor),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.headphones,
-                      color: Color(AppTheme.primaryColor),
-                      size: 25.h,
-                    ),
-                    title: Text('Help & Support',
-                        style: AppTheme.settingListTileHeadingStyle),
-                    trailing: Wrap(
-                      spacing: 5,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 5.0.h),
-                          child: Icon(
-                            Icons.navigate_next,
-                            size: 35.sp,
-                            color: Color(AppTheme.primaryColor),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (builder) => HelpScreen()));
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.headphones,
+                        color: Color(AppTheme.primaryColor),
+                        size: 25.h,
+                      ),
+                      title: Text('Help & Support',
+                          style: AppTheme.settingListTileHeadingStyle),
+                      trailing: Wrap(
+                        spacing: 5,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0.h),
+                            child: Icon(
+                              Icons.navigate_next,
+                              size: 35.sp,
+                              color: Color(AppTheme.primaryColor),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.help_center,
-                      color: Color(AppTheme.primaryColor),
-                      size: 25.h,
-                    ),
-                    title: Text('About',
-                        style: AppTheme.settingListTileHeadingStyle),
-                    trailing: Wrap(
-                      spacing: 5,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 5.0.h),
-                          child: Icon(
-                            Icons.navigate_next,
-                            size: 35.sp,
-                            color: Color(AppTheme.primaryColor),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (builder) => FeedbackScreen()));
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.help_center,
+                        color: Color(AppTheme.primaryColor),
+                        size: 25.h,
+                      ),
+                      title: Text('About',
+                          style: AppTheme.settingListTileHeadingStyle),
+                      trailing: Wrap(
+                        spacing: 5,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0.h),
+                            child: Icon(
+                              Icons.navigate_next,
+                              size: 35.sp,
+                              color: Color(AppTheme.primaryColor),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Divider(),
