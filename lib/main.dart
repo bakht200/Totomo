@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 primarySwatch: Colors.blue,
                 useMaterial3: true,
-                textTheme: TextTheme(
+                textTheme: const TextTheme(
                   headlineLarge: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
