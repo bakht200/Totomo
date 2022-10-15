@@ -53,7 +53,7 @@ dependencies:
   easy_container: ^1.0.4
   intl_phone_field: ^3.1.0
   fluttertoast:
-  google_mobile_ads: ^2.0.1
+  google_mobile_ads: ^2.1.0
   cloud_firestore:
   get:
   firebase_storage: ^10.3.8

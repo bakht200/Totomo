@@ -90,9 +90,12 @@ class _HomePageState extends State<HomePage>
         request: const AdRequest(),
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           onAdLoaded: (RewardedAd ad) {
+            print("REWARDED AD LOADED");
             debugPrint('$ad loaded.');
-            _rewardedAd = ad;
-            _numRewardedLoadAttempts = 0;
+            setState(() {
+              _rewardedAd = ad;
+              _numRewardedLoadAttempts = 0;
+            });
           },
           onAdFailedToLoad: (LoadAdError error) {
             debugPrint('RewardedAd failed to load: $error');
@@ -106,24 +109,26 @@ class _HomePageState extends State<HomePage>
   }
 
   void _showRewardedAd() {
+    print(_rewardedAd);
     if (_rewardedAd == null) {
       debugPrint('Warning: attempt to show rewarded before loaded.');
       return;
     }
-    _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (RewardedAd ad) =>
-          debugPrint('ad onAdShowedFullScreenContent.'),
-      onAdDismissedFullScreenContent: (RewardedAd ad) {
-        debugPrint('$ad onAdDismissedFullScreenContent.');
-        ad.dispose();
-        _createRewardedAd();
-      },
-      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-        debugPrint('$ad onAdFailedToShowFullScreenContent: $error');
-        ad.dispose();
-        _createRewardedAd();
-      },
-    );
+    _rewardedAd!.show(onUserEarnedReward: ((ad, reward) {}));
+    // _rewardedAd.FullScreenContentCallback(
+    //   onAdShowedFullScreenContent: (RewardedAd ad) =>
+    //       debugPrint('ad onAdShowedFullScreenContent.'),
+    //   onAdDismissedFullScreenContent: (RewardedAd ad) {
+    //     debugPrint('$ad onAdDismissedFullScreenContent.');
+    //     ad.dispose();
+    //     _createRewardedAd();
+    //   },
+    //   onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+    //     debugPrint('$ad onAdFailedToShowFullScreenContent: $error');
+    //     ad.dispose();
+    //     _createRewardedAd();
+    //   },
+    // );
 
     // _rewardedAd!.setImmersiveMode(true);
 
@@ -132,7 +137,6 @@ class _HomePageState extends State<HomePage>
     // debugPrint(
     //     '$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
     // });
-    _rewardedAd = null;
   }
 
   @override
