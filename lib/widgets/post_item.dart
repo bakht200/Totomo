@@ -223,59 +223,61 @@ class _PostItemState extends State<PostItem> {
                         ? SizedBox()
                         : GestureDetector(
                             onTap: () async {
-                              // final equipmentCollection = FirebaseFirestore
-                              //     .instance
-                              //     .collection("users")
-                              //     .doc(widget.userId);
+                              final equipmentCollection = FirebaseFirestore
+                                  .instance
+                                  .collection("users")
+                                  .doc(widget.userId);
 
-                              // final docSnap = await equipmentCollection.get();
+                              final docSnap = await equipmentCollection.get();
 
-                              // var queue = docSnap.get('coins');
-                              // print(queue);
-                              // if (queue != 0) {
-                              //   widget.controller.giveCoin(widget.data['id'],
-                              //       widget.userId, widget.data['postedBy']);
-                              // } else {
-                              Dialogs.materialDialog(
-                                  lottieBuilder: LottieBuilder.asset(
-                                      'assets/images/5084-gold-coin.json'),
-                                  color: Colors.white,
-                                  msg:
-                                      'Watch ads for send a gold or buy golds!',
-                                  title: 'Send a gold',
-                                  context: context,
-                                  actions: [
-                                    IconsButton(
-                                      onPressed: () {
-                                        // print(rewardedAd);
-                                        // rewardedAd!.show(
-                                        //     onUserEarnedReward: (ad, reward) {
-                                        //   print(
-                                        //       "USER WATCH COMPLETE VIDEO AND GET COINS");
-                                        // });
-                                      },
-                                      text: 'Watch Add',
-                                      iconData: Icons.video_collection,
-                                      color: Color(AppTheme.primaryColor),
-                                      textStyle: TextStyle(color: Colors.white),
-                                      iconColor: Colors.white,
-                                    ),
-                                    IconsButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (builder) =>
-                                                    GetCoins()));
-                                      },
-                                      text: 'Buy',
-                                      iconData: Icons.diamond_outlined,
-                                      color: Colors.blue,
-                                      textStyle: TextStyle(color: Colors.white),
-                                      iconColor: Colors.white,
-                                    ),
-                                  ]);
-                              //  }
+                              var queue = docSnap.get('coins');
+                              print(queue);
+                              if (queue != 0) {
+                                widget.controller.giveCoin(widget.data['id'],
+                                    widget.userId, widget.data['postedBy']);
+                              } else {
+                                Dialogs.materialDialog(
+                                    lottieBuilder: LottieBuilder.asset(
+                                        'assets/images/5084-gold-coin.json'),
+                                    color: Colors.white,
+                                    msg:
+                                        'Watch ads for send a gold or buy golds!',
+                                    title: 'Send a gold',
+                                    context: context,
+                                    actions: [
+                                      IconsButton(
+                                        onPressed: () {
+                                          // print(rewardedAd);
+                                          // rewardedAd!.show(
+                                          //     onUserEarnedReward: (ad, reward) {
+                                          //   print(
+                                          //       "USER WATCH COMPLETE VIDEO AND GET COINS");
+                                          // });
+                                        },
+                                        text: 'Watch Add',
+                                        iconData: Icons.video_collection,
+                                        color: Color(AppTheme.primaryColor),
+                                        textStyle:
+                                            TextStyle(color: Colors.white),
+                                        iconColor: Colors.white,
+                                      ),
+                                      IconsButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (builder) =>
+                                                      GetCoins()));
+                                        },
+                                        text: 'Buy',
+                                        iconData: Icons.diamond_outlined,
+                                        color: Colors.blue,
+                                        textStyle:
+                                            TextStyle(color: Colors.white),
+                                        iconColor: Colors.white,
+                                      ),
+                                    ]);
+                              }
                             },
                             child: Icon(
                               Icons.diamond,

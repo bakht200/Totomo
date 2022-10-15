@@ -20,8 +20,11 @@ class _SearchState extends State<Search> {
 
   bool isLoading = false;
   bool haveUserSearched = false;
+  String? userId;
 
   initiateSearch() async {
+    userId = await UserSecureStorage.fetchToken();
+
     await databaseMethods.getAllUsers().then((snapshot) {
       setState(() {
         searchResultSnapshot = snapshot;
@@ -53,18 +56,22 @@ class _SearchState extends State<Search> {
                 shrinkWrap: true,
                 itemCount: searchResultSnapshot?.docs.length,
                 itemBuilder: (context, index) {
-                  return userTile(
-                    searchResultSnapshot?.docs[index]["fullName"],
-                    searchResultSnapshot?.docs[index]["profileImage"][0],
-                    "${searchResultSnapshot?.docs[index]["region"]}, ${searchResultSnapshot?.docs[index]["city"]}",
-                  );
+                  return searchResultSnapshot?.docs[index]["blockedBy"]
+                          .contains(userId)
+                      ? SizedBox()
+                      : userTile(
+                          searchResultSnapshot?.docs[index]["fullName"],
+                          searchResultSnapshot?.docs[index]["profileImage"][0],
+                          searchResultSnapshot?.docs[index]["uid"],
+                          "${searchResultSnapshot?.docs[index]["region"]}, ${searchResultSnapshot?.docs[index]["city"]}",
+                        );
                 }),
           )
         : Container();
   }
 
   /// 1.create a chatroom, send user to the chatroom, other userdetails
-  sendMessage(String userName) async {
+  sendMessage(String userName, userId) async {
     String? name = await UserSecureStorage.fetchUserName();
     List<String> users = [name!, userName];
 
@@ -81,12 +88,11 @@ class _SearchState extends State<Search> {
         context,
         MaterialPageRoute(
             builder: (context) => Chat(
-                  chatRoomId: chatRoomId,
-                  sendTo: userName,
-                )));
+                chatRoomId: chatRoomId, sendTo: userName, userId: userId)));
   }
 
-  Widget userTile(String userName, String profileImage, String userEmail) {
+  Widget userTile(
+      String userName, String profileImage, String userId, String userEmail) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
       child: Row(
@@ -118,7 +124,7 @@ class _SearchState extends State<Search> {
           Spacer(),
           GestureDetector(
             onTap: () {
-              sendMessage(userName);
+              sendMessage(userName, userId);
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -147,6 +153,7 @@ class _SearchState extends State<Search> {
   @override
   void initState() {
     initiateSearch();
+
     super.initState();
   }
 

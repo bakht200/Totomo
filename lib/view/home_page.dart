@@ -19,6 +19,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/secure_storage.dart';
+import '../controller/ads_service.dart';
 import '../widgets/post_item.dart';
 import '../widgets/story_item.dart';
 import 'gallery_post.dart';
@@ -29,6 +30,8 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
+
+const int maxFailedLoadAttempts = 3;
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
@@ -43,6 +46,8 @@ class _HomePageState extends State<HomePage>
   String? userId;
   List<String> selectedCategory = [];
   var userSubscription;
+
+  int _numRewardedLoadAttempts = 0;
 
   final BannerAd myBanner = BannerAd(
     adUnitId: 'ca-app-pub-3940256099942544/6300978111',
@@ -81,54 +86,61 @@ class _HomePageState extends State<HomePage>
 
   void _createRewardedAd() {
     RewardedAd.load(
-        adUnitId: Platform.isAndroid
-            ? 'cca-app-pub-3940256099942544/5224354917'
-            : 'ca-app-pub-3940256099942544/1712485313',
-        request: request,
+        adUnitId: AdMobService.rewardedAdUnitId!,
+        request: const AdRequest(),
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           onAdLoaded: (RewardedAd ad) {
-            print('$ad loaded.');
+            debugPrint('$ad loaded.');
             _rewardedAd = ad;
+            _numRewardedLoadAttempts = 0;
           },
           onAdFailedToLoad: (LoadAdError error) {
-            print('RewardedAd failed to load: $error');
+            debugPrint('RewardedAd failed to load: $error');
             _rewardedAd = null;
+            _numRewardedLoadAttempts += 1;
+            if (_numRewardedLoadAttempts < maxFailedLoadAttempts) {
+              _createRewardedAd();
+            }
           },
         ));
   }
 
-  //static final AdRequest request = ;
   void _showRewardedAd() {
     if (_rewardedAd == null) {
-      print('Warning: attempt to show rewarded before loaded.');
+      debugPrint('Warning: attempt to show rewarded before loaded.');
       return;
     }
     _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (RewardedAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
+          debugPrint('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (RewardedAd ad) {
-        print('$ad onAdDismissedFullScreenContent.');
+        debugPrint('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
         _createRewardedAd();
       },
       onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
+        debugPrint('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
         _createRewardedAd();
       },
     );
 
-    _rewardedAd!.setImmersiveMode(true);
-    _rewardedAd!.show(
-        onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
-    });
+    // _rewardedAd!.setImmersiveMode(true);
+
+    // {
+
+    // debugPrint(
+    //     '$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
+    // });
     _rewardedAd = null;
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void dispose() {
+    super.dispose();
+
+    _rewardedAd?.dispose();
+    // _rewardedInterstitialAd?.dispose();
   }
 
   Future<dynamic> fetchUserList() async {
@@ -241,16 +253,17 @@ class _HomePageState extends State<HomePage>
                             Navigator.pop(context);
                           },
                         ),
-                        ListTile(
-                          leading: const Icon(
-                            Icons.diamond,
-                            color: Colors.amber,
-                          ),
-                          title: const Text('Most gold'),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
+                        // ListTile(
+                        //   leading: const Icon(
+                        //     Icons.diamond,
+                        //     color: Colors.amber,
+                        //   ),
+                        //   title: const Text('Most gold'),
+                        //   onTap: () {
+                        //     searchDataList('mostGold', null);
+                        //     Navigator.pop(context);
+                        //   },
+                        // ),
                         ListTile(
                           leading: const Icon(
                             Icons.rocket,
@@ -258,7 +271,7 @@ class _HomePageState extends State<HomePage>
                           ),
                           title: const Text('Best'),
                           onTap: () {
-                            Navigator.pop(context);
+                            _showRewardedAd();
                           },
                         ),
                         ListTile(

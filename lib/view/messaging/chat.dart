@@ -4,14 +4,17 @@ import 'package:dating_app/services/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 
 import '../../constants/secure_storage.dart';
 
 class Chat extends StatefulWidget {
   final String? chatRoomId;
   final String? sendTo;
+  final String? userId;
 
-  Chat({this.chatRoomId, this.sendTo});
+  Chat({this.chatRoomId, this.sendTo, this.userId});
 
   @override
   _ChatState createState() => _ChatState();
@@ -110,29 +113,64 @@ class _ChatState extends State<Chat> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        widget.sendTo!,
-                        style: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.w600),
+                      Row(
+                        children: [
+                          Text(
+                            widget.sendTo!,
+                            style: TextStyle(
+                                fontSize: 16.sp, fontWeight: FontWeight.w600),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  width: 12.w,
-                ),
-                userSubscription == 'paid'
-                    ? Icon(
-                        Icons.diamond,
-                        color: Colors.amber,
-                      )
-                    : SizedBox(),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Icon(
-                  Icons.block,
-                  color: Colors.red,
+                GestureDetector(
+                  onTap: () {
+                    Dialogs.materialDialog(
+                        lottieBuilder: LottieBuilder.asset(
+                            'assets/images/5084-gold-coin.json'),
+                        color: Colors.white,
+                        msg: 'Do you wanna block this user?',
+                        title: 'Block user',
+                        context: context,
+                        actions: [
+                          IconsButton(
+                            onPressed: () async {
+                              String? userId =
+                                  await UserSecureStorage.fetchToken();
+
+                              await FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(widget.userId)
+                                  .update({
+                                "blockedBy": FieldValue.arrayUnion([userId])
+                              });
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            },
+                            text: 'Yes',
+                            iconData: Icons.done,
+                            color: Color(AppTheme.primaryColor),
+                            textStyle: TextStyle(color: Colors.white),
+                            iconColor: Colors.white,
+                          ),
+                          IconsButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            text: 'No',
+                            iconData: Icons.cancel,
+                            color: Colors.blue,
+                            textStyle: TextStyle(color: Colors.white),
+                            iconColor: Colors.white,
+                          ),
+                        ]);
+                  },
+                  child: Icon(
+                    Icons.block,
+                    color: Colors.red,
+                  ),
                 ),
               ],
             ),
