@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage>
   void _createRewardedAd() {
     RewardedAd.load(
         adUnitId: Platform.isAndroid
-            ? 'ca-app-pub-3940256099942544/5224354917'
+            ? 'cca-app-pub-3940256099942544/5224354917'
             : 'ca-app-pub-3940256099942544/1712485313',
         request: request,
         rewardedAdLoadCallback: RewardedAdLoadCallback(
@@ -636,7 +636,7 @@ class _HomePageState extends State<HomePage>
             }),
         FlatButton(
             child: const Text('Submit'),
-            onPressed: () {
+            onPressed: () async {
               try {
                 var uniqueId =
                     FirebaseFirestore.instance.collection("category").doc().id;
@@ -648,6 +648,7 @@ class _HomePageState extends State<HomePage>
                   'categoryName': categoryNameController.text.trim(),
                   'id': uniqueId,
                 });
+                await postController.getCategories();
                 Navigator.pop(context);
                 Fluttertoast.showToast(msg: "Category submitted");
               } catch (e) {
