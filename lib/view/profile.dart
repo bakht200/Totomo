@@ -350,74 +350,77 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                     ),
-                    SingleChildScrollView(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 8.0.w),
-                              child: Text(
-                                'Recent Posts',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 17.0.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            profileController.userPost[0]['mediaUrl'].length !=
-                                    0
-                                ? GetBuilder(
-                                    init: profileController,
-                                    builder: (context) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.black38)),
-                                        child: Wrap(
-                                            spacing: 2,
-                                            runSpacing: 5,
-                                            children: List.generate(
-                                                profileController
-                                                    .userPost.length, (index) {
-                                              return Container(
-                                                  width: 70.w,
-                                                  height: 100.h,
-                                                  child: ListView.builder(
-                                                      itemCount:
-                                                          profileController
-                                                              .userPost[index]
-                                                                  ['mediaUrl']
-                                                              .length,
-                                                      itemBuilder:
-                                                          ((context, _index) {
-                                                        return FullScreenWidget(
-                                                          child: Container(
-                                                              width: 70.w,
-                                                              height: 100.h,
-                                                              decoration: BoxDecoration(
-                                                                  image: DecorationImage(
-                                                                      image: NetworkImage(
-                                                                        profileController.userPost[index]['mediaUrl']
-                                                                            [
-                                                                            _index],
-                                                                      ),
-                                                                      fit: BoxFit.cover))),
+                    profileController.userPost.length != 0
+                        ? SingleChildScrollView(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 8.0.w),
+                                    child: Text(
+                                      'Recent Posts',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 17.0.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  profileController
+                                              .userPost[0]['mediaUrl'].length !=
+                                          0
+                                      ? GetBuilder(
+                                          init: profileController,
+                                          builder: (context) {
+                                            return Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.black38)),
+                                              child: Wrap(
+                                                  spacing: 2,
+                                                  runSpacing: 5,
+                                                  children: List.generate(
+                                                      profileController.userPost
+                                                          .length, (index) {
+                                                    return Container(
+                                                        width: 70.w,
+                                                        height: 100.h,
+                                                        child: ListView.builder(
+                                                            itemCount:
+                                                                profileController
+                                                                    .userPost[
+                                                                        index][
+                                                                        'mediaUrl']
+                                                                    .length,
+                                                            itemBuilder:
+                                                                ((context,
+                                                                    _index) {
+                                                              return FullScreenWidget(
+                                                                child: Container(
+                                                                    width: 70.w,
+                                                                    height: 100.h,
+                                                                    decoration: BoxDecoration(
+                                                                        image: DecorationImage(
+                                                                            image: NetworkImage(
+                                                                              profileController.userPost[index]['mediaUrl'][_index],
+                                                                            ),
+                                                                            fit: BoxFit.cover))),
+                                                              );
+                                                            }))
+                                                        // decoration: BoxDecoration(
+                                                        //     image: DecorationImage(
+                                                        //         image: NetworkImage(
+                                                        //           '',
+                                                        //         ),
+                                                        //         fit: BoxFit.cover)),
                                                         );
-                                                      }))
-                                                  // decoration: BoxDecoration(
-                                                  //     image: DecorationImage(
-                                                  //         image: NetworkImage(
-                                                  //           '',
-                                                  //         ),
-                                                  //         fit: BoxFit.cover)),
-                                                  );
-                                            })),
-                                      );
-                                    })
-                                : SizedBox()
-                          ]),
-                    )
+                                                  })),
+                                            );
+                                          })
+                                      : SizedBox()
+                                ]),
+                          )
+                        : SizedBox()
                   ],
                 ),
               ));

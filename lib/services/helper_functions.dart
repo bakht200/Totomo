@@ -439,6 +439,28 @@ class HelperFunction {
     }
   }
 
+  giveCoinFromAd(id, userId, postedBy) async {
+    try {
+////TAKER COINS
+      final a = FirebaseFirestore.instance.collection("users").doc(postedBy);
+
+      final b = await a.get();
+
+      var c = b.get('coins');
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(postedBy)
+          .update({"coins": c + 1});
+
+      await FirebaseFirestore.instance.collection('posts').doc(id).update({
+        "coins": FieldValue.arrayUnion([userId])
+      });
+      return "Updated";
+    } catch (e) {
+      return null;
+    }
+  }
+
   unLikePost(id, userId) async {
     try {
       final equipmentCollection =

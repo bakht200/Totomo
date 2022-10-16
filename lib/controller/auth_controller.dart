@@ -41,6 +41,7 @@ class AuthController extends GetxController {
         'userType': 'free',
         'subscriptionTime': '',
         'coins': 0,
+        'blockedBy': '',
       });
 
       final snapshot = await FirebaseFirestore.instance
@@ -93,6 +94,7 @@ class AuthController extends GetxController {
         'userType': 'free',
         'subscriptionTime': '',
         'coins': 0,
+        'blockedBy': '',
       });
       Navigator.of(context).pop();
 
